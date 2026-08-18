@@ -46,6 +46,8 @@
   @keyframes csBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
   @keyframes csFlicker { 0%,100% { transform: scale(1) translateY(0); opacity: .95; } 30% { transform: scale(1.08,1.15) translateY(-3px); opacity: .8; } 60% { transform: scale(.94,1.05) translateY(-1px); opacity: 1; } }
   @keyframes csSteam { 0% { transform: translateY(0) translateX(0) scale(.6); opacity: 0; } 15% { opacity: .55; } 100% { transform: translateY(-140px) translateX(18px) scale(1.6); opacity: 0; } }
+  @keyframes csFireGlow { 0%,100% { opacity: .8; transform: translate(-50%,-50%) scale(1); } 45% { opacity: 1; transform: translate(-50%,-50%) scale(1.12); } 70% { opacity: .72; transform: translate(-50%,-50%) scale(.96); } }
+  @keyframes csEmber { 0% { opacity: 0; transform: translateY(0) scale(.7); } 20% { opacity: .9; } 100% { opacity: 0; transform: translateY(-72px) translateX(14px) scale(.3); } }
   @keyframes csRipple { 0% { transform: scale(.4); opacity: .7; } 100% { transform: scale(1.5); opacity: 0; } }
   @keyframes csScrollHint { 0%,100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(8px); opacity: .4; } }
   .yt-cover iframe { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100%; min-width: 177.78vh; transform: translate(-50%,-50%); pointer-events: none; }
@@ -68,6 +70,9 @@
     .cs-storebtns a { font-size: 14px !important; padding: 13px 22px !important; }
     .cs-footer { flex-direction: column !important; align-items: flex-start !important; padding: 32px 20px 40px !important; }
     .cs-moon { width: 76px !important; height: 76px !important; top: 9vh !important; right: 8vw !important; }
+    .cs-const { opacity: .3 !important; width: min(190px, 40vw) !important; }
+    .cs-const-fish { display: none !important; }
+    .cs-dipper { top: 11vh !important; left: 4vw !important; width: min(285px, 62vw) !important; opacity: .38 !important; }
     .cs-catstar { transform: scale(.7); transform-origin: 100% 0; right: 4vw !important; }
     .cs-cook { width: min(276px, 74vw) !important; height: min(276px, 74vw) !important; }
     .cs-scene3 { min-height: auto !important; padding: 9vh 20px !important; gap: 34px !important; }
@@ -90,6 +95,7 @@
     .cs-catback { width: min(104px, 24vw) !important; }
     .cs-restcat { width: min(240px, 62vw) !important; }
     .cs-shop { width: min(240px, 62vw) !important; }
+    .cs-chefcat { width: min(54px, 12vw) !important; }
     .cs-camping { width: min(250px, 64vw) !important; }
     .cs-langgrid { width: min(320px, 86vw) !important; }
     .cs-langgrid button { height: 42px !important; font-size: 13px !important; }
@@ -110,7 +116,7 @@
   <!-- loading screen -->
 <div ref="{{ loaderRef }}" style="position: fixed; inset: 0; z-index: 100; background: linear-gradient(180deg, #0d1026 0%, #171c3d 40%, #232a55 75%, #2e3763 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; transition: opacity .8s ease; opacity: 1; overflow: hidden; font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif;" dir="ltr">
     <canvas ref="{{ loaderStarsRef }}" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
-    <img src="assets/cat_star.png" alt="" style="width: 80px; height: 80px; display: block; align-self: center; letter-spacing: 0; animation: csTwinkle 1.4s ease-in-out infinite;">
+    <img src="assets/cat_star.webp" alt="" style="width: 80px; height: 80px; display: block; align-self: center; letter-spacing: 0; animation: csTwinkle 1.4s ease-in-out infinite;">
     <sc-if value="{{ langConfirmed }}" hint-placeholder-val="{{ false }}">
       <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: var(--cs-weight, 700); font-size: 38px; color: #f3efe2; text-align: center; padding: 0 24px; opacity: 0; animation: csLoaderFadeIn 1.4s ease forwards .3s;">{{ t.loadingVoice }}</div>
       <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-size: 15px; letter-spacing: 3px; color: #9aa3d1;">{{ t.loadingLabel }}</div>
@@ -131,6 +137,61 @@
 
   <!-- fixed backgrounds -->
   <div style="position: fixed; inset: 0; z-index: 0; background: linear-gradient(180deg, #0d1026 0%, #171c3d 40%, #232a55 75%, #2e3763 100%);"></div>
+  <!-- the Big Dipper, sitting quietly in the night sky -->
+  <div class="cs-dipper" style="position: fixed; top: 16vh; left: 5vw; z-index: 0; width: min(450px, 51vw); pointer-events: none; opacity: .5;">
+    <svg viewBox="0 0 200 96" style="width: 100%; height: auto; display: block; overflow: visible;">
+      <polyline points="6,58 40,44 74,34 106,50 112,76 156,84 172,54 106,50" fill="none" stroke="#cfd6f5" stroke-width="0.7" stroke-opacity=".38" stroke-linejoin="round"></polyline>
+      <circle cx="6" cy="58" r="2.1" fill="#eef1ff" style="animation: csTwinkle 4.6s ease-in-out infinite"></circle>
+      <circle cx="40" cy="44" r="2.6" fill="#eef1ff" style="animation: csTwinkle 5.4s ease-in-out infinite .6s"></circle>
+      <circle cx="74" cy="34" r="2.3" fill="#eef1ff" style="animation: csTwinkle 4.2s ease-in-out infinite 1.2s"></circle>
+      <circle cx="106" cy="50" r="1.8" fill="#eef1ff" style="animation: csTwinkle 5.8s ease-in-out infinite 1.9s"></circle>
+      <circle cx="112" cy="76" r="2.4" fill="#eef1ff" style="animation: csTwinkle 4.9s ease-in-out infinite 2.4s"></circle>
+      <circle cx="156" cy="84" r="2.2" fill="#eef1ff" style="animation: csTwinkle 5.1s ease-in-out infinite 3.1s"></circle>
+      <circle cx="172" cy="54" r="2.9" fill="#eef1ff" style="animation: csTwinkle 4.4s ease-in-out infinite 3.7s"></circle>
+    </svg>
+  </div>
+  <div class="cs-const cs-const-cat" style="position: fixed; top: 58vh; left: 7vw; z-index: 0; width: min(340px, 40vw); pointer-events: none; opacity: .42;">
+    <svg viewBox="0 0 130 96" style="width: 100%; height: auto; display: block; overflow: visible;">
+      <polyline points="10,34 26,12 44,32 70,26 96,42 118,68 92,84 52,80 18,62 10,34" fill="none" stroke="#cfd6f5" stroke-width="0.7" stroke-opacity=".32" stroke-linejoin="round"></polyline>
+      <circle cx="10" cy="34" r="2.2" fill="#eef1ff" style="animation: csTwinkle 4.0s ease-in-out infinite 0.0s"></circle>
+      <circle cx="26" cy="12" r="2.6" fill="#eef1ff" style="animation: csTwinkle 4.7s ease-in-out infinite 0.7s"></circle>
+      <circle cx="44" cy="32" r="2.1" fill="#eef1ff" style="animation: csTwinkle 5.4s ease-in-out infinite 1.4s"></circle>
+      <circle cx="70" cy="26" r="1.9" fill="#eef1ff" style="animation: csTwinkle 6.1s ease-in-out infinite 2.1s"></circle>
+      <circle cx="96" cy="42" r="2.7" fill="#eef1ff" style="animation: csTwinkle 4.4s ease-in-out infinite 2.8s"></circle>
+      <circle cx="118" cy="68" r="2.2" fill="#eef1ff" style="animation: csTwinkle 5.1s ease-in-out infinite 3.5s"></circle>
+      <circle cx="92" cy="84" r="2" fill="#eef1ff" style="animation: csTwinkle 5.8s ease-in-out infinite 4.2s"></circle>
+      <circle cx="52" cy="80" r="2.4" fill="#eef1ff" style="animation: csTwinkle 4.1s ease-in-out infinite 4.9s"></circle>
+      <circle cx="18" cy="62" r="2.3" fill="#eef1ff" style="animation: csTwinkle 4.8s ease-in-out infinite 5.6s"></circle>
+    </svg>
+  </div>
+  <div class="cs-const cs-const-ladle" style="position: fixed; top: 40vh; right: 6vw; z-index: 0; width: min(300px, 36vw); pointer-events: none; opacity: .42;">
+    <svg viewBox="0 0 142 88" style="width: 100%; height: auto; display: block; overflow: visible;">
+      <polyline points="8,20 34,32 58,48 78,64 100,76 126,66 132,42 110,32 78,64" fill="none" stroke="#cfd6f5" stroke-width="0.7" stroke-opacity=".32" stroke-linejoin="round"></polyline>
+      <circle cx="8" cy="20" r="2" fill="#eef1ff" style="animation: csTwinkle 4.0s ease-in-out infinite 0.0s"></circle>
+      <circle cx="34" cy="32" r="2.4" fill="#eef1ff" style="animation: csTwinkle 4.9s ease-in-out infinite 0.9s"></circle>
+      <circle cx="58" cy="48" r="2.1" fill="#eef1ff" style="animation: csTwinkle 5.8s ease-in-out infinite 1.8s"></circle>
+      <circle cx="78" cy="64" r="2.6" fill="#eef1ff" style="animation: csTwinkle 4.3s ease-in-out infinite 2.7s"></circle>
+      <circle cx="100" cy="76" r="2.2" fill="#eef1ff" style="animation: csTwinkle 5.2s ease-in-out infinite 3.6s"></circle>
+      <circle cx="126" cy="66" r="2.5" fill="#eef1ff" style="animation: csTwinkle 6.1s ease-in-out infinite 4.5s"></circle>
+      <circle cx="132" cy="42" r="2" fill="#eef1ff" style="animation: csTwinkle 4.6s ease-in-out infinite 5.4s"></circle>
+      <circle cx="110" cy="32" r="2.3" fill="#eef1ff" style="animation: csTwinkle 5.5s ease-in-out infinite 6.3s"></circle>
+    </svg>
+  </div>
+  <div class="cs-const cs-const-fish" style="position: fixed; top: 76vh; right: 20vw; z-index: 0; width: min(260px, 32vw); pointer-events: none; opacity: .42;">
+    <svg viewBox="0 0 114 84" style="width: 100%; height: auto; display: block; overflow: visible;">
+      <polyline points="10,40 34,20 68,26 86,44 64,64 32,60 10,40" fill="none" stroke="#cfd6f5" stroke-width="0.7" stroke-opacity=".32" stroke-linejoin="round"></polyline>
+      <polyline points="86,44 104,26" fill="none" stroke="#cfd6f5" stroke-width="0.7" stroke-opacity=".32" stroke-linejoin="round"></polyline>
+      <polyline points="86,44 104,60" fill="none" stroke="#cfd6f5" stroke-width="0.7" stroke-opacity=".32" stroke-linejoin="round"></polyline>
+      <circle cx="10" cy="40" r="2.3" fill="#eef1ff" style="animation: csTwinkle 4.0s ease-in-out infinite 0.0s"></circle>
+      <circle cx="34" cy="20" r="2.5" fill="#eef1ff" style="animation: csTwinkle 4.8s ease-in-out infinite 0.8s"></circle>
+      <circle cx="68" cy="26" r="2" fill="#eef1ff" style="animation: csTwinkle 5.6s ease-in-out infinite 1.6s"></circle>
+      <circle cx="86" cy="44" r="2.7" fill="#eef1ff" style="animation: csTwinkle 4.0s ease-in-out infinite 2.4s"></circle>
+      <circle cx="64" cy="64" r="2.1" fill="#eef1ff" style="animation: csTwinkle 4.8s ease-in-out infinite 3.2s"></circle>
+      <circle cx="32" cy="60" r="2.4" fill="#eef1ff" style="animation: csTwinkle 5.6s ease-in-out infinite 4.0s"></circle>
+      <circle cx="104" cy="26" r="1.9" fill="#eef1ff" style="animation: csTwinkle 4.0s ease-in-out infinite 4.8s"></circle>
+      <circle cx="104" cy="60" r="1.9" fill="#eef1ff" style="animation: csTwinkle 4.8s ease-in-out infinite 5.6s"></circle>
+    </svg>
+  </div>
   <div ref="{{ dayBgRef }}" style="position: fixed; inset: 0; z-index: 1; opacity: 0; background: linear-gradient(180deg, #bfdde8 0%, #e8ecd9 45%, #f6ead6 100%); transition: opacity 0.2s linear;"></div>
   <canvas ref="{{ canvasRef }}" style="position: fixed; inset: 0; z-index: 2; width: 100%; height: 100%; pointer-events: none;"></canvas>
   <!-- the fire the story keeps feeding: one warmth that grows from the soup pot to the morning -->
@@ -141,7 +202,7 @@
   <div class="cs-topbar" style="position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 20px 36px; visibility: {{ mainUiVisibility }};">
     <div class="cs-topbar-left" style="display: flex; align-items: center; gap: 18px;">
       <button onClick="{{ reopenLangGate }}" style="display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit;">
-        <img ref="{{ logoTopRef }}" class="cs-logo-top" src="assets/cat_face_star.png" alt="Cats &amp; Soup" style="height: 34px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));">
+        <img ref="{{ logoTopRef }}" class="cs-logo-top" src="assets/cat_face_star.webp" alt="Cats &amp; Soup" style="height: 34px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));">
         <span style="font-family: 'Gowun Dodum', sans-serif; font-size: 13px; color: #c3c9e8; white-space: nowrap; text-shadow: 0 1px 6px rgba(0,0,0,.4);">{{ t.pickLanguage }}</span>
       </button>
       <div style="display: none; gap: 4px; background: rgba(19,23,48,.55); border: 1px solid rgba(154,163,209,.35); border-radius: 999px; padding: 3px;">
@@ -162,10 +223,10 @@
   <section data-screen-label="1 밤하늘" class="cs-hero" onClick="{{ skyClick }}" style="position: relative; z-index: 3; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 96px 24px 36px; cursor: pointer;">
     <!-- the cat star -->
     <div class="cs-catstar" style="position: absolute; top: 15vh; right: 15vw; z-index: 1; pointer-events: none">
-      <img src="assets/cat_star.png" alt="고양이 별" style="width: 67px; display: block; animation: csTwinkle 3.2s ease-in-out infinite;">
+      <img src="assets/cat_star.webp" alt="고양이 별" style="width: 67px; display: block; animation: csTwinkle 3.2s ease-in-out infinite;">
     </div>
     <div style="position: relative; z-index: 1; font-size: 15px; letter-spacing: 6px; color: #9aa3d1; margin-bottom: 30px;">{{ t.heroEyebrow }}</div>
-    <h1 style="margin: 0 0 34px;"><img ref="{{ logoHeroRef }}" src="assets/logo_kr_trim.png" alt="고양이와 스프 · Cats &amp; Soup" style="width: min(676px, 88vw); display: block; filter: drop-shadow(0 6px 22px rgba(0,0,0,.45));"></h1>
+    <h1 style="margin: 0 0 34px;"><img ref="{{ logoHeroRef }}" src="assets/logo_kr_trim.webp" alt="고양이와 스프 · Cats &amp; Soup" style="width: min(676px, 88vw); display: block; filter: drop-shadow(0 6px 22px rgba(0,0,0,.45));"></h1>
     <div class="cs-heroline" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: var(--cs-weight, 700); font-size: clamp(24px, 2.6vw, 34px); line-height: 1.5; margin: 0 0 18px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.heroHeadline }}</div>
     <p class="cs-herotag" style="font-size: 19px; line-height: 1.8; color: #c3c9e8; max-width: 560px; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.heroTag }}</p>
     <div style="margin-top: 34px; animation: csScrollHint 2.2s ease-in-out infinite; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #9aa3d1; font-size: 18px;">
@@ -180,25 +241,25 @@
   </section>
 
   <!-- SCENE 2 : falling star cat -->
-  <section id="story" data-screen-label="2 별에서 온 고양이" ref="{{ scene2Ref }}" style="position: relative; z-index: 3; height: 760vh; margin-bottom: 60vh;">
+  <section id="story" data-screen-label="2 별에서 온 고양이" ref="{{ scene2Ref }}" style="position: relative; z-index: 3; height: 930vh; margin-bottom: 30vh;">
     <div style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
 
       <!-- beat visuals -->
       
-      <div ref="{{ cloudsRef }}" style="position: absolute; bottom: 0; left: 0; right: 0; height: 335px; opacity: 0; pointer-events: none; will-change: opacity, transform; background: url('assets/forrest_pattern_s.png') repeat-x center bottom / auto 335px;"></div>
+      <div ref="{{ cloudsRef }}" style="position: absolute; bottom: 0; left: 0; right: 0; height: 335px; opacity: 0; pointer-events: none; will-change: opacity, transform; background: url('assets/forrest_pattern_s.webp') repeat-x center bottom / auto 335px;"></div>
 
       <!-- falling cat -->
       <div ref="{{ catFallRef }}" style="position: absolute; left: 50%; top: 0; will-change: transform; z-index: 6;">
         <div style="position: relative; width: 114px; margin-left: -57px;">
-          <img src="assets/balloon.png" alt="" style="position: absolute; left: 50%; bottom: 45%; width: 163px; margin-left: -96px; display: block; filter: drop-shadow(0 4px 16px rgba(0,0,0,.28)); animation: csBob 4.2s ease-in-out infinite;">
-          <img src="assets/kiki.png" alt="별고양이 키키" style="width: 114px; display: block; filter: drop-shadow(0 0 32px rgba(255,224,150,.8));">
+          <img src="assets/balloon.webp" alt="" style="position: absolute; left: 50%; bottom: 45%; width: 163px; margin-left: -96px; display: block; z-index: -1; filter: drop-shadow(0 4px 16px rgba(0,0,0,.28)); animation: csBob 4.2s ease-in-out infinite;">
+          <img src="assets/kiki.webp" alt="별고양이 키키" style="width: 114px; display: block;">
         </div>
       </div>
 
       <!-- beat 1 : observatory spark -->
       <div ref="{{ beat1Ref }}" class="cs-story-beat" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 24px; will-change: opacity, transform;">
         <div style="max-width: 720px; text-align: center;">
-          <img class="cs-spark" src="assets/light_02.png" alt="" style="width: min(420px, 76vw); max-width: none; display: block; margin: 0 auto 26px;">
+          <img class="cs-spark" src="assets/light_02.webp" alt="" style="width: min(420px, 76vw); max-width: none; display: block; margin: 0 auto 26px;">
           <div class="cs-story-eyebrow" style="font-size: 18px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.storyEyebrow }}</div>
           <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.beat1 }}</p>
         </div>
@@ -209,8 +270,8 @@
         <div style="max-width: 720px; text-align: center;">
           <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.beat2 }}</p>
           <div class="cs-roomrow" style="display: flex; align-items: flex-end; justify-content: center; gap: 12px; margin-top: 30px;">
-            <img class="cs-room" src="assets/room.png" alt="천문대의 방" style="width: min(320px, 44vw); display: block; filter: drop-shadow(0 6px 20px rgba(0,0,0,.28));">
-            <img ref="{{ kikiStarRef }}" class="cs-kiki" src="assets/kiki_star.png" alt="키키" style="width: min(180px, 30vw); display: block; filter: drop-shadow(0 6px 24px rgba(255,220,150,.25)); will-change: transform, opacity; opacity: 0; transform: translateX(62vw) rotate(10deg);">
+            <img class="cs-room" src="assets/room.webp" alt="천문대의 방" style="width: min(320px, 44vw); display: block; filter: drop-shadow(0 6px 20px rgba(0,0,0,.28));">
+            <img ref="{{ kikiStarRef }}" class="cs-kiki" src="assets/kiki_star.webp" alt="키키" style="width: min(180px, 30vw); display: block; filter: drop-shadow(0 6px 24px rgba(255,220,150,.25)); will-change: transform, opacity; opacity: 0; transform: translateX(62vw) rotate(10deg);">
           </div>
         </div>
       </div>
@@ -225,7 +286,7 @@
   </section>
 
   <!-- SCENE 3 : forest campfire + soup pot -->
-  <section data-screen-label="3 숲과 수프" class="cs-scene3" ref="{{ scene3Ref }}" style="position: relative; z-index: 3; min-height: 240vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12vh 24px; gap: 56px;">
+  <section data-screen-label="3 숲과 수프" class="cs-scene3" ref="{{ scene3Ref }}" style="position: relative; z-index: 3; min-height: 150vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 56px;">
     <div style="position: relative; text-align: center; max-width: 740px;">
       <div class="cs-story-eyebrow" style="font-size: 18px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.s3Eyebrow }}</div>
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s3Main }}</p>
@@ -233,46 +294,54 @@
 
     <!-- interactive cook -->
     <div ref="{{ tiltCatRef }}" class="cs-soup" onClick="{{ meow }}" style="position: relative; width: min(350px, 68vw); aspect-ratio: 800 / 727; cursor: pointer; filter: drop-shadow(rgba(0,0,0,.4) 0 6px 14px);">
-      <img src="assets/soup_pot.png" alt="끓고 있는 수프 한 냄비" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
+      <img src="assets/soup_pot.webp" alt="끓고 있는 수프 한 냄비" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
       <div ref="{{ steamRef }}" style="position: absolute; left: 50%; bottom: 58%; width: 40%; height: 1px; transform: translateX(-50%); pointer-events: none; z-index: 3;"></div>
       <div ref="{{ meowBubbleRef }}" data-cs-meow="1" style="display: none; position: absolute; top: 10px; right: 0; padding: 6px 12px; background: #f3efe2; color: #2c2418; font-size: 13px; border-radius: 12px 12px 12px 2px; opacity: 0; transition: opacity .25s;">야옹 ~</div>
     </div>
 
-    <img class="cs-catback" src="assets/cat_back.png" alt="냄비를 바라보는 키키" onClick="{{ meow }}" style="cursor: pointer; width: min(144px, 29vw); display: block; margin: -28px auto 0; position: relative; z-index: 2; animation: csCatPeek 3.4s ease-in-out infinite; transform-origin: 50% 100%;">
+    <img class="cs-catback" src="assets/cat_back.webp" alt="냄비를 바라보는 키키" onClick="{{ meow }}" style="cursor: pointer; width: min(144px, 29vw); display: block; margin: -28px auto 0; position: relative; z-index: 2; animation: csCatPeek 3.4s ease-in-out infinite; transform-origin: 50% 100%;">
   </section>
 
   <!-- INTERLUDE : the forest cook -->
-  <section data-screen-label="3.5 숲의 요리사" class="cs-interlude" style="position: relative; z-index: 3; min-height: 176vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 44px; padding: 10vh 24px;">
+  <section data-screen-label="3.5 숲의 요리사" class="cs-interlude" style="position: relative; z-index: 3; min-height: 125vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 44px; padding: 10vh 24px;">
     <div class="cs-reveal" style="max-width: 720px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
       <div style="width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 0 auto 30px;"></div>
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.inter1 }}</p>
       <div style="width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 30px auto 0;"></div>
     </div>
     <div class="cs-reveal cs-cook" style="position: relative; width: 396px; height: 396px; will-change: opacity, transform;">
-      <img ref="{{ cookFrame1Ref }}" src="assets/cat_cook_01.png" alt="수프를 젓는 키키" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); left: -4px; top: -45px; opacity: 1; transition: opacity .55s ease;">
-      <img ref="{{ cookFrameRef }}" src="assets/cat_cook_02.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); left: -4px; top: -45px; opacity: 0; transition: opacity .55s ease;">
+      <img ref="{{ cookFrame1Ref }}" src="assets/cat_cook_01.webp" alt="수프를 젓는 키키" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); left: -4px; top: -45px; opacity: 1; transition: opacity .55s ease;">
+      <img ref="{{ cookFrameRef }}" src="assets/cat_cook_02.webp" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); left: -4px; top: -45px; opacity: 0; transition: opacity .55s ease;">
       <div ref="{{ steam2Ref }}" style="position: absolute; left: calc(50% - 40px); bottom: 52%; width: 34%; height: 1px; transform: translateX(-50%); pointer-events: none; z-index: 3;"></div>
     </div>
   </section>
 
   <!-- SCENE 4 : cats gather -->
-  <section id="cats" data-screen-label="4 고양이들" class="cs-cats" style="position: relative; z-index: 3; min-height: 176vh; padding: 30vh 24px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  <section id="cats" data-screen-label="4 고양이들" class="cs-cats" style="position: relative; z-index: 3; min-height: 125vh; padding: 18vh 24px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
     <div style="text-align: center; max-width: 740px;">
       <div class="cs-story-eyebrow" style="font-size: 18px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.s4Eyebrow }}</div>
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s4Main }}</p>
       
-    </div><img ref="{{ catOtherRef }}" src="assets/cat_other.png" alt="별고양이들" style="width: min(200px, 45vw); display: block; margin: 20px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(46vw, -38vh) rotate(14deg); transition: opacity 2.4s ease, transform 4.2s cubic-bezier(.42,0,.72,1);">
-    <img ref="{{ catsSurroundRef }}" class="cs-audience" src="assets/cats_surround.png" alt="구경하는 고양이들" style="width: min(620px, 88vw); display: block; margin: -10px auto 0; opacity: 0; transform: translateY(24px); transition: opacity 2.2s ease, transform 2.2s ease;">
+    </div><img ref="{{ catOtherRef }}" src="assets/cat_other.webp" alt="별고양이들" style="width: min(200px, 45vw); display: block; margin: 20px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(46vw, -38vh) rotate(14deg); transition: opacity 2.4s ease, transform 4.2s cubic-bezier(.42,0,.72,1);">
+    <img ref="{{ catsSurroundRef }}" class="cs-audience" src="assets/cats_surround.webp" alt="구경하는 고양이들" style="width: min(620px, 88vw); display: block; margin: -10px auto 0; opacity: 0; transform: translateY(24px); transition: opacity 2.2s ease, transform 2.2s ease;">
   </section>
 
   <!-- INTERLUDE : night deepens, dawn nears -->
-  <section ref="{{ guitarSection2Ref }}" data-screen-label="4.5 깊어가는 밤" style="position: relative; z-index: 3; min-height: 176vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 46px;">
-    <img class="cs-reveal cs-camping" src="assets/camping_cat.png" alt="모닥불 곁의 고양이" style="width: min(360px, 70vw); display: block; margin: 0 auto 26px; will-change: opacity, transform;">
+  <section ref="{{ guitarSection2Ref }}" data-screen-label="4.5 깊어가는 밤" style="position: relative; z-index: 3; min-height: 125vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 46px;">
+    <div class="cs-reveal cs-camping" style="position: relative; width: min(360px, 70vw); margin: 0 auto 26px; will-change: opacity, transform;">
+      <img src="assets/camping_cat.webp" alt="모닥불 곁의 고양이" style="width: 100%; display: block;">
+      <div style="position: absolute; left: 62%; top: 70%; width: 46%; height: 34%; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(255,196,90,.55) 0%, rgba(255,150,60,.26) 42%, rgba(255,140,60,0) 72%); mix-blend-mode: screen; pointer-events: none; animation: csFireGlow 2.4s ease-in-out infinite;"></div>
+      <div style="position: absolute; left: 62%; top: 62%; width: 22%; height: 22%; transform: translateX(-50%); pointer-events: none; overflow: visible;">
+        <span style="position: absolute; left: 30%; bottom: 0; width: 5px; height: 5px; border-radius: 50%; background: #ffcf72; opacity: 0; animation: csEmber 3.2s ease-out infinite;"></span>
+        <span style="position: absolute; left: 52%; bottom: 0; width: 4px; height: 4px; border-radius: 50%; background: #ffb44f; opacity: 0; animation: csEmber 3.2s ease-out infinite 1.1s;"></span>
+        <span style="position: absolute; left: 70%; bottom: 0; width: 6px; height: 6px; border-radius: 50%; background: #ffe0a0; opacity: 0; animation: csEmber 3.2s ease-out infinite 2.1s;"></span>
+      </div>
+    </div>
     <div class="cs-reveal" style="max-width: 720px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.inter2 }}</p>
     </div>
     <div class="cs-reveal cs-restcat" style="position: relative; width: min(340px, 61vw); margin: 0 auto; will-change: opacity, transform;">
-      <img src="assets/cat_rest.png" alt="해먹에서 잠든 고양이" onClick="{{ meow }}" style="width: 100%; display: block; cursor: pointer; filter: drop-shadow(0 8px 26px rgba(0,0,0,.3));">
+      <img src="assets/cat_rest.webp" alt="해먹에서 잠든 고양이" onClick="{{ meow }}" style="width: 100%; display: block; cursor: pointer; filter: drop-shadow(0 8px 26px rgba(0,0,0,.3));">
       <span style="position: absolute; left: 72%; top: 42%; font-family: 'Gowun Batang', serif; font-size: 30px; color: #cfd6f5; opacity: 0; animation: csZzz 4.2s ease-out infinite;">z</span>
       <span style="position: absolute; left: 72%; top: 42%; font-family: 'Gowun Batang', serif; font-size: 38px; color: #cfd6f5; opacity: 0; animation: csZzz 4.2s ease-out infinite 1.05s;">z</span>
       <span style="position: absolute; left: 72%; top: 42%; font-family: 'Gowun Batang', serif; font-size: 46px; color: #cfd6f5; opacity: 0; animation: csZzz 4.2s ease-out infinite 2.1s;">z</span>
@@ -280,9 +349,9 @@
   </section>
 
   <!-- SCENE 4.3 : the guitar cat -->
-  <section ref="{{ guitarSectionRef }}" data-screen-label="4.3 기타 치는 고양이" style="position: relative; z-index: 3; min-height: 236vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 30px;">
-    <div style="position: relative; width: min(504px, 86vw);">
-      <img class="cs-guitarcat" src="assets/guitar_show.png" alt="기타 치는 고양이" style="width: 100%; display: block; filter: drop-shadow(0 8px 28px rgba(255,220,150,.22));">
+  <section ref="{{ guitarSectionRef }}" data-screen-label="4.3 기타 치는 고양이" style="position: relative; z-index: 3; width: 100%; min-height: 160vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 30px; box-sizing: border-box;">
+    <div style="position: relative; width: min(504px, 86vw); margin: 0 auto; flex-shrink: 0;">
+      <img class="cs-guitarcat" src="assets/guitar_show.webp" alt="기타 치는 고양이" style="width: 100%; display: block; filter: drop-shadow(0 8px 28px rgba(255,220,150,.22));">
       <span style="position: absolute; left: 30%; top: 22%; font-size: 40px; color: #ffd48a; opacity: 0; animation: csNote 3.6s ease-out infinite;">♪</span>
       <span style="position: absolute; left: 30%; top: 22%; font-size: 50px; color: #f0b95c; opacity: 0; animation: csNote 3.6s ease-out infinite 1.2s;">♫</span>
       <span style="position: absolute; left: 30%; top: 22%; font-size: 34px; color: #ffe6b8; opacity: 0; animation: csNote 3.6s ease-out infinite 2.4s;">♪</span>
@@ -291,8 +360,20 @@
     <div class="cs-reveal" style="margin-top: 30px; font-size: 13px; letter-spacing: 4px; color: #9aa3d1; will-change: opacity, transform;">{{ t.dawnHint }}</div>
   </section>
 
+  <!-- SCENE 5 : dawn / download -->
+  <!-- EPILOGUE : where the story came from -->
+  <section data-screen-label="4.9 이야기의 시작" style="position: relative; z-index: 3; min-height: 110vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px;">
+    <div class="cs-reveal" style="max-width: 660px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
+      <img src="assets/origin_cat.webp" alt="" style="width: min(200px, 35.2vw); display: block; margin: 0 auto 26px;">
+      <div style="width: 44px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 0 auto 34px;"></div>
+      <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; font-size: 16px; color: #9aa3d1; margin-bottom: 26px;">{{ t.originEyebrow }}</div>
+      <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 46px; line-height: var(--cs-lead, 1.85); color: #f3efe2; margin: 0 0 26px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originQuote }}</p>
+      <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-size: 21px; line-height: var(--cs-lead, 1.9); color: #9aa3d1; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originNote }}</p>
+    </div>
+  </section>
+
   <!-- SCENE 4.7 : game trailer -->
-  <section ref="{{ trailerSectionRef }}" data-screen-label="4.7 게임 영상" style="position: relative; z-index: 3; min-height: 198vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12vh 24px;">
+  <section ref="{{ trailerSectionRef }}" data-screen-label="4.7 게임 영상" style="position: relative; z-index: 3; min-height: 140vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12vh 24px;">
     <div class="cs-reveal" style="text-align: center; max-width: 640px; margin-bottom: 44px; will-change: opacity, transform;">
       <div style="font-size: 13px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.trailerEyebrow }}</div>
       <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: 26px; line-height: 1.7; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.trailerMain }}</p>
@@ -311,28 +392,20 @@
     <a href="https://www.youtube.com/watch?v=z5gwT8qzqFU" target="_blank" rel="noopener" style="margin-top: 18px; font-size: 13px; color: #9aa3d1;">▶ {{ t.trailerYoutube }}</a>
   </section>
 
-  <!-- SCENE 5 : dawn / download -->
-  <!-- EPILOGUE : where the story came from -->
-  <section data-screen-label="4.9 이야기의 시작" style="position: relative; z-index: 3; min-height: 156vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px;">
-    <div class="cs-reveal" style="max-width: 660px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
-      <div style="width: 44px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 0 auto 34px;"></div>
-      <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; font-size: 16px; color: #9aa3d1; margin-bottom: 26px;">{{ t.originEyebrow }}</div>
-      <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-weight: 700; font-size: 46px; line-height: var(--cs-lead, 1.85); color: #f3efe2; margin: 0 0 26px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originQuote }}</p>
-      <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-size: 21px; line-height: var(--cs-lead, 1.9); color: #9aa3d1; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originNote }}</p>
-    </div>
-  </section>
-
-  <section id="download" data-screen-label="5 아침과 다운로드" ref="{{ scene5Ref }}" style="position: relative; z-index: 3; min-height: 220vh; padding: 60vh 24px 0; display: flex; flex-direction: column; align-items: center; color: #3a2f22;">
+  <section id="download" data-screen-label="5 아침과 다운로드" ref="{{ scene5Ref }}" style="position: relative; z-index: 3; min-height: 150vh; padding: 34vh 24px 0; display: flex; flex-direction: column; align-items: center; color: #3a2f22;">
     <div style="position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; background: linear-gradient(180deg, rgba(243,230,200,0) 0%, rgba(243,230,200,.55) 9%, #f3e6c8 20%, #f7edd6 46%, #f4ead0 100%);">
-      <img src="assets/meadow.png" alt="" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 34%; object-fit: cover; object-position: center bottom; mask-image: linear-gradient(180deg, transparent 0%, black 22%); -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 22%); opacity: .95;">
+      <img src="assets/meadow.webp" alt="" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 34%; object-fit: cover; object-position: center bottom; mask-image: linear-gradient(180deg, transparent 0%, black 22%); -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 22%); opacity: .95;">
     </div>
-    <img class="cs-shop" src="assets/shop_open.png" alt="문을 연 수프 가게" style="position: relative; z-index: 1; width: min(340px, 68vw); display: block; margin: 0 auto 26px;">
+    <div style="position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: center; gap: 6px; margin: 0 auto 26px;">
+      <img class="cs-shop" src="assets/shop_open.webp" alt="문을 연 수프 가게" style="width: min(340px, 68vw); display: block;">
+      <img class="cs-chefcat" src="assets/chef_cat.webp" alt="요리사 고양이" style="width: min(72px, 14.4vw); display: block; margin-bottom: 4px;">
+    </div>
     <div style="position: relative; z-index: 1; text-align: center; width: 100%; max-width: 680px; margin-bottom: 0; min-height: 300px; display: flex; flex-direction: column; justify-content: flex-start;">
       <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; color: #a08a5f; margin-bottom: 18px;">{{ t.s5Eyebrow }}</div>
-      <h2 style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: clamp(34px, 4.5vw, 52px); line-height: var(--cs-lead, 1.4); margin: 0 0 20px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s5Heading }}</h2>
+      <h2 style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: clamp(34px, 4.5vw, 52px); line-height: 1.25; margin: 0 0 20px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s5Heading }}</h2>
       <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-size: 16px; line-height: var(--cs-lead, 1.9); color: #6d5c42; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s5Main }}</p>
     </div>
-    <div class="cs-storebtns" style="position: relative; z-index: 1; margin-top: 40px; padding-bottom: 13vh; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div class="cs-storebtns" style="position: relative; z-index: 1; margin-top: 40px; padding-bottom: 5vh; display: flex; flex-direction: column; align-items: center; gap: 20px;">
       <div style="display: flex; align-items: center; gap: 14px; font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; color: #a08a5f;">
         <span style="display: block; width: 30px; height: 1px; background: rgba(160,138,95,.5);"></span>
         <span>{{ t.gateLabel }}</span>
@@ -357,7 +430,7 @@
   </footer>
 </div>
 </div></x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;particleDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;분위기&quot;},&quot;fontKr&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Gowun Batang&quot;,&quot;options&quot;:[&quot;Gowun Batang&quot;,&quot;Gowun Dodum&quot;,&quot;Nanum Myeongjo&quot;,&quot;Hi Melody&quot;,&quot;Poor Story&quot;,&quot;Gaegu&quot;,&quot;Dongle&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontEn&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontJp&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Zen Maru Gothic&quot;,&quot;options&quot;:[&quot;Zen Maru Gothic&quot;,&quot;Kosugi Maru&quot;,&quot;M PLUS Rounded 1c&quot;,&quot;Yusei Magic&quot;,&quot;Zen Kurenaido&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontCn&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;ZCOOL XiaoWei&quot;,&quot;options&quot;:[&quot;ZCOOL XiaoWei&quot;,&quot;LXGW WenKai TC&quot;,&quot;Noto Sans SC&quot;,&quot;ZCOOL QingKe HuangYou&quot;,&quot;ZCOOL KuaiLe&quot;,&quot;Noto Sans TC&quot;,&quot;Noto Serif SC&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontEs&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontFr&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontId&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackKr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:-1,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackEn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.5,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackJp&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-2,&quot;max&quot;:3,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackCn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-1,&quot;max&quot;:1,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackEs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-0.5,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackFr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-1,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackId&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingKr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingEn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingJp&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.45,&quot;min&quot;:1.3,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingCn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.7,&quot;min&quot;:1.6,&quot;max&quot;:1.8,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingEs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingFr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingId&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;fontPt&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackPt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingPt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;fontTh&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Mali&quot;,&quot;options&quot;:[&quot;Mali&quot;,&quot;Itim&quot;,&quot;Sriracha&quot;,&quot;Charm&quot;,&quot;Chakra Petch&quot;,&quot;Bai Jamjuree&quot;,&quot;Noto Serif Thai&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackTh&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-2,&quot;max&quot;:4,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingTh&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.8,&quot;min&quot;:1.6,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;particleDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;분위기&quot;},&quot;fontKr&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Gowun Batang&quot;,&quot;options&quot;:[&quot;Gowun Batang&quot;,&quot;Gowun Dodum&quot;,&quot;Nanum Myeongjo&quot;,&quot;Hi Melody&quot;,&quot;Poor Story&quot;,&quot;Gaegu&quot;,&quot;Dongle&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontEn&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontJp&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Zen Maru Gothic&quot;,&quot;options&quot;:[&quot;Zen Maru Gothic&quot;,&quot;Kosugi Maru&quot;,&quot;M PLUS Rounded 1c&quot;,&quot;Yusei Magic&quot;,&quot;Zen Kurenaido&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontCn&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;ZCOOL XiaoWei&quot;,&quot;options&quot;:[&quot;ZCOOL XiaoWei&quot;,&quot;LXGW WenKai TC&quot;,&quot;Noto Sans SC&quot;,&quot;ZCOOL QingKe HuangYou&quot;,&quot;ZCOOL KuaiLe&quot;,&quot;Noto Sans TC&quot;,&quot;Noto Serif SC&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontEs&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontFr&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontId&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackKr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:-2,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackEn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.5,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackJp&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-2,&quot;max&quot;:3,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackCn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-1,&quot;max&quot;:1,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackEs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-0.5,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackFr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-1,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackId&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingKr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingEn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingJp&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.45,&quot;min&quot;:1.3,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingCn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.7,&quot;min&quot;:1.6,&quot;max&quot;:1.8,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingEs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingFr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingId&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;fontPt&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackPt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingPt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;fontTh&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Mali&quot;,&quot;options&quot;:[&quot;Mali&quot;,&quot;Itim&quot;,&quot;Sriracha&quot;,&quot;Charm&quot;,&quot;Chakra Petch&quot;,&quot;Bai Jamjuree&quot;,&quot;Noto Serif Thai&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackTh&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-2,&quot;max&quot;:4,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingTh&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.8,&quot;min&quot;:1.6,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;}}">
 class Component extends DCLogic {
   state = { sound: true, flipped: {}, lang: 'kr', langConfirmed: false };
 
@@ -530,6 +603,16 @@ class Component extends DCLogic {
     this._catOtherObs = true; // rect-driven in updateScroll
   }
 
+  // webp where the browser supports it, png everywhere else
+  webp(path) {
+    if (this._webpOk === undefined) {
+      const c = document.createElement('canvas');
+      c.width = c.height = 1;
+      this._webpOk = c.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+    }
+    return path.replace(/\.png$/, '.webp');
+  }
+
   ensureFont(name) {
     this._fonts = this._fonts || new Set();
     if (this._fonts.has(name)) return;
@@ -633,6 +716,8 @@ class Component extends DCLogic {
       'assets/logo_' + (['kr', 'en', 'jp', 'cn'].includes(lang) ? lang : 'en') + '_trim.png',
       'assets/meadow.png', 'assets/bgm.mp3', 'assets/guitar.mp3'
     ];
+    const pngs = urls.map(u => /\.png$/.test(u) ? this.webp(u) : u);
+    urls.length = 0; urls.push(...pngs);
     let loaded = 0;
     const bump = () => {
       loaded++;
@@ -730,6 +815,13 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    // every load starts the story from the top, never where the reader left off
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    const toTop = () => window.scrollTo(0, 0);
+    toTop();
+    requestAnimationFrame(toTop);
+    setTimeout(toTop, 120);
+    window.addEventListener('beforeunload', toTop);
     this.killStrayAudio();
     this.applyCjkFont();
     const density = this.props.particleDensity ?? 1;
@@ -863,7 +955,7 @@ class Component extends DCLogic {
       const yTop = pad + head;
       const yBot = Math.max(yTop + 1, h - ch * rigScale - pad);
       // she only starts her descent on the third beat
-      const pf = Math.max(0, Math.min(1, (p - 0.68) / 0.32));
+      const pf = Math.max(0, Math.min(1, (p - 0.84) / 0.11));
       const y = yTop + pf * (yBot - yTop);
       // fall straight down along the right edge, clear of the centered copy
       const halfW = window.innerWidth / 2;
@@ -883,11 +975,11 @@ class Component extends DCLogic {
         el.style.transform = 'translateY(' + ((p - mid) * -(drift || 420)) + 'px)';
       };
       // three equal thirds with a small crossfade overlap — no dead gaps
-      win(this.refs2.beat1, -0.02, 0.35);
-      win(this.refs2.beat2, 0.32, 0.69);
-      win(this.refs2.beat3, 0.66, 1.03);
+      win(this.refs2.beat1, -0.02, 0.33);
+      win(this.refs2.beat2, 0.40, 0.80);
+      win(this.refs2.beat3, 0.83, 1.02);
       // kiki plays her own timed entrance once beat2 comes into view
-      if (this.refs2.kikiStar && !this._kikiFlew && p > 0.33) {
+      if (this.refs2.kikiStar && !this._kikiFlew && p > 0.41) {
         this._kikiFlew = true;
         const el = this.refs2.kikiStar;
         el.style.transition = 'opacity 2.6s ease, transform 3.4s cubic-bezier(.34,0,.5,1)';
@@ -939,12 +1031,12 @@ class Component extends DCLogic {
       this.dayAlpha = p;
       if (this.refs2.dayBg) this.refs2.dayBg.style.opacity = String(p);
     }
-    // one continuous warmth: kindled at the soup pot, brightest at the village, handed over to the dawn
+    // one continuous warmth, held back until the trailer, then carried through to the dawn
     const w = this.refs2.warmth;
-    const s3 = this.refs2.scene3;
-    if (w && s3) {
+    const ts = this.refs2.trailerSection;
+    if (w && ts) {
       const h = window.innerHeight;
-      const lit = Math.max(0, Math.min(1, (h * 0.85 - s3.getBoundingClientRect().top) / (h * 0.85)));
+      const lit = Math.max(0, Math.min(1, (h * 0.85 - ts.getBoundingClientRect().top) / (h * 0.85)));
       w.style.opacity = String(lit * (1 - this.dayAlpha * 0.9));
     }
   }
@@ -1006,8 +1098,8 @@ class Component extends DCLogic {
         const cx = m.x + (tx - m.x) * e;
         const cy = m.y + (ty - m.y) * e - Math.sin(m.life * Math.PI) * 80 * dpr;
         ctx.globalAlpha = 0.9 * night;
-        ctx.fillStyle = '#ffe096';
-        ctx.shadowColor = '#ffe096';
+        ctx.fillStyle = '#8fd6ff';
+        ctx.shadowColor = '#2f9dff';
         ctx.shadowBlur = 14 * dpr;
         ctx.beginPath();
         ctx.arc(cx, cy, 3 * dpr, 0, 7);
@@ -1029,7 +1121,7 @@ class Component extends DCLogic {
         const dt = t - this.glowT;
         if (this.glowT > 0 && dt < 1.4) {
           const g = Math.sin(Math.min(1, dt / 1.4) * Math.PI);
-          logo.style.filter = 'drop-shadow(0 6px 22px rgba(0,0,0,.45)) drop-shadow(0 0 ' + (26 * g) + 'px rgba(255,224,150,' + (0.85 * g) + '))';
+          logo.style.filter = 'drop-shadow(0 6px 22px rgba(0,0,0,.45)) drop-shadow(0 0 ' + (26 * g) + 'px rgba(90,180,255,' + (0.85 * g) + '))';
         } else if (this.glowT > 0 && dt < 1.6) {
           logo.style.filter = 'drop-shadow(0 6px 22px rgba(0,0,0,.45))';
         }
@@ -1249,7 +1341,7 @@ class Component extends DCLogic {
         storyEyebrow: '첫 번째 밤, 하늘로 오른 작은 불빛',
         beat1: '어느 밤, 낡은 천문대에서\n작은 불빛 여러개를\n하늘로 쏘아 올렸어요.',
         beat2: '그 빛은 별들 사이를 지나\n고양이 별에 닿았어요.\n그곳엔 호기심 많은 별고양이\n키키가 살고 있었죠.',
-        beat3: '키키는 별빛 리본을 따라\n구름을 지나 잠든 숲으로\n내려왔답니다.',
+        beat3: '키키는\n별빛 리본을 따라\n구름을 지나\n잠든 숲으로\n내려왔답니다.',
         catStar: '고양이 별',
         s3Eyebrow: '두 번째 밤, 보글보글 끓는 냄비',
         s3Main: '숲 속에서 키키가 발견한 건,\n모닥불 위에서 보글보글\n끓고 있는 수프 한 냄비.',
@@ -1649,7 +1741,7 @@ class Component extends DCLogic {
       guitarSectionRef: (el) => { this.refs2.guitarSection = el; if (el) requestAnimationFrame(() => this.watchGuitar(el)); },
       logoHeroRef: (el) => {
         this.refs2.logoHero = el;
-        if (el) el.src = 'assets/logo_' + (['kr','en','jp','cn'].includes(lang) ? lang : 'en') + '_trim.png';
+        if (el) el.src = this.webp('assets/logo_' + (['kr','en','jp','cn'].includes(lang) ? lang : 'en') + '_trim.png');
       },
       reopenLangGate: () => {
         this._loaderGone = false;
@@ -1677,7 +1769,7 @@ class Component extends DCLogic {
         color: l.id === lang ? '#1b1409' : '#9aa3d1',
         pick: () => {
           const src = logoFor(l.id);
-          if (this.refs2.logoHero) this.refs2.logoHero.src = src;
+          if (this.refs2.logoHero) this.refs2.logoHero.src = this.webp(src);
           this.setState({ lang: l.id }, () => this.applyCjkFont());
         }
       })),
