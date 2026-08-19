@@ -70,6 +70,31 @@
   @keyframes csEmber { 0% { opacity: 0; transform: translateY(0) scale(.7); } 20% { opacity: .9; } 100% { opacity: 0; transform: translateY(-120px) translateX(24px) scale(.3); } }
   @keyframes csRipple { 0% { transform: scale(.4); opacity: .7; } 100% { transform: scale(1.5); opacity: 0; } }
   @keyframes csScrollHint { 0%,100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(8px); opacity: .4; } }
+  .cs-morestar {
+    width: 12px;
+    height: 12px;
+    margin: 28px auto 0;
+    background: #ffd77e;
+    border-radius: 50%;
+    box-shadow: 0 0 18px 6px rgba(255,215,126,.5);
+    animation: csTwinkle 2.6s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .cs-storebadge {
+    height: 52px;
+    width: auto;
+    max-width: 46vw;
+    display: block;
+  }
+  .cs-storebadge-link {
+    display: block;
+    line-height: 0;
+    transition: transform .3s ease, filter .3s ease;
+  }
+  .cs-storebadge-link:hover {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 8px 16px rgba(58,47,34,.22));
+  }
   .yt-cover iframe { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100%; min-width: 177.78vh; transform: translate(-50%,-50%); pointer-events: none; }
   .cs-hero { min-height: 100vh !important; min-height: 100dvh !important; }
   .cs-story-pin { height: 100vh !important; height: 100dvh !important; }
@@ -77,6 +102,11 @@
   .cs-sound-mark { display: none; }
   .cs-sound.is-off { opacity: .42; }
   .cs-lang-btn, .cs-sound, .cs-nav a { touch-action: manipulation; }
+  .cs-topbar {
+    background: rgba(13, 16, 38, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
   /* mobile responsive overrides */
   @media (max-width: 720px) {
     .cs-topbar {
@@ -89,7 +119,7 @@
     .cs-topbar-left { gap: 10px !important; }
     .cs-logo-top { height: 26px !important; }
     .cs-lang-label { display: none !important; }
-    .cs-nav { gap: 8px !important; font-size: 12px !important; }
+    .cs-nav { gap: 10px !important; font-size: 15px !important; }
     .cs-nav a { display: inline !important; padding: 8px 4px; }
     .cs-sound { padding: 10px 12px !important; min-width: 44px; min-height: 44px; font-size: 18px !important; }
     .cs-sound-full { display: none !important; }
@@ -105,10 +135,9 @@
     .cs-origin-note { font-size: 16px !important; }
     .cs-potrow { flex-direction: column !important; align-items: center !important; gap: 40px !important; }
     .cs-pot { transform: scale(.82); transform-origin: 50% 100%; }
-    .cs-observatory { transform: scale(.6); transform-origin: 100% 100%; right: 2vw !important; }
     .cs-shot { width: min(300px, 78vw) !important; }
     .cs-storebtns { padding-bottom: max(28px, env(safe-area-inset-bottom)) !important; }
-    .cs-storebtns a:not(.cs-coupon) { font-size: 14px !important; padding: 13px 22px !important; }
+    .cs-storebadge { height: 44px !important; }
     .cs-gatelabel { font-size: 18px !important; letter-spacing: 2px !important; }
     .cs-coupon { font-size: 18px !important; }
     .cs-footer {
@@ -248,28 +277,29 @@
     </svg>
   </div>
   <div ref="{{ dayBgRef }}" style="position: fixed; inset: 0; z-index: 1; opacity: 0; background: linear-gradient(180deg, #bfdde8 0%, #e8ecd9 45%, #f6ead6 100%); transition: opacity 0.2s linear;"></div>
-  <canvas ref="{{ canvasRef }}" style="position: fixed; inset: 0; z-index: 2; width: 100%; height: 100%; pointer-events: none;"></canvas>
+  <canvas ref="{{ canvasRef }}" style="position: fixed; inset: 0; z-index: 2; width: 100%; height: 100%; pointer-events: none; contain: strict;"></canvas>
   <!-- the fire the story keeps feeding: one warmth that grows from the soup pot to the morning -->
   <div ref="{{ warmthRef }}" style="position: fixed; inset: 0; z-index: 2; opacity: 0; pointer-events: none; background: radial-gradient(120% 62% at 50% 108%, rgba(255,186,92,.42) 0%, rgba(255,150,70,.20) 34%, rgba(255,140,60,0) 70%);"></div>
 
 
   <!-- top bar -->
   <div class="cs-topbar" style="position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 20px 36px; visibility: {{ mainUiVisibility }};">
-    <div class="cs-topbar-left" style="display: flex; align-items: center; gap: 18px;">
-      <button onClick="{{ reopenLangGate }}" style="display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit;">
+    <div class="cs-topbar-left" style="display: flex; align-items: center; gap: 12px;">
+      <button onClick="{{ reopenLangGate }}" style="display: flex; align-items: center; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit;" title="{{ t.pickLanguage }}" aria-label="{{ t.pickLanguage }}">
         <img ref="{{ logoTopRef }}" class="cs-logo-top" src="assets/cat_face_star.webp" alt="Cats &amp; Soup" style="height: 34px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));">
-        <span class="cs-lang-label" style="font-family: 'Gowun Dodum', sans-serif; font-size: 13px; color: #c3c9e8; white-space: nowrap; text-shadow: 0 1px 6px rgba(0,0,0,.4);">{{ t.pickLanguage }}</span>
       </button>
+      <button type="button" class="cs-sound" ref="{{ soundBtnRef }}" title="{{ soundLabel }}" aria-label="{{ soundLabel }}" style="cursor: pointer; border: 1px solid rgba(240,185,92,.6); background: rgba(19,23,48,.55); color: #f0b95c; font-family: 'Gowun Dodum', sans-serif; font-size: 13px; padding: 8px 14px; border-radius: 999px; white-space: nowrap; position: relative; z-index: 30;"><span class="cs-sound-full">{{ soundLabel }}</span><span class="cs-sound-mark" aria-hidden="true">♪</span></button>
       <div style="display: none; gap: 4px; background: rgba(19,23,48,.55); border: 1px solid rgba(154,163,209,.35); border-radius: 999px; padding: 3px;">
         <sc-for list="{{ langs }}" as="lg" hint-placeholder-count="4">
           <button onClick="{{ lg.pick }}" style="cursor: pointer; border: none; font-family: 'Gowun Dodum', sans-serif; font-size: 12px; padding: 5px 10px; border-radius: 999px; white-space: nowrap; background: {{ lg.bg }}; color: {{ lg.color }};">{{ lg.label }}</button>
         </sc-for>
       </div>
     </div>
-    <div class="cs-nav" style="display: flex; align-items: center; gap: 16px; font-size: 14px; white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word;">
+    <div class="cs-nav" style="display: flex; align-items: center; gap: 20px; font-size: 18px; font-weight: 600; white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; flex-wrap: wrap; justify-content: flex-end;">
       <a href="#story" ref="{{ storyNavRef }}" onClick="{{ goStory }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navStory }}</a>
-      <a href="#download" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navDownload }}</a>
-      <button type="button" class="cs-sound" ref="{{ soundBtnRef }}" title="{{ soundLabel }}" aria-label="{{ soundLabel }}" style="cursor: pointer; border: 1px solid rgba(240,185,92,.6); background: rgba(19,23,48,.55); color: #f0b95c; font-family: 'Gowun Dodum', sans-serif; font-size: 13px; padding: 8px 14px; border-radius: 999px; white-space: nowrap; position: relative; z-index: 30;"><span class="cs-sound-full">{{ soundLabel }}</span><span class="cs-sound-mark" aria-hidden="true">♪</span></button>
+      <a href="https://www.youtube.com/c/kittypawpaw" target="_blank" rel="noopener" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navUpdate }}</a>
+      <a href="https://apps.apple.com/us/app/cats-soup-magic-recipe/id6446347021" target="_blank" rel="noopener" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navRecipe }}</a>
+      <a href="#social" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navSocial }}</a>
     </div>
   </div>
 
@@ -285,13 +315,9 @@
     <div class="cs-heroline" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: var(--cs-weight, 700); font-size: clamp(24px, 2.6vw, 34px); line-height: 1.5; margin: 0 0 18px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.heroHeadline }}</div>
     <p class="cs-herotag" style="font-size: 19px; line-height: 1.8; color: #c3c9e8; max-width: 560px; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.heroTag }}</p>
     <div style="margin-top: 34px; animation: csScrollHint 2.2s ease-in-out infinite; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #9aa3d1; font-size: 18px;">
-      <div style="font-size: 17px; color: #7d86b8;">{{ t.skyHint }}</div>
       <div>{{ t.scrollHint }}</div>
+      <div class="cs-morestar" aria-hidden="true" style="margin-top: 6px;"></div>
       <div style="width: 1px; height: 44px; background: linear-gradient(180deg, #9aa3d1, transparent);"></div>
-    </div>
-    <!-- observatory silhouette -->
-    <div class="cs-observatory" style="position: absolute; bottom: 0; right: 8vw; width: 160px; height: 190px; opacity: .85;">
-      <div style="position: absolute; bottom: 214px; left: 108px; width: 10px; height: 10px; background: #ffd77e; border-radius: 50%; box-shadow: 0 0 18px 6px rgba(255,215,126,.5); animation: csTwinkle 2.6s ease-in-out infinite;"></div>
     </div>
   </section>
 
@@ -317,6 +343,7 @@
           <img class="cs-spark" src="assets/light_02.webp" alt="" style="width: min(420px, 76vw); max-width: none; display: block; margin: 0 auto 26px;">
           <div class="cs-story-eyebrow" style="font-size: 18px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.storyEyebrow }}</div>
           <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.beat1 }}</p>
+          <div class="cs-morestar" aria-hidden="true"></div>
         </div>
       </div>
 
@@ -324,6 +351,7 @@
       <div ref="{{ beat2Ref }}" class="cs-story-beat" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 24px; opacity: 0; will-change: opacity, transform;">
         <div style="max-width: 720px; text-align: center;">
           <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.beat2 }}</p>
+          <div class="cs-morestar" aria-hidden="true"></div>
           <div class="cs-roomrow" style="display: flex; align-items: flex-end; justify-content: center; gap: 12px; margin-top: 30px;">
             <img class="cs-room" src="assets/room.webp" alt="천문대의 방" style="width: min(320px, 44vw); display: block; filter: drop-shadow(0 6px 20px rgba(0,0,0,.28));">
             <img ref="{{ kikiStarRef }}" class="cs-kiki" src="assets/kiki_star.webp" alt="키키" style="width: min(180px, 30vw); display: block; filter: drop-shadow(0 6px 24px rgba(255,220,150,.25)); will-change: transform, opacity; opacity: 0; transform: translateX(62vw) rotate(10deg);">
@@ -335,6 +363,7 @@
       <div ref="{{ beat3Ref }}" class="cs-story-beat" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 24px; opacity: 0; will-change: opacity, transform;">
         <div style="max-width: 720px; text-align: center;">
           <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.beat3 }}</p>
+          <div class="cs-morestar" aria-hidden="true"></div>
         </div>
       </div>
     </div>
@@ -345,6 +374,7 @@
     <div class="cs-reveal" style="position: relative; text-align: center; max-width: 740px; will-change: opacity, transform;">
       <div class="cs-story-eyebrow" style="font-size: 18px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.s3Eyebrow }}</div>
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s3Main }}</p>
+      <div class="cs-morestar" aria-hidden="true"></div>
     </div>
 
     <!-- interactive cook -->
@@ -362,6 +392,7 @@
     <div class="cs-reveal" style="max-width: 720px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
       <div style="width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 0 auto 30px;"></div>
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.inter1 }}</p>
+      <div class="cs-morestar" aria-hidden="true"></div>
       <div style="width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 30px auto 0;"></div>
     </div>
     <div class="cs-reveal cs-cook" style="position: relative; width: 396px; height: 396px; will-change: opacity, transform;">
@@ -376,6 +407,7 @@
     <div class="cs-reveal" style="text-align: center; max-width: 740px; will-change: opacity, transform;">
       <div class="cs-story-eyebrow" style="font-size: 18px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.s4Eyebrow }}</div>
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s4Main }}</p>
+      <div class="cs-morestar" aria-hidden="true"></div>
       
     </div><img ref="{{ catOtherRef }}" src="assets/cat_other.webp" alt="별고양이들" style="width: min(200px, 45vw); display: block; margin: 20px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(46vw, -38vh) rotate(14deg); transition: opacity 2.4s ease, transform 4.2s cubic-bezier(.42,0,.72,1);">
     <img ref="{{ catsSurroundRef }}" class="cs-audience" src="assets/cats_surround.webp" alt="구경하는 고양이들" style="width: min(620px, 88vw); display: block; margin: -10px auto 0; opacity: 0; transform: translateY(24px); transition: opacity 2.2s ease, transform 2.2s ease;">
@@ -394,6 +426,7 @@
     </div>
     <div class="cs-reveal" style="max-width: 720px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.inter2 }}</p>
+      <div class="cs-morestar" aria-hidden="true"></div>
     </div>
     <div class="cs-reveal cs-restcat" style="position: relative; width: min(340px, 61vw); margin: 0 auto; will-change: opacity, transform;">
       <img src="assets/cat_rest.webp" alt="해먹에서 잠든 고양이" onClick="{{ meow }}" style="width: 100%; display: block; cursor: pointer; filter: drop-shadow(0 8px 26px rgba(0,0,0,.3));">
@@ -412,6 +445,7 @@
       <span style="position: absolute; left: 30%; top: 22%; font-size: 34px; color: #ffe6b8; opacity: 0; animation: csNote 3.6s ease-out infinite 2.4s;">♪</span>
     </div>
     <p class="cs-reveal cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; max-width: 740px; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line; will-change: opacity, transform;">{{ t.guitarMain }}</p>
+    <div class="cs-reveal"><div class="cs-morestar" aria-hidden="true"></div></div>
     <div class="cs-reveal cs-dawnhint" style="margin-top: 30px; font-size: 24px; letter-spacing: 2px; line-height: 1.7; color: #9aa3d1; will-change: opacity, transform;">{{ t.dawnHint }}</div>
   </section>
 
@@ -424,6 +458,7 @@
       <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; font-size: 16px; color: #9aa3d1; margin-bottom: 26px;">{{ t.originEyebrow }}</div>
       <p class="cs-origin-quote" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 46px; line-height: var(--cs-lead, 1.85); color: #f3efe2; margin: 0 0 26px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originQuote }}</p>
       <p class="cs-origin-note" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-size: 21px; line-height: var(--cs-lead, 1.9); color: #9aa3d1; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originNote }}</p>
+      <div class="cs-morestar" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -467,9 +502,13 @@
         <span>{{ t.gateLabel }}</span>
         <span style="display: block; width: 30px; height: 1px; background: rgba(160,138,95,.5);"></span>
       </div>
-      <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-        <a href="https://play.google.com/store/apps/details?id=com.hidea.cat" style="display: flex; align-items: center; gap: 10px; background: #3a2f22; color: #f3efe2; padding: 18px 34px; border-radius: 999px; font-size: 16px; box-shadow: 0 6px 22px rgba(58,47,34,.22); transition: box-shadow .3s ease, transform .3s ease" style-hover="box-shadow: 0 8px 34px rgba(255,186,92,.55); transform: translateY(-2px);">{{ t.btnGoogle }}</a>
-        <a href="https://itunes.apple.com/app/id1581431235" style="display: flex; align-items: center; gap: 10px; background: #3a2f22; color: #f3efe2; padding: 18px 34px; border-radius: 999px; font-size: 16px; box-shadow: 0 6px 22px rgba(58,47,34,.22); transition: box-shadow .3s ease, transform .3s ease" style-hover="box-shadow: 0 8px 34px rgba(255,186,92,.55); transform: translateY(-2px);">{{ t.btnApple }}</a>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; align-items: center;">
+        <a class="cs-storebadge-link" href="https://play.google.com/store/apps/details?id=com.hidea.cat">
+          <img class="cs-storebadge" src="assets/googleplay.webp" alt="{{ t.btnGoogle }}" width="308" height="102">
+        </a>
+        <a class="cs-storebadge-link" href="https://itunes.apple.com/app/id1581431235">
+          <img class="cs-storebadge" src="assets/appstore.webp" alt="{{ t.btnApple }}" width="308" height="102">
+        </a>
       </div>
       <a class="cs-coupon" href="https://redeem.catsnsoup.com/" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 20px; color: #6d5c42; border-bottom: 1px solid rgba(109,92,66,.4); padding-bottom: 2px;" style-hover="color: #3a2f22; border-bottom-color: #3a2f22;">{{ t.btnCoupon }}</a>
     </div>
@@ -874,11 +913,11 @@ class Component extends DCLogic {
   startLoaderStars(cv) {
     if (!cv || this._loaderStars) return;
     const ctx = cv.getContext('2d');
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const dpr = Math.min(1.5, window.devicePixelRatio || 1);
     const size = () => { cv.width = cv.clientWidth * dpr; cv.height = cv.clientHeight * dpr; };
     size();
     const mobile = window.innerWidth <= 720;
-    const stars = Array.from({ length: mobile ? 36 : 130 }, () => ({
+    const stars = Array.from({ length: mobile ? 28 : 70 }, () => ({
       x: Math.random(), y: Math.random(),
       r: (Math.random() * (mobile ? 1.0 : 1.3) + 0.35) * dpr,
       ph: Math.random() * Math.PI * 2,
@@ -886,14 +925,17 @@ class Component extends DCLogic {
     }));
     const draw = (t) => {
       if (this._loaderGone && this._loaderStarsStop) return;
+      if (document.hidden) {
+        this._loaderStars = requestAnimationFrame(draw);
+        return;
+      }
       ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.fillStyle = '#e9edff';
       for (const s of stars) {
         const a = (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t / 1000 * s.sp + s.ph))) * (mobile ? 0.45 : 1);
         ctx.globalAlpha = a;
-        ctx.fillStyle = '#e9edff';
-        ctx.beginPath();
-        ctx.arc(s.x * cv.width, s.y * cv.height, s.r, 0, Math.PI * 2);
-        ctx.fill();
+        const rr = s.r;
+        ctx.fillRect(s.x * cv.width - rr, s.y * cv.height - rr, rr * 2, rr * 2);
       }
       this._loaderStars = requestAnimationFrame(draw);
     };
@@ -918,6 +960,7 @@ class Component extends DCLogic {
       'assets/soup_pot.png', 'assets/cat_back.png', 'assets/forrest_pattern_s.png',
       'assets/cat_other.png', 'assets/cats_surround.png', 'assets/guitar_show.png',
       'assets/camping_cat.png', 'assets/cat_rest.png', 'assets/shop_open.png',
+      'assets/googleplay.png', 'assets/appstore.png',
       'assets/logo_' + (['kr', 'en', 'jp', 'cn'].includes(lang) ? lang : 'en') + '_trim.png',
       'assets/meadow.png', 'assets/bgm.mp3', 'assets/guitar.mp3'
     ];
@@ -1029,19 +1072,24 @@ class Component extends DCLogic {
     window.addEventListener('beforeunload', toTop);
     this.killStrayAudio();
     this.applyCjkFont();
-    const density = this.props.particleDensity ?? 1;
+    const density = Math.min(1, this.props.particleDensity ?? 1);
     const mobileSky = window.innerWidth <= 720;
-    const skyMul = mobileSky ? 0.22 : 1;
-    const W = () => window.innerWidth, H = () => window.innerHeight;
-    for (let i = 0; i < Math.round(130 * density * skyMul); i++) {
+    const skyMul = mobileSky ? 0.28 : 1;
+    for (let i = 0; i < Math.round(90 * density * skyMul); i++) {
       this.stars.push({ x: Math.random(), y: Math.random() * 0.9, r: Math.random() * (mobileSky ? 1.1 : 1.6) + 0.35, p: Math.random() * Math.PI * 2, s: 0.5 + Math.random() * 1.5 });
     }
-    for (let i = 0; i < Math.round(26 * density * (mobileSky ? 0.3 : 1)); i++) {
+    for (let i = 0; i < Math.round(14 * density * (mobileSky ? 0.4 : 1)); i++) {
       this.fireflies.push({ x: Math.random(), y: 0.45 + Math.random() * 0.5, vx: (Math.random() - .5) * .0006, vy: (Math.random() - .5) * .0004, p: Math.random() * Math.PI * 2 });
     }
-    this.onScroll = () => { this.updateScroll(); this.enforceSilenceBelow(); };
-    this.onMove = (e) => this.updateMouse(e);
-    this.onResize = () => this.sizeCanvas();
+    this.onScroll = () => {
+      if (this._scrollRaf) return;
+      this._scrollRaf = requestAnimationFrame(() => {
+        this._scrollRaf = 0;
+        this.updateScroll();
+      });
+    };
+    this.onMove = (e) => { this.mx = e.clientX; this.my = e.clientY; };
+    this.onResize = () => { this._balloonEl = null; this.sizeCanvas(); this.updateScroll(); };
     window.addEventListener('scroll', this.onScroll, { passive: true, capture: true });
     window.addEventListener('mousemove', this.onMove, { passive: true });
     window.addEventListener('resize', this.onResize);
@@ -1063,15 +1111,23 @@ class Component extends DCLogic {
     window.addEventListener('keydown', startBgm);
     let last = 0;
     const loop = (t) => {
+      if (document.hidden) { this.rafId = 0; return; }
       this.rafId = requestAnimationFrame(loop);
-      if (t - last < 30) return;
+      const idle = this.dayAlpha > 0.92 && !this.magicShots.length && !this.shooters.length;
+      if (t - last < (idle ? 80 : 33)) return;
       last = t;
-      this.updateScroll();
-      this.enforceSilenceBelow();
       this.draw(t / 1000);
     };
+    this._onVis = () => {
+      if (!document.hidden && !this.rafId) this.rafId = requestAnimationFrame(loop);
+    };
+    document.addEventListener('visibilitychange', this._onVis);
     this.rafId = requestAnimationFrame(loop);
-    this.steamTimer = setInterval(() => { this.spawnSteam(false); this.spawnSteam(false, 2); }, 480);
+    this.steamTimer = setInterval(() => {
+      if (document.hidden) return;
+      this.spawnSteam(false);
+      this.spawnSteam(false, 2);
+    }, 900);
     this.beatTimes = null;
     this._beatIdx = -1;
     // video slots: show only when the file exists & can play
@@ -1101,6 +1157,8 @@ class Component extends DCLogic {
     }
     clearInterval(this._bRamp); clearInterval(this._gRamp);
     cancelAnimationFrame(this.rafId);
+    if (this._scrollRaf) cancelAnimationFrame(this._scrollRaf);
+    if (this._onVis) document.removeEventListener('visibilitychange', this._onVis);
     if (this.ytPlayer && this.ytPlayer.destroy) try { this.ytPlayer.destroy(); } catch (e) {}
     clearInterval(this.steamTimer);
     clearInterval(this.shootTimer);
@@ -1118,8 +1176,11 @@ class Component extends DCLogic {
   sizeCanvas() {
     const c = this.refs2.canvas;
     if (!c) return;
-    c.width = window.innerWidth * devicePixelRatio;
-    c.height = window.innerHeight * devicePixelRatio;
+    const dpr = Math.min(1.5, window.devicePixelRatio || 1);
+    this._dpr = dpr;
+    c.width = Math.floor(window.innerWidth * dpr);
+    c.height = Math.floor(window.innerHeight * dpr);
+    this._ctx = c.getContext('2d', { alpha: true, desynchronized: true });
   }
 
   progressOf(el, span) {
@@ -1141,7 +1202,10 @@ class Component extends DCLogic {
       const pad = window.innerWidth <= 720 ? 14 : 24;
       // keep the cat fully inside the sticky viewport at every scroll position
       // room above for the balloon bunch she holds, measured not guessed
-      const balloon = cf.querySelector('img[src*="balloon"]');
+      if (!this._balloonEl || this._balloonEl.parentNode !== cf) {
+        this._balloonEl = cf.querySelector('img[src*="balloon"]');
+      }
+      const balloon = this._balloonEl;
       let head = balloon ? balloon.offsetHeight * 0.82 : 220;
       // narrow screens: the rig reads much larger against the viewport, so scale it down
       let rigScale = window.innerWidth <= 480 ? 0.62 : window.innerWidth <= 720 ? 0.74 : 1;
@@ -1213,16 +1277,20 @@ class Component extends DCLogic {
         this.refs2.clouds.style.transform = 'translateY(' + ((1 - o) * 10) + 'vh)';
       }
     }
-    // gentle fade-up reveals, driven per frame from live rects
+    // gentle fade-up reveals, driven from live rects on scroll only
     // fade in as copy enters, fade out as it leaves so adjacent scenes do not stack
-    for (const el of document.querySelectorAll('.cs-reveal')) {
+    const reveals = document.getElementsByClassName('cs-reveal');
+    for (let i = 0; i < reveals.length; i++) {
+      const el = reveals[i];
       const r = el.getBoundingClientRect();
       const inn = Math.max(0, Math.min(1, (h * 0.86 - r.top) / (h * 0.26)));
       const out = Math.max(0, Math.min(1, (r.bottom - h * 0.14) / (h * 0.26)));
       const t = Math.min(inn, out);
       const o = t * t * (3 - 2 * t);
-      el.style.opacity = String(o);
-      el.style.transform = 'translateY(' + ((1 - o) * 16) + 'px)';
+      const op = Math.round(o * 100) / 100;
+      const ty = ((1 - o) * 16) | 0;
+      if (el._csO !== op) { el._csO = op; el.style.opacity = String(op); }
+      if (el._csY !== ty) { el._csY = ty; el.style.transform = 'translateY(' + ty + 'px)'; }
     }
     // cloud cat + audience cats (rect-driven; IO does not fire in this host)
     const co = this.refs2.catOther;
@@ -1239,6 +1307,13 @@ class Component extends DCLogic {
       }
     }
     this.updateAudioZones(h);
+    const s3 = this.refs2.scene3;
+    if (s3) {
+      const r3 = s3.getBoundingClientRect();
+      this._s3Vis = Math.max(0, Math.min(1, (h - r3.top) / h)) * Math.max(0, Math.min(1, r3.bottom / h));
+    } else {
+      this._s3Vis = 0;
+    }
     // scene 5 dawn
     const s5 = this.refs2.scene5;
     if (s5) {
@@ -1257,45 +1332,54 @@ class Component extends DCLogic {
     }
   }
 
-  updateMouse(e) {
-    this.mx = e.clientX; this.my = e.clientY;
-
-  }
-
   draw(t) {
     const c = this.refs2.canvas;
     if (!c) return;
-    const ctx = c.getContext('2d');
+    const ctx = this._ctx || c.getContext('2d');
     const w = c.width, h = c.height;
-    ctx.clearRect(0, 0, w, h);
     const night = 1 - this.dayAlpha;
-    const dpr = devicePixelRatio;
+    const idleSky = night <= 0.02 && !this.magicShots.length && !this.shooters.length;
+    if (idleSky) {
+      if (!this._canvasCleared) {
+        ctx.clearRect(0, 0, w, h);
+        this._canvasCleared = true;
+      }
+      return;
+    }
+    this._canvasCleared = false;
+    ctx.clearRect(0, 0, w, h);
+    const dpr = this._dpr || Math.min(1.5, devicePixelRatio || 1);
     const heroVisible = window.scrollY < window.innerHeight * 0.9;
     const mx = (this.mx || -9999) * dpr, my = (this.my || -9999) * dpr;
     const px = heroVisible ? ((this.mx || window.innerWidth / 2) / window.innerWidth - 0.5) : 0;
     const py = heroVisible ? ((this.my || window.innerHeight / 2) / window.innerHeight - 0.5) : 0;
+    const mobileDim = window.innerWidth <= 720 ? 0.4 : 1;
+    const nearR2 = (170 * dpr) * (170 * dpr);
     if (night > 0.02) {
-      const near = [];
-      for (const s of this.stars) {
-        const a = (0.35 + 0.65 * Math.abs(Math.sin(t * s.s + s.p))) * night * (window.innerWidth <= 720 ? 0.4 : 1);
-        // gentle mouse parallax (depth from twinkle speed)
+      ctx.fillStyle = '#e9edff';
+      for (let i = 0; i < this.stars.length; i++) {
+        const s = this.stars[i];
+        const a = (0.35 + 0.65 * Math.abs(Math.sin(t * s.s + s.p))) * night * mobileDim;
         const ox = heroVisible ? -px * s.s * 18 * dpr : 0;
         const oy = heroVisible ? -py * s.s * 12 * dpr : 0;
         const sx = s.x * w + ox, sy = s.y * h + oy;
-        s._sx = sx; s._sy = sy;
         let boost = 1;
-        if (heroVisible) {
-          const d = Math.hypot(sx - mx, sy - my);
-          if (d < 170 * dpr) { near.push(s); boost = 1.6; }
+        if (heroVisible && this.mx) {
+          const dx = sx - mx, dy = sy - my;
+          if (dx * dx + dy * dy < nearR2) boost = 1.6;
         }
         ctx.globalAlpha = Math.min(1, a * boost);
-        ctx.fillStyle = '#e9edff';
-        ctx.beginPath();
-        ctx.arc(sx, sy, s.r * dpr * boost, 0, 7);
-        ctx.fill();
+        const rr = s.r * dpr * boost;
+        ctx.fillRect(sx - rr, sy - rr, rr * 2, rr * 2);
       }
-      // click-spawned stars flying to the logo
       const logo = this.refs2.logoHero;
+      let logoTx = 0, logoTy = 0, logoReady = false;
+      if (this.magicShots.length && logo) {
+        const lr = logo.getBoundingClientRect();
+        logoTx = (lr.left + lr.width / 2) * dpr;
+        logoTy = (lr.top + lr.height / 2) * dpr;
+        logoReady = true;
+      }
       for (let i = this.magicShots.length - 1; i >= 0; i--) {
         const m = this.magicShots[i];
         m.life += 0.025;
@@ -1304,35 +1388,24 @@ class Component extends DCLogic {
           this.glowT = t;
           continue;
         }
-        let tx = m.tx, ty = m.ty;
-        if (logo) {
-          const r = logo.getBoundingClientRect();
-          tx = (r.left + r.width / 2) * dpr;
-          ty = (r.top + r.height / 2) * dpr;
-        }
+        const tx = logoReady ? logoTx : m.tx;
+        const ty = logoReady ? logoTy : m.ty;
         const e = 1 - Math.pow(1 - m.life, 3);
         const cx = m.x + (tx - m.x) * e;
         const cy = m.y + (ty - m.y) * e - Math.sin(m.life * Math.PI) * 80 * dpr;
         ctx.globalAlpha = 0.9 * night;
         ctx.fillStyle = '#8fd6ff';
-        ctx.shadowColor = '#2f9dff';
-        ctx.shadowBlur = 14 * dpr;
         ctx.beginPath();
         ctx.arc(cx, cy, 3 * dpr, 0, 7);
         ctx.fill();
-        ctx.shadowBlur = 0;
-        // sparkle trail
-        for (let k = 1; k <= 4; k++) {
+        for (let k = 1; k <= 3; k++) {
           const e2 = 1 - Math.pow(1 - Math.max(0, m.life - k * 0.04), 3);
           const hx = m.x + (tx - m.x) * e2;
           const hy = m.y + (ty - m.y) * e2 - Math.sin(Math.max(0, m.life - k * 0.04) * Math.PI) * 80 * dpr;
           ctx.globalAlpha = (0.5 - k * 0.1) * night;
-          ctx.beginPath();
-          ctx.arc(hx, hy, (2.4 - k * 0.4) * dpr, 0, 7);
-          ctx.fill();
+          ctx.fillRect(hx - dpr, hy - dpr, 2 * dpr, 2 * dpr);
         }
       }
-      // logo glow pulse on arrival
       if (logo) {
         const dt = t - this.glowT;
         if (this.glowT > 0 && dt < 1.4) {
@@ -1340,45 +1413,36 @@ class Component extends DCLogic {
           logo.style.filter = 'drop-shadow(0 6px 22px rgba(0,0,0,.45)) drop-shadow(0 0 ' + (26 * g) + 'px rgba(90,180,255,' + (0.85 * g) + '))';
         } else if (this.glowT > 0 && dt < 1.6) {
           logo.style.filter = 'drop-shadow(0 6px 22px rgba(0,0,0,.45))';
+          this.glowT = 0;
         }
       }
-      // shooting stars
+      ctx.strokeStyle = 'rgba(255,224,150,0.9)';
       for (let i = this.shooters.length - 1; i >= 0; i--) {
         const sh = this.shooters[i];
         sh.life += 0.02;
         if (sh.life > 1) { this.shooters.splice(i, 1); continue; }
         const x = (sh.x + sh.dx * sh.life) * w, y = (sh.y + sh.dy * sh.life) * h;
-        const g = ctx.createLinearGradient(x - 90 * devicePixelRatio, y - 40 * devicePixelRatio, x, y);
-        g.addColorStop(0, 'rgba(255,224,150,0)');
-        g.addColorStop(1, 'rgba(255,224,150,' + (0.9 * night * Math.sin(sh.life * Math.PI)) + ')');
-        ctx.strokeStyle = g;
-        ctx.lineWidth = 2 * devicePixelRatio;
+        ctx.globalAlpha = night * Math.sin(sh.life * Math.PI);
+        ctx.lineWidth = 2 * dpr;
         ctx.beginPath();
-        ctx.moveTo(x - 90 * devicePixelRatio, y - 40 * devicePixelRatio);
+        ctx.moveTo(x - 90 * dpr, y - 40 * dpr);
         ctx.lineTo(x, y);
         ctx.stroke();
       }
-      // fireflies over forest scene
-      const s3 = this.refs2.scene3;
-      if (s3) {
-        const r = s3.getBoundingClientRect();
-        const vis = Math.max(0, Math.min(1, (window.innerHeight - r.top) / window.innerHeight)) * Math.max(0, Math.min(1, (r.bottom) / window.innerHeight));
-        if (vis > 0.05) {
-          for (const f of this.fireflies) {
-            f.x += f.vx + Math.sin(t * 0.7 + f.p) * 0.0004;
-            f.y += f.vy + Math.cos(t * 0.5 + f.p) * 0.0003;
-            if (f.x < 0) f.x = 1; if (f.x > 1) f.x = 0;
-            if (f.y < 0.3) f.y = 0.95; if (f.y > 1) f.y = 0.35;
-            const a = (0.25 + 0.75 * Math.abs(Math.sin(t * 1.4 + f.p * 3))) * vis * night * (window.innerWidth <= 720 ? 0.45 : 1);
-            ctx.globalAlpha = a;
-            ctx.fillStyle = '#d9f79a';
-            ctx.shadowColor = '#d9f79a';
-            ctx.shadowBlur = 8 * devicePixelRatio;
-            ctx.beginPath();
-            ctx.arc(f.x * w, f.y * h, 2 * devicePixelRatio, 0, 7);
-            ctx.fill();
-            ctx.shadowBlur = 0;
-          }
+      const vis = this._s3Vis || 0;
+      if (vis > 0.05) {
+        ctx.fillStyle = '#d9f79a';
+        const ffDim = window.innerWidth <= 720 ? 0.45 : 1;
+        for (let i = 0; i < this.fireflies.length; i++) {
+          const f = this.fireflies[i];
+          f.x += f.vx + Math.sin(t * 0.7 + f.p) * 0.0004;
+          f.y += f.vy + Math.cos(t * 0.5 + f.p) * 0.0003;
+          if (f.x < 0) f.x = 1; if (f.x > 1) f.x = 0;
+          if (f.y < 0.3) f.y = 0.95; if (f.y > 1) f.y = 0.35;
+          const a = (0.25 + 0.75 * Math.abs(Math.sin(t * 1.4 + f.p * 3))) * vis * night * ffDim;
+          ctx.globalAlpha = a;
+          const fx = f.x * w, fy = f.y * h, fr = 2 * dpr;
+          ctx.fillRect(fx - fr, fy - fr, fr * 2, fr * 2);
         }
       }
     }
@@ -1440,9 +1504,10 @@ class Component extends DCLogic {
     if (!box) return;
     const r = box.getBoundingClientRect();
     if (r.bottom < 0 || r.top > window.innerHeight) return;
+    if (box.childElementCount > 6) return;
     const d = document.createElement('div');
     const size = strong ? 34 + Math.random() * 26 : 22 + Math.random() * 18;
-    d.style.cssText = 'position:absolute;bottom:0;left:' + (Math.random() * 100) + '%;width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:rgba(255,252,240,' + (strong ? .85 : .6) + ');filter:blur(' + (size / 5) + 'px);animation:csSteam ' + (2.2 + Math.random()) + 's ease-out forwards;';
+    d.style.cssText = 'position:absolute;bottom:0;left:' + (Math.random() * 100) + '%;width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:radial-gradient(circle, rgba(255,252,240,' + (strong ? .7 : .45) + ') 0%, rgba(255,252,240,0) 70%);animation:csSteam ' + (2.2 + Math.random()) + 's ease-out forwards;';
     box.appendChild(d);
     setTimeout(() => d.remove(), 3400);
   }
@@ -1574,8 +1639,7 @@ class Component extends DCLogic {
         s5Heading: '아침이 밝고,\n작은 수프 가게가 문을 열었어요',
         s5Main: '이제, 이 숲의 집사는 당신이에요.\n고양이들과 함께 수프를 끓여 보세요.',
         lblBreed: '품종', lblBirthday: '생일', lblFood: '좋아하는 음식',
-        skyHint: '밤하늘을 클릭해 별똥별을 보내 보세요 ✦',
-        navStory: '이야기', navCats: '고양이들', navDownload: '다운로드',
+        navStory: '이야기', navUpdate: '업데이트', navRecipe: '마법 레시피', navSocial: '소셜', navCats: '고양이들', navDownload: '다운로드',
         btnGoogle: 'Google Play에서 받기', btnApple: 'App Store에서 받기', btnCoupon: '쿠폰 코드 입력',
         bgmOn: '배경음 켜기', bgmOff: '배경음 끄기',
         ftTerms: '이용약관', ftPrivacy: '개인정보처리방침',
@@ -1617,8 +1681,7 @@ class Component extends DCLogic {
         s5Heading: 'Morning came,\nand the little soup shop opened its doors',
         s5Main: 'Now the forest is yours to care for.\nCome cook soup with the cats.',
         lblBreed: 'Breed', lblBirthday: 'Birthday', lblFood: 'Favorite Food',
-        skyHint: 'Click the night sky to send a shooting star ✦',
-        navStory: 'Story', navCats: 'Cats', navDownload: 'Download',
+        navStory: 'Story', navUpdate: 'Update', navRecipe: 'Magic Recipe', navSocial: 'Social', navCats: 'Cats', navDownload: 'Download',
         btnGoogle: 'Get it on Google Play', btnApple: 'Download on the App Store', btnCoupon: 'Enter Coupon Code',
         bgmOn: 'Music On', bgmOff: 'Music Off',
         ftTerms: 'Terms of Service', ftPrivacy: 'Privacy Policy',
@@ -1660,8 +1723,7 @@ class Component extends DCLogic {
         s5Heading: '朝が来て、\nちいさなスープ屋さんが店をひらきました',
         s5Main: 'これからは、あなたがこの森の飼い主。\n猫たちといっしょにスープを作りましょう。',
         lblBreed: '猫種', lblBirthday: '誕生日', lblFood: '好きな食べ物',
-        skyHint: '夜空をクリックして流れ星を飛ばそう ✦',
-        navStory: '物語', navCats: '猫たち', navDownload: 'ダウンロード',
+        navStory: '物語', navUpdate: 'アップデート', navRecipe: '魔法のレシピ', navSocial: 'ソーシャル', navCats: '猫たち', navDownload: 'ダウンロード',
         btnGoogle: 'Google Playで手に入れる', btnApple: 'App Storeでダウンロード', btnCoupon: 'クーポンコード入力',
         bgmOn: '背景音楽 オン', bgmOff: '背景音楽 オフ',
         ftTerms: '利用規約', ftPrivacy: 'プライバシーポリシー',
@@ -1703,8 +1765,7 @@ class Component extends DCLogic {
         s5Heading: '天亮了，\n小小的汤铺开门了',
         s5Main: '现在，你就是这片森林的管家。\n来和猫咪们一起煮汤吧。',
         lblBreed: '品种', lblBirthday: '生日', lblFood: '喜欢的食物',
-        skyHint: '点一点夜空，送出一颗流星 ✦',
-        navStory: '故事', navCats: '猫咪们', navDownload: '下载',
+        navStory: '故事', navUpdate: '更新', navRecipe: '魔法食谱', navSocial: '社交', navCats: '猫咪们', navDownload: '下载',
         btnGoogle: '在 Google Play 下载', btnApple: '在 App Store 下载', btnCoupon: '输入优惠码',
         bgmOn: '开启音乐', bgmOff: '关闭音乐',
         ftTerms: '服务条款', ftPrivacy: '隐私政策',
@@ -1746,8 +1807,7 @@ class Component extends DCLogic {
         s5Heading: 'Llegó la mañana,\ny la pequeña tienda de sopa abrió sus puertas',
         s5Main: 'Ahora el bosque está a tu cuidado.\nVen a cocinar sopa con los gatos.',
         lblBreed: 'Raza', lblBirthday: 'Cumpleaños', lblFood: 'Comida favorita',
-        skyHint: 'Haz clic en el cielo nocturno para lanzar una estrella fugaz ✦',
-        navStory: 'Historia', navCats: 'Gatos', navDownload: 'Descargar',
+        navStory: 'Historia', navUpdate: 'Novedades', navRecipe: 'Receta mágica', navSocial: 'Social', navCats: 'Gatos', navDownload: 'Descargar',
         btnGoogle: 'Consíguelo en Google Play', btnApple: 'Descárgalo en el App Store', btnCoupon: 'Introducir código',
         bgmOn: 'Música activada', bgmOff: 'Música desactivada',
         ftTerms: 'Términos del servicio', ftPrivacy: 'Política de privacidad',
@@ -1789,8 +1849,7 @@ class Component extends DCLogic {
         s5Heading: 'Le matin vint,\net la petite échoppe de soupe ouvrit ses portes',
         s5Main: 'La forêt est désormais à votre charge.\nVenez cuisiner de la soupe avec les chats.',
         lblBreed: 'Race', lblBirthday: 'Anniversaire', lblFood: 'Plat préféré',
-        skyHint: 'Cliquez sur le ciel nocturne pour lancer une étoile filante ✦',
-        navStory: 'Histoire', navCats: 'Chats', navDownload: 'Télécharger',
+        navStory: 'Histoire', navUpdate: 'Mises à jour', navRecipe: 'Recette magique', navSocial: 'Social', navCats: 'Chats', navDownload: 'Télécharger',
         btnGoogle: 'Disponible sur Google Play', btnApple: 'Télécharger dans l’App Store', btnCoupon: 'Saisir un code',
         bgmOn: 'Musique activée', bgmOff: 'Musique désactivée',
         ftTerms: 'Conditions d’utilisation', ftPrivacy: 'Politique de confidentialité',
@@ -1832,8 +1891,7 @@ class Component extends DCLogic {
         s5Heading: 'เช้ามาเยือน\nและร้านซุปเล็ก ๆ ก็เปิดประตู',
         s5Main: 'ตั้งแต่นี้ไป ป่าแห่งนี้อยู่ในความดูแลของคุณ\nมาทำซุปกับเหล่าแมวกันเถอะ',
         lblBreed: 'สายพันธุ์', lblBirthday: 'วันเกิด', lblFood: 'อาหารโปรด',
-        skyHint: 'คลิกท้องฟ้ายามค่ำเพื่อปล่อยดาวตก ✦',
-        navStory: 'เรื่องเล่า', navCats: 'เหล่าแมว', navDownload: 'ดาวน์โหลด',
+        navStory: 'เรื่องเล่า', navUpdate: 'อัปเดต', navRecipe: 'สูตรเวทมนตร์', navSocial: 'โซเชียล', navCats: 'เหล่าแมว', navDownload: 'ดาวน์โหลด',
         btnGoogle: 'ดาวน์โหลดบน Google Play', btnApple: 'ดาวน์โหลดบน App Store', btnCoupon: 'กรอกโค้ด',
         bgmOn: 'เปิดเพลง', bgmOff: 'ปิดเพลง',
         ftTerms: 'ข้อกำหนดการใช้งาน', ftPrivacy: 'นโยบายความเป็นส่วนตัว',
@@ -1875,8 +1933,7 @@ class Component extends DCLogic {
         s5Heading: 'A manhã chegou,\ne a pequena casa de sopas abriu as portas',
         s5Main: 'Agora esta floresta está aos seus cuidados.\nVenha cozinhar sopa com os gatos.',
         lblBreed: 'Raça', lblBirthday: 'Aniversário', lblFood: 'Comida preferida',
-        skyHint: 'Clique no céu noturno para lançar uma estrela cadente ✦',
-        navStory: 'História', navCats: 'Gatos', navDownload: 'Descarregar',
+        navStory: 'História', navUpdate: 'Atualizações', navRecipe: 'Receita mágica', navSocial: 'Social', navCats: 'Gatos', navDownload: 'Descarregar',
         btnGoogle: 'Baixar no Google Play', btnApple: 'Baixar na App Store', btnCoupon: 'Resgatar código',
         bgmOn: 'Música ligada', bgmOff: 'Música desligada',
         ftTerms: 'Termos de utilização', ftPrivacy: 'Política de privacidade',
@@ -1918,8 +1975,7 @@ class Component extends DCLogic {
         s5Heading: 'Pagi tiba,\ndan kedai sup mungil itu membuka pintunya',
         s5Main: 'Kini hutan ini ada dalam asuhanmu.\nMasaklah sup bersama para kucing.',
         lblBreed: 'Ras', lblBirthday: 'Ulang tahun', lblFood: 'Makanan favorit',
-        skyHint: 'Klik langit malam untuk melepas bintang jatuh ✦',
-        navStory: 'Cerita', navCats: 'Kucing', navDownload: 'Unduh',
+        navStory: 'Cerita', navUpdate: 'Pembaruan', navRecipe: 'Resep ajaib', navSocial: 'Sosial', navCats: 'Kucing', navDownload: 'Unduh',
         btnGoogle: 'Dapatkan di Google Play', btnApple: 'Unduh di App Store', btnCoupon: 'Masukkan kode',
         bgmOn: 'Musik menyala', bgmOff: 'Musik mati',
         ftTerms: 'Ketentuan Layanan', ftPrivacy: 'Kebijakan Privasi',
