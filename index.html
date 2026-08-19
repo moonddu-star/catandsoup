@@ -106,6 +106,7 @@
   .cs-story-pin { height: 100vh !important; height: 100dvh !important; }
   .cs-story-beat { transition: none; }
   .cs-sound-mark { display: none; }
+  .cs-meowcat { cursor: pointer; touch-action: manipulation; }
   .cs-sound.is-off { opacity: .42; }
   .cs-lang-btn, .cs-sound, .cs-nav a { touch-action: manipulation; }
   .cs-topbar {
@@ -313,7 +314,7 @@
   <div ref="{{ mainContentRef }}" style="visibility: {{ mainUiVisibility }};">
   <section data-screen-label="1 밤하늘" class="cs-hero" onClick="{{ skyClick }}" style="position: relative; z-index: 3; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 96px 24px 36px; cursor: pointer;">
     <!-- the cat star -->
-    <div class="cs-catstar" style="position: absolute; top: 15vh; right: 15vw; z-index: 1; pointer-events: none">
+    <div class="cs-catstar cs-meowcat" style="position: absolute; top: 15vh; right: 15vw; z-index: 1; pointer-events: auto">
       <img src="assets/cat_star.webp" alt="고양이 별" style="width: 67px; display: block; animation: csTwinkle 3.2s ease-in-out infinite;">
     </div>
     <div style="position: relative; z-index: 1; font-size: 15px; letter-spacing: 6px; color: #9aa3d1; margin-bottom: 30px;">{{ t.heroEyebrow }}</div>
@@ -338,7 +339,7 @@
       <div ref="{{ catFallRef }}" style="position: absolute; left: 50%; top: 0; will-change: transform; z-index: 6;">
         <div style="position: relative; width: 114px; margin-left: -57px;">
           <img src="assets/balloon.webp" alt="" style="position: absolute; left: 50%; bottom: 45%; width: 163px; margin-left: -96px; display: block; z-index: -1; filter: drop-shadow(0 4px 16px rgba(0,0,0,.28)); animation: csBob 4.2s ease-in-out infinite;">
-          <img src="assets/kiki.webp" alt="별고양이 키키" style="width: 114px; display: block;">
+          <img class="cs-meowcat" src="assets/kiki.webp" alt="별고양이 키키" style="width: 114px; display: block;">
         </div>
       </div>
 
@@ -359,7 +360,7 @@
           <div class="cs-morestar" aria-hidden="true"></div>
           <div class="cs-roomrow" style="display: flex; align-items: flex-end; justify-content: center; gap: 12px; margin-top: 30px;">
             <img class="cs-room" src="assets/room.webp" alt="천문대의 방" style="width: min(320px, 44vw); display: block; filter: drop-shadow(0 6px 20px rgba(0,0,0,.28));">
-            <img ref="{{ kikiStarRef }}" class="cs-kiki" src="assets/kiki_star.webp" alt="키키" style="width: min(180px, 30vw); display: block; filter: drop-shadow(0 6px 24px rgba(255,220,150,.25)); will-change: transform, opacity; opacity: 0; transform: translateX(62vw) rotate(10deg);">
+            <img ref="{{ kikiStarRef }}" class="cs-kiki cs-meowcat" src="assets/kiki_star.webp" alt="키키" style="width: min(180px, 30vw); display: block; filter: drop-shadow(0 6px 24px rgba(255,220,150,.25)); will-change: transform, opacity; opacity: 0; transform: translateX(62vw) rotate(10deg);">
           </div>
         </div>
       </div>
@@ -383,13 +384,13 @@
     </div>
 
     <!-- interactive cook -->
-    <div ref="{{ tiltCatRef }}" class="cs-soup" onClick="{{ meow }}" onTouchStart="{{ stirStart }}" onTouchMove="{{ stirTouch }}" onTouchEnd="{{ stirEnd }}" style="position: relative; width: min(350px, 68vw); aspect-ratio: 800 / 727; cursor: pointer; filter: drop-shadow(rgba(0,0,0,.4) 0 6px 14px); touch-action: manipulation;">
+    <div ref="{{ tiltCatRef }}" class="cs-soup cs-meowcat" onTouchStart="{{ stirStart }}" onTouchMove="{{ stirTouch }}" onTouchEnd="{{ stirEnd }}" style="position: relative; width: min(350px, 68vw); aspect-ratio: 800 / 727; cursor: pointer; filter: drop-shadow(rgba(0,0,0,.4) 0 6px 14px); touch-action: manipulation;">
       <img src="assets/soup_pot.webp" alt="끓고 있는 수프 한 냄비" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
       <div ref="{{ steamRef }}" style="position: absolute; left: 50%; bottom: 58%; width: 40%; height: 1px; transform: translateX(-50%); pointer-events: none; z-index: 3;"></div>
       <div ref="{{ meowBubbleRef }}" data-cs-meow="1" style="display: none; position: absolute; top: 10px; right: 0; padding: 6px 12px; background: #f3efe2; color: #2c2418; font-size: 13px; border-radius: 12px 12px 12px 2px; opacity: 0; transition: opacity .25s;">야옹 ~</div>
     </div>
 
-    <img class="cs-catback" src="assets/cat_back.webp" alt="냄비를 바라보는 키키" onClick="{{ meow }}" style="cursor: pointer; width: min(144px, 29vw); display: block; margin: -28px auto 0; position: relative; z-index: 2; animation: csCatPeek 3.4s ease-in-out infinite; transform-origin: 50% 100%;">
+    <img class="cs-catback cs-meowcat" src="assets/cat_back.webp" alt="냄비를 바라보는 키키" style="cursor: pointer; width: min(144px, 29vw); display: block; margin: -28px auto 0; position: relative; z-index: 2; animation: csCatPeek 3.4s ease-in-out infinite; transform-origin: 50% 100%;">
   </section>
 
   <!-- INTERLUDE : the forest cook -->
@@ -400,7 +401,7 @@
       <div class="cs-morestar" aria-hidden="true"></div>
       <div style="width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 30px auto 0;"></div>
     </div>
-    <div class="cs-reveal cs-cook" style="position: relative; width: 396px; height: 396px; will-change: opacity, transform;">
+    <div class="cs-reveal cs-cook cs-meowcat" style="position: relative; width: 396px; height: 396px; will-change: opacity, transform;">
       <img ref="{{ cookFrame1Ref }}" src="assets/cat_cook_01.webp" alt="수프를 젓는 키키" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); left: -4px; top: 8px; opacity: 1; transition: opacity .55s ease;">
       <img ref="{{ cookFrameRef }}" src="assets/cat_cook_02.webp" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); left: -4px; top: 8px; opacity: 0; transition: opacity .55s ease;">
       <div ref="{{ steam2Ref }}" style="position: absolute; left: calc(50% - 40px); bottom: 52%; width: 34%; height: 1px; transform: translateX(-50%); pointer-events: none; z-index: 3;"></div>
@@ -414,14 +415,14 @@
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s4Main }}</p>
       <div class="cs-morestar" aria-hidden="true"></div>
       
-    </div><img ref="{{ catOtherRef }}" src="assets/cat_other.webp" alt="별고양이들" style="width: min(200px, 45vw); display: block; margin: 20px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(46vw, -38vh) rotate(14deg); transition: opacity 2.4s ease, transform 4.2s cubic-bezier(.42,0,.72,1);">
-    <img ref="{{ catsSurroundRef }}" class="cs-audience" src="assets/cats_surround.webp" alt="구경하는 고양이들" style="width: min(620px, 88vw); display: block; margin: -10px auto 0; opacity: 0; transform: translateY(24px); transition: opacity 2.2s ease, transform 2.2s ease;">
+    </div><img ref="{{ catOtherRef }}" class="cs-meowcat" src="assets/cat_other.webp" alt="별고양이들" style="width: min(200px, 45vw); display: block; margin: 20px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(46vw, -38vh) rotate(14deg); transition: opacity 2.4s ease, transform 4.2s cubic-bezier(.42,0,.72,1);">
+    <img ref="{{ catsSurroundRef }}" class="cs-audience cs-meowcat" src="assets/cats_surround.webp" alt="구경하는 고양이들" style="width: min(620px, 88vw); display: block; margin: -10px auto 0; opacity: 0; transform: translateY(24px); transition: opacity 2.2s ease, transform 2.2s ease;">
   </section>
 
   <!-- INTERLUDE : night deepens, dawn nears -->
   <section ref="{{ guitarSection2Ref }}" class="cs-tall" data-screen-label="4.5 깊어가는 밤" style="position: relative; z-index: 3; min-height: 125vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 46px;">
     <div class="cs-reveal cs-camping" style="position: relative; width: 500px; max-width: 92vw; margin: 0 auto 26px; will-change: opacity, transform;">
-      <img src="assets/camping_cat.webp" alt="모닥불 곁의 고양이" style="width: 100%; height: auto; display: block;">
+      <img class="cs-meowcat" src="assets/camping_cat.webp" alt="모닥불 곁의 고양이" style="width: 100%; height: auto; display: block;">
       <div style="position: absolute; left: 62%; top: 70%; width: 46%; height: 34%; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(255,196,90,.55) 0%, rgba(255,150,60,.26) 42%, rgba(255,140,60,0) 72%); mix-blend-mode: screen; pointer-events: none; animation: csFireGlow 2.4s ease-in-out infinite;"></div>
       <div style="position: absolute; left: 62%; top: 62%; width: 22%; height: 22%; transform: translateX(-50%); pointer-events: none; overflow: visible;">
         <span style="position: absolute; left: 30%; bottom: 0; width: 8px; height: 8px; border-radius: 50%; background: #ffcf72; opacity: 0; animation: csEmber 3.2s ease-out infinite;"></span>
@@ -434,7 +435,7 @@
       <div class="cs-morestar" aria-hidden="true"></div>
     </div>
     <div class="cs-reveal cs-restcat" style="position: relative; width: min(340px, 61vw); margin: 0 auto; will-change: opacity, transform;">
-      <img src="assets/cat_rest.webp" alt="해먹에서 잠든 고양이" onClick="{{ meow }}" style="width: 100%; display: block; cursor: pointer; filter: drop-shadow(0 8px 26px rgba(0,0,0,.3));">
+      <img class="cs-meowcat" src="assets/cat_rest.webp" alt="해먹에서 잠든 고양이" style="width: 100%; display: block; cursor: pointer; filter: drop-shadow(0 8px 26px rgba(0,0,0,.3));">
       <span style="position: absolute; left: 72%; top: 42%; font-family: 'Gowun Batang', serif; font-size: 30px; color: #cfd6f5; opacity: 0; animation: csZzz 4.2s ease-out infinite;">z</span>
       <span style="position: absolute; left: 72%; top: 42%; font-family: 'Gowun Batang', serif; font-size: 38px; color: #cfd6f5; opacity: 0; animation: csZzz 4.2s ease-out infinite 1.05s;">z</span>
       <span style="position: absolute; left: 72%; top: 42%; font-family: 'Gowun Batang', serif; font-size: 46px; color: #cfd6f5; opacity: 0; animation: csZzz 4.2s ease-out infinite 2.1s;">z</span>
@@ -444,7 +445,7 @@
   <!-- SCENE 4.3 : the guitar cat -->
   <section ref="{{ guitarSectionRef }}" class="cs-tall" data-screen-label="4.3 기타 치는 고양이" style="position: relative; z-index: 3; width: 100%; min-height: 160vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 30px; box-sizing: border-box;">
     <div style="position: relative; width: min(504px, 86vw); margin: 0 auto; flex-shrink: 0;">
-      <img class="cs-guitarcat" src="assets/guitar_show.webp" alt="기타 치는 고양이" style="width: 100%; display: block; filter: drop-shadow(0 8px 28px rgba(255,220,150,.22));">
+      <img class="cs-guitarcat cs-meowcat" src="assets/guitar_show.webp" alt="기타 치는 고양이" style="width: 100%; display: block; filter: drop-shadow(0 8px 28px rgba(255,220,150,.22));">
       <span style="position: absolute; left: 30%; top: 22%; font-size: 40px; color: #ffd48a; opacity: 0; animation: csNote 3.6s ease-out infinite;">♪</span>
       <span style="position: absolute; left: 30%; top: 22%; font-size: 50px; color: #f0b95c; opacity: 0; animation: csNote 3.6s ease-out infinite 1.2s;">♫</span>
       <span style="position: absolute; left: 30%; top: 22%; font-size: 34px; color: #ffe6b8; opacity: 0; animation: csNote 3.6s ease-out infinite 2.4s;">♪</span>
@@ -458,7 +459,7 @@
   <!-- EPILOGUE : where the story came from -->
   <section class="cs-tall" data-screen-label="4.9 이야기의 시작" style="position: relative; z-index: 3; min-height: 110vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px;">
     <div class="cs-reveal" style="max-width: 660px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
-      <img src="assets/origin_cat.webp" alt="" style="width: min(200px, 35.2vw); display: block; margin: 0 auto 26px;">
+      <img class="cs-meowcat" src="assets/origin_cat.webp" alt="" style="width: min(200px, 35.2vw); display: block; margin: 0 auto 26px;">
       <div style="width: 44px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 0 auto 34px;"></div>
       <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; font-size: 16px; color: #9aa3d1; margin-bottom: 26px;">{{ t.originEyebrow }}</div>
       <p class="cs-origin-quote" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 46px; line-height: var(--cs-lead, 1.85); color: #f3efe2; margin: 0 0 26px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originQuote }}</p>
@@ -493,7 +494,7 @@
     </div>
     <div style="position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: center; gap: 6px; margin: 0 auto 26px;">
       <img class="cs-shop" src="assets/shop_open.webp" alt="문을 연 수프 가게" style="width: min(340px, 68vw); display: block;">
-      <img class="cs-chefcat" src="assets/chef_cat.webp" alt="요리사 고양이" style="width: min(72px, 14.4vw); display: block; margin-bottom: 4px;">
+      <img class="cs-chefcat cs-meowcat" src="assets/chef_cat.webp" alt="요리사 고양이" style="width: min(72px, 14.4vw); display: block; margin-bottom: 4px;">
     </div>
     <div class="cs-download-copy" style="position: relative; z-index: 1; text-align: center; width: 100%; max-width: 680px; margin-bottom: 0; min-height: 300px; display: flex; flex-direction: column; justify-content: flex-start;">
       <div class="cs-s5eyebrow" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 20px; letter-spacing: 3px; color: #a08a5f; margin-bottom: 18px;">{{ t.s5Eyebrow }}</div>
@@ -1154,6 +1155,13 @@ class Component extends DCLogic {
         this.shooters.push({ x: Math.random() * 0.8 + 0.1, y: Math.random() * 0.35, life: 0, dx: 0.28 + Math.random() * 0.15, dy: 0.12 + Math.random() * 0.08 });
       }
     }, 3800);
+    this._onMeowClick = (e) => {
+      const el = e.target && e.target.closest && e.target.closest('.cs-meowcat');
+      if (!el) return;
+      e.stopPropagation();
+      this.playMeow(el);
+    };
+    document.addEventListener('click', this._onMeowClick, true);
   }
 
   componentWillUnmount() {
@@ -1175,6 +1183,7 @@ class Component extends DCLogic {
     }
     window.removeEventListener('mousemove', this.onMove);
     window.removeEventListener('resize', this.onResize);
+    if (this._onMeowClick) document.removeEventListener('click', this._onMeowClick, true);
     if (this.audio) { try { this.audio.ctx.close(); } catch (e) {} }
   }
 
@@ -1502,6 +1511,40 @@ class Component extends DCLogic {
       'opacity:0;animation:csMeowPop 1.5s ease-out forwards;';
     document.body.appendChild(b);
     setTimeout(() => b.remove(), 1600);
+  }
+
+  playMeow(host) {
+    const now = performance.now();
+    if (this._meowAt && now - this._meowAt < 220) return;
+    this._meowAt = now;
+    this.popMeow({ currentTarget: host });
+    if (!this.soundEnabled() || this._yielded) return;
+    try {
+      const a = this.ensureAudio();
+      if (a.ctx.resume) a.ctx.resume();
+      const t0 = a.ctx.currentTime;
+      const o = a.ctx.createOscillator();
+      const o2 = a.ctx.createOscillator();
+      const g = a.ctx.createGain();
+      o.type = 'sine';
+      o2.type = 'triangle';
+      o.frequency.setValueAtTime(620, t0);
+      o.frequency.linearRampToValueAtTime(920, t0 + 0.12);
+      o.frequency.linearRampToValueAtTime(480, t0 + 0.42);
+      o2.frequency.setValueAtTime(310, t0);
+      o2.frequency.linearRampToValueAtTime(460, t0 + 0.12);
+      o2.frequency.linearRampToValueAtTime(240, t0 + 0.42);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.linearRampToValueAtTime(0.14, t0 + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.52);
+      o.connect(g);
+      o2.connect(g);
+      g.connect(a.ctx.destination);
+      o.start(t0);
+      o2.start(t0);
+      o.stop(t0 + 0.55);
+      o2.stop(t0 + 0.55);
+    } catch (err) {}
   }
 
   spawnSteam(strong, which) {
@@ -2078,25 +2121,7 @@ class Component extends DCLogic {
         }, { passive: false });
       },
       toggleSound: () => this.toggleSoundNow(),
-      meow: () => {
-        const a = this.ensureAudio();
-        a.ctx.resume();
-        const o = a.ctx.createOscillator();
-        const g = a.ctx.createGain();
-        o.type = 'sine';
-        const t0 = a.ctx.currentTime;
-        o.frequency.setValueAtTime(620, t0);
-        o.frequency.linearRampToValueAtTime(920, t0 + 0.12);
-        o.frequency.linearRampToValueAtTime(480, t0 + 0.42);
-        g.gain.setValueAtTime(0.0001, t0);
-        g.gain.linearRampToValueAtTime(0.12, t0 + 0.06);
-        g.gain.linearRampToValueAtTime(0.0001, t0 + 0.5);
-        o.connect(g);
-        g.connect(a.ctx.destination);
-        o.start(t0);
-        o.stop(t0 + 0.55);
-        this.popMeow(arguments[0]);
-      },
+      meow: (e) => this.playMeow((e && e.currentTarget) || this.refs2.tiltCat),
       trailerSectionRef: (el) => { this.refs2.trailerSection = el; if (el) requestAnimationFrame(() => this.watchTrailerFade(el)); },
       trailerFrameRef: this.ref('trailerFrame'),
       trailerPosterRef: this.ref('trailerPoster'),
