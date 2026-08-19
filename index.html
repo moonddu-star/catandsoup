@@ -551,13 +551,26 @@ class Component extends DCLogic {
     return this._soundOn !== undefined ? this._soundOn : this.state.sound;
   }
 
+  silenceAll() {
+    for (const a of [window.__csBgm, window.__csGuitar]) {
+      if (!a) continue;
+      a.pause();
+      a.volume = 0;
+      a.muted = true;
+    }
+  }
+
   unlockAudio() {
-    const a = this.getAudio();
-    const g = this.getGuitar();
-    a.volume = 0;
-    g.volume = 0;
-    a.play().catch(() => {});
-    g.play().then(() => { g.pause(); g.currentTime = 0; }).catch(() => {});
+    // iOS: play+pause inside the tap so later scroll can start each track.
+    // Stay muted and paused — the loader must stay silent.
+    for (const el of [this.getAudio(), this.getGuitar()]) {
+      el.muted = true;
+      el.volume = 0;
+      const p = el.play();
+      el.pause();
+      try { el.currentTime = 0; } catch (e) {}
+      if (p && p.catch) p.catch(() => {});
+    }
   }
 
   toggleSoundNow() {
@@ -570,6 +583,11 @@ class Component extends DCLogic {
     clearInterval(this._fade);
     clearInterval(this._bRamp); this._bRamp = null; this._t_bRamp = undefined;
     clearInterval(this._gRamp); this._gRamp = null; this._t_gRamp = undefined;
+    if (!this._loaderGone) {
+      this.silenceAll();
+      this.setState({ sound: on });
+      return;
+    }
     const el = this.getAudio();
     const g = this.getGuitar();
     if (on) {
@@ -578,8 +596,10 @@ class Component extends DCLogic {
       el.play().catch(() => {});
     } else {
       el.pause();
+      el.muted = true;
       el.volume = 0;
       g.pause();
+      g.muted = true;
       g.volume = 0;
     }
     this.setState({ sound: on });
@@ -618,7 +638,10 @@ class Component extends DCLogic {
 
   // rect-driven audio zoning (IntersectionObserver never fires in this host)
   updateAudioZones(h) {
-    if (!this._loaderGone) return;
+    if (!this._loaderGone) {
+      this.silenceAll();
+      return;
+    }
     this._zonesLive = true;
     if (!this.soundEnabled() || this._yielded) {
       for (const a of [window.__csBgm, window.__csGuitar]) {
@@ -664,9 +687,12 @@ class Component extends DCLogic {
           audio.volume = target;
           clearInterval(this[key]);
           this[key] = null;
-          if (target === 0) audio.pause();
+          if (target === 0) { audio.pause(); audio.muted = true; }
         } else {
-          if (target > 0 && audio.paused) audio.play().catch(() => {});
+          if (target > 0) {
+            audio.muted = false;
+            if (audio.paused) audio.play().catch(() => {});
+          }
           audio.volume = Math.max(0, Math.min(1, next));
         }
       }, 60);
@@ -684,6 +710,7 @@ class Component extends DCLogic {
         this._guitarPlayed = true;
         try { g.currentTime = 0; } catch (e) {}
       }
+      g.muted = false;
       g.play().catch(() => { this._guitarPlayed = false; });
       ramp(g, 0.55, 0.03);
     } else {
@@ -882,13 +909,17 @@ class Component extends DCLogic {
         this._loaderStarsStop = true;
         cancelAnimationFrame(this._loaderStars);
         if (this._loaderResize) window.removeEventListener('resize', this._loaderResize);
-        if (this.state.sound) {
+        if (this.soundEnabled()) {
           this._pendingBgm = false;
+          const g = window.__csGuitar;
+          if (g) { g.pause(); g.muted = true; g.volume = 0; }
           const a = this.getAudio();
+          a.muted = false;
           a.volume = 0;
           a.play().catch(() => {});
-          // hand the fade-in to updateAudioZones so nothing fights over volume
           this._t_bRamp = undefined;
+        } else {
+          this.silenceAll();
         }
       }, 850);
     }, wait);
