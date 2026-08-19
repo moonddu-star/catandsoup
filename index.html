@@ -138,6 +138,17 @@
   .cs-lang-btn, .cs-sound, .cs-nav a, .cs-menubtn { touch-action: manipulation; }
   .cs-menubtn { display: none; }
   .cs-menu-scrim { display: none; }
+  .cs-topbar-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 31;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+  }
   .cs-topbar {
     background: rgba(13, 16, 38, 0.7);
     backdrop-filter: blur(8px);
@@ -147,8 +158,6 @@
   /* mobile responsive overrides */
   @media (max-width: 720px) {
     .cs-topbar {
-      /* 볼륨 버튼 가로 위치: 음수면 왼쪽, 양수면 오른쪽 */
-      --cs-sound-x: -4px;
       padding: 10px 14px !important;
       padding-top: max(10px, env(safe-area-inset-top)) !important;
       padding-left: max(14px, env(safe-area-inset-left)) !important;
@@ -173,7 +182,7 @@
     }
     .cs-logo-top { width: 40px !important; height: 40px !important; }
     .cs-lang-label { display: none !important; }
-    .cs-sound { padding: 0 !important; margin-left: var(--cs-sound-x); }
+    .cs-sound { padding: 0 !important; margin-left: 0; }
     .cs-sound-icon-on { width: 62px !important; height: 62px !important; }
     .cs-sound-icon-off { width: 61px !important; height: 61px !important; }
     .cs-menubtn {
@@ -217,7 +226,8 @@
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
     }
-    .cs-topbar.is-menu-open .cs-topbar-left { z-index: 1; }
+    .cs-topbar.is-menu-open .cs-topbar-left,
+    .cs-topbar.is-menu-open .cs-topbar-center { z-index: 1; }
     .cs-topbar.is-menu-open .cs-menu-scrim.is-open { z-index: 20; }
     .cs-topbar.is-menu-open .cs-nav.is-open { z-index: 30; }
     .cs-topbar.is-menu-open .cs-menubtn { z-index: 45; }
@@ -414,9 +424,6 @@
   <!-- top bar -->
   <div class="cs-topbar" ref="{{ topbarRef }}" style="position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 20px 36px; visibility: {{ mainUiVisibility }};">
     <div class="cs-topbar-left" style="display: flex; align-items: center; gap: 12px;">
-      <button class="cs-lang-icon-btn" onClick="{{ reopenLangGate }}" style="display: flex; align-items: center; justify-content: center; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit;" title="{{ t.pickLanguage }}" aria-label="{{ t.pickLanguage }}">
-        <img ref="{{ logoTopRef }}" class="cs-logo-top" src="assets/cat_face_star.webp" alt="Cats &amp; Soup" width="50" height="50" style="width: 50px; height: 50px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));">
-      </button>
       <button type="button" class="cs-sound" ref="{{ soundBtnRef }}" title="{{ soundLabel }}" aria-label="{{ soundLabel }}">
         <img class="cs-sound-icon cs-sound-icon-on" src="assets/icon_sound_on.webp" alt="" width="78" height="78">
         <img class="cs-sound-icon cs-sound-icon-off" src="assets/icon_sound_off.webp" alt="" width="76" height="76">
@@ -427,6 +434,9 @@
         </sc-for>
       </div>
     </div>
+    <button class="cs-topbar-center cs-lang-icon-btn" onClick="{{ reopenLangGate }}" style="display: flex; align-items: center; justify-content: center; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit;" title="{{ t.pickLanguage }}" aria-label="{{ t.pickLanguage }}">
+      <img ref="{{ logoTopRef }}" class="cs-logo-top" src="assets/cat_face_star.webp" alt="Cats &amp; Soup" width="50" height="50" style="width: 50px; height: 50px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));">
+    </button>
     <div class="cs-menu-scrim" ref="{{ menuScrimRef }}" aria-hidden="true"></div>
     <div class="cs-nav" id="cs-nav" ref="{{ navRef }}" style="display: flex; align-items: center; gap: 24px; font-size: 22px; font-weight: 600; white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; flex-wrap: wrap; justify-content: flex-end;">
       <a href="#story" ref="{{ storyNavRef }}" onClick="{{ goStory }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navStory }}</a>
