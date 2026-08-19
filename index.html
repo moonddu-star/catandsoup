@@ -182,6 +182,7 @@
       </div>
       <button onClick="{{ confirmLoader }}" style="margin-top: 6px; height: 56px; width: 220px; padding: 0 16px; border-radius: 999px; border: 0; background: #f0b95c; color: #1a1330; font-size: 19px; font-weight: var(--cs-weight, 700); cursor: pointer; font-family: inherit; white-space: nowrap;">{{ t.okStart }}</button>
     </sc-if>
+    <div style="position: absolute; right: max(16px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); font-family: 'Gowun Dodum', sans-serif; font-size: 11px; letter-spacing: 0.5px; color: #fff; pointer-events: none;">ver 0.5</div>
   </div>
 
   <!-- fixed backgrounds -->
@@ -551,6 +552,17 @@ class Component extends DCLogic {
     return this._soundOn !== undefined ? this._soundOn : this.state.sound;
   }
 
+  stopTrack(el) {
+    if (!el) return;
+    const key = (el === window.__csGuitar) ? '_gRamp' : '_bRamp';
+    clearInterval(this[key]);
+    this[key] = null;
+    this['_t' + key] = 0;
+    el.pause();
+    el.volume = 0;
+    el.muted = true;
+  }
+
   silenceAll() {
     for (const a of [window.__csBgm, window.__csGuitar]) {
       if (!a) continue;
@@ -588,20 +600,8 @@ class Component extends DCLogic {
       this.setState({ sound: on });
       return;
     }
-    const el = this.getAudio();
-    const g = this.getGuitar();
-    if (on) {
-      el.muted = false;
-      el.volume = 0.4;
-      el.play().catch(() => {});
-    } else {
-      el.pause();
-      el.muted = true;
-      el.volume = 0;
-      g.pause();
-      g.muted = true;
-      g.volume = 0;
-    }
+    if (on) this.updateAudioZones(window.innerHeight);
+    else this.silenceAll();
     this.setState({ sound: on });
   }
 
@@ -644,27 +644,8 @@ class Component extends DCLogic {
     }
     this._zonesLive = true;
     if (!this.soundEnabled() || this._yielded) {
-      for (const a of [window.__csBgm, window.__csGuitar]) {
-        if (a && !a.paused) { a.pause(); a.volume = 0; }
-      }
+      this.silenceAll();
       return;
-    }
-    // watchdog: revive a track that reports playing but whose clock has stalled
-    const now = Date.now();
-    if (!this._wdAt || now - this._wdAt > 1200) {
-      this._wdAt = now;
-      // silence any other audio still running (detached elements keep playing)
-      for (const a of (window.__csAllAudio || [])) {
-        if (a !== window.__csBgm && a !== window.__csGuitar && !a.paused) { a.pause(); a.volume = 0; }
-      }
-      for (const a of [window.__csBgm, window.__csGuitar]) {
-        if (!a || a.paused) continue;
-        if (a._wdT === a.currentTime) {
-          if (!a.isConnected) document.body.appendChild(a);
-          a.play().catch(() => {});
-        }
-        a._wdT = a.currentTime;
-      }
     }
     const on = (el, ratio) => {
       if (!el) return false;
@@ -672,9 +653,38 @@ class Component extends DCLogic {
       return r.top < h * (1 - (ratio || 0.25)) && r.bottom > h * (ratio || 0.25);
     };
     const g = this.getGuitar();
+    const b = this.getAudio();
+    const gs = this.refs2.guitarSection;
+    const gs2 = this.refs2.guitarSection2;
+    const mobile = window.innerWidth <= 720;
+    const inGuitar = on(gs, mobile ? 0.06 : 0.22) || on(gs2, mobile ? 0.12 : 0.28);
+    const inTrailer = on(this.refs2.trailerSection, 0.35);
+    const active = inTrailer ? null : (inGuitar ? g : b);
+
+    const now = Date.now();
+    if (!this._wdAt || now - this._wdAt > 1200) {
+      this._wdAt = now;
+      for (const a of (window.__csAllAudio || [])) {
+        if (a !== window.__csBgm && a !== window.__csGuitar && !a.paused) { a.pause(); a.volume = 0; }
+      }
+      for (const a of [window.__csBgm, window.__csGuitar]) {
+        if (!a) continue;
+        if (a !== active) {
+          if (!a.paused) this.stopTrack(a);
+          continue;
+        }
+        if (a.paused) continue;
+        if (a._wdT === a.currentTime) {
+          if (!a.isConnected) document.body.appendChild(a);
+          a.play().catch(() => {});
+        }
+        a._wdT = a.currentTime;
+      }
+    }
+
+    const otherOf = (audio) => (audio === g ? b : g);
     const ramp = (audio, target, step) => {
       const key = audio === g ? '_gRamp' : '_bRamp';
-      // a ramp toward this same target is already in flight — never restart it
       if (this['_t' + key] === target && this[key]) return;
       const settled = audio.volume === target && (target > 0 ? !audio.paused : audio.paused);
       if (this['_t' + key] === target && settled) return;
@@ -690,6 +700,7 @@ class Component extends DCLogic {
           if (target === 0) { audio.pause(); audio.muted = true; }
         } else {
           if (target > 0) {
+            this.stopTrack(otherOf(audio));
             audio.muted = false;
             if (audio.paused) audio.play().catch(() => {});
           }
@@ -697,32 +708,27 @@ class Component extends DCLogic {
         }
       }, 60);
     };
-    const gs = this.refs2.guitarSection;
-    const gs2 = this.refs2.guitarSection2;
-    const mobile = window.innerWidth <= 720;
-    const inGuitar = on(gs, mobile ? 0.06 : 0.22) || on(gs2, mobile ? 0.12 : 0.28);
-    const pastGuitar = gs && gs.getBoundingClientRect().bottom < 0 && !inGuitar;
-    const inTrailer = on(this.refs2.trailerSection, 0.35);
-    const b = this._bgm;
+
+    if (inTrailer) {
+      this.stopTrack(b);
+      this.stopTrack(g);
+      return;
+    }
     if (inGuitar) {
-      if (b) ramp(b, 0, 0.03);
+      this.stopTrack(b);
       if (!this._guitarPlayed) {
         this._guitarPlayed = true;
         try { g.currentTime = 0; } catch (e) {}
       }
-      g.muted = false;
-      g.play().catch(() => { this._guitarPlayed = false; });
-      ramp(g, 0.55, 0.03);
-    } else {
-      // let the song finish; only cut it once the scene is fully behind us
-      if (pastGuitar || inTrailer) ramp(g, 0, 0.012);
-      const guitarAudible = !g.paused && g.volume > 0.01;
-      if (pastGuitar || inTrailer || guitarAudible) {
-        if (b) ramp(b, 0);
-      } else {
-        ramp(this.getAudio(), 0.4, 0.006);
+      if (g.paused) {
+        g.muted = false;
+        g.play().catch(() => { this._guitarPlayed = false; });
       }
+      ramp(g, 0.55, 0.04);
+      return;
     }
+    this.stopTrack(g);
+    ramp(b, 0.4, 0.02);
   }
 
   // hard rule: nothing plays once the guitar scene is fully above the viewport
@@ -911,13 +917,9 @@ class Component extends DCLogic {
         if (this._loaderResize) window.removeEventListener('resize', this._loaderResize);
         if (this.soundEnabled()) {
           this._pendingBgm = false;
-          const g = window.__csGuitar;
-          if (g) { g.pause(); g.muted = true; g.volume = 0; }
-          const a = this.getAudio();
-          a.muted = false;
-          a.volume = 0;
-          a.play().catch(() => {});
           this._t_bRamp = undefined;
+          this._t_gRamp = undefined;
+          this.updateAudioZones(window.innerHeight);
         } else {
           this.silenceAll();
         }
@@ -942,6 +944,18 @@ class Component extends DCLogic {
             this.volume = 0;
             return Promise.resolve();
           }
+        }
+        // guitar and BGM must never run at the same time
+        if (this === window.__csBgm && window.__csGuitar && !window.__csGuitar.paused) {
+          this.pause();
+          this.volume = 0;
+          this.muted = true;
+          return Promise.resolve();
+        }
+        if (this === window.__csGuitar && window.__csBgm && !window.__csBgm.paused) {
+          window.__csBgm.pause();
+          window.__csBgm.volume = 0;
+          window.__csBgm.muted = true;
         }
         return origPlay.apply(this, arguments);
       };
@@ -1006,16 +1020,10 @@ class Component extends DCLogic {
       // stay silent until the loader has finished and the hero is showing
       if (!this._loaderGone || this._pendingBgm) return;
       if (!this.state.sound) return;
-      // once zoning is live it owns playback entirely — do nothing here
-      if (this._zonesLive) return;
-      const el = this.getAudio();
-      if (!el.paused) return;
-      el.volume = 0;
-      el.play().then(() => {
-        window.removeEventListener('pointerdown', startBgm);
-        window.removeEventListener('keydown', startBgm);
-        window.removeEventListener('scroll', startBgm, { capture: true });
-      }).catch(() => {});
+      this.updateAudioZones(window.innerHeight);
+      window.removeEventListener('pointerdown', startBgm);
+      window.removeEventListener('keydown', startBgm);
+      window.removeEventListener('scroll', startBgm, { capture: true });
     };
     this._startBgm = startBgm;
     startBgm();
