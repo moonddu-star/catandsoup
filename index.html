@@ -1,8 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>고양이와 스프 · Cats &amp; Soup</title>
+<meta name="description" content="별에서 온 고양이들의 아주 작은 수프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
+<meta name="theme-color" content="#131730">
+<link rel="canonical" href="https://moonddu-star.github.io/catandsoup/">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cats &amp; Soup">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://moonddu-star.github.io/catandsoup/">
+<meta property="og:title" content="고양이와 스프 · Cats &amp; Soup">
+<meta property="og:description" content="별에서 온 고양이들의 아주 작은 수프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
+<meta property="og:image" content="https://moonddu-star.github.io/catandsoup/assets/og-share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="고양이와 스프 · Cats &amp; Soup">
+<meta name="twitter:description" content="별에서 온 고양이들의 아주 작은 수프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
+<meta name="twitter:image" content="https://moonddu-star.github.io/catandsoup/assets/og-share.png">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -662,6 +682,26 @@ class Component extends DCLogic {
     document.documentElement.style.setProperty('--cs-jp-palt', L === 'jp' ? '"palt" 1, "kern" 1' : 'normal');
     // JP/CN run with no spaces; keep-all treats the whole line as unbreakable and overflows
     document.documentElement.style.setProperty('--cs-wb', (this.state.lang === 'jp' || this.state.lang === 'cn') ? 'normal' : 'keep-all');
+    this.syncDocumentMeta();
+  }
+
+  syncDocumentMeta() {
+    const L = this.state.lang;
+    const t = (this._T && (this._T[L] || this._T.kr)) || {};
+    const htmlLang = { kr: 'ko', en: 'en', jp: 'ja', cn: 'zh-Hans', es: 'es', fr: 'fr', th: 'th', pt: 'pt', id: 'id' }[L] || 'ko';
+    const ogLocale = { kr: 'ko_KR', en: 'en_US', jp: 'ja_JP', cn: 'zh_CN', es: 'es_ES', fr: 'fr_FR', th: 'th_TH', pt: 'pt_PT', id: 'id_ID' }[L] || 'ko_KR';
+    const brand = t.brandName || '고양이와 스프';
+    const title = brand === 'Cats & Soup' ? 'Cats & Soup' : (brand + ' · Cats & Soup');
+    const desc = String(t.heroTag || '').replace(/\n/g, ' ');
+    document.documentElement.lang = htmlLang;
+    document.title = title;
+    const set = (sel, attr, val) => { const el = document.querySelector(sel); if (el && val) el.setAttribute(attr, val); };
+    set('meta[name="description"]', 'content', desc);
+    set('meta[property="og:title"]', 'content', title);
+    set('meta[property="og:description"]', 'content', desc);
+    set('meta[property="og:locale"]', 'content', ogLocale);
+    set('meta[name="twitter:title"]', 'content', title);
+    set('meta[name="twitter:description"]', 'content', desc);
   }
 
   ref2(name) { return (el) => { this.refs2[name] = el; }; }
