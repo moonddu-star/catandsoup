@@ -154,7 +154,24 @@
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
-  html.cs-menu-lock, body.cs-menu-lock { overflow: hidden; }
+  .cs-story-main,
+  .cs-origin-quote,
+  .cs-origin-note,
+  .cs-s5main,
+  .cs-heroline,
+  .cs-herotag {
+    text-align: center !important;
+    text-align-last: center;
+  }
+  html[lang="th"] .cs-story-main,
+  html[lang="th"] .cs-origin-quote,
+  html[lang="th"] .cs-origin-note,
+  html[lang="th"] .cs-s5main,
+  html[lang="th"] .cs-heroline,
+  html[lang="th"] .cs-herotag {
+    word-break: break-word !important;
+    overflow-wrap: anywhere;
+  }
   /* mobile responsive overrides */
   @media (max-width: 720px) {
     .cs-topbar {
@@ -949,8 +966,9 @@ class Component extends DCLogic {
     const beforeGuitar = !firstG || firstG.getBoundingClientRect().top > h * 0.4;
     const pastGuitar = lastG && lastG.getBoundingClientRect().bottom < 0;
     const guitarOver = this._guitarDone || (g && g.ended);
+    const guitarOnce = !!(this._guitarPlayed && !guitarOver && g && !g.ended);
     const silent = inTrailer || pastGuitar || (guitarOver && !beforeGuitar);
-    const active = silent ? null : (inGuitar && !guitarOver ? g : (beforeGuitar ? b : null));
+    const active = silent ? null : ((inGuitar && !guitarOver) || guitarOnce ? g : (beforeGuitar ? b : null));
 
     const now = Date.now();
     if (!this._wdAt || now - this._wdAt > 1200) {
@@ -1021,12 +1039,29 @@ class Component extends DCLogic {
       }, 60);
     };
 
-    if (inTrailer || pastGuitar || (guitarOver && !beforeGuitar)) {
+    if (inTrailer || pastGuitar) {
+      if (this._guitarPlayed) this._guitarDone = true;
       ramp(b, 0, 0.04);
       ramp(g, 0, 0.03);
       return;
     }
-    if (inGuitar) {
+    if (beforeGuitar && !guitarOnce) {
+      ramp(g, 0, 0.025);
+      ramp(b, 0.4, 0.02);
+      return;
+    }
+    if (beforeGuitar && guitarOnce) {
+      this._guitarDone = true;
+      ramp(g, 0, 0.025);
+      ramp(b, 0.4, 0.02);
+      return;
+    }
+    if (guitarOver) {
+      ramp(b, 0, 0.04);
+      ramp(g, 0, 0.03);
+      return;
+    }
+    if (inGuitar || guitarOnce) {
       ramp(b, 0, 0.02);
       if (!this._guitarPlayed) {
         this._guitarPlayed = true;
@@ -1040,13 +1075,6 @@ class Component extends DCLogic {
         g.play().catch(() => { this._guitarPlayed = false; });
       }
       ramp(g, 0.55, 0.025);
-      return;
-    }
-    if (beforeGuitar) {
-      this._guitarDone = false;
-      this._guitarPlayed = false;
-      ramp(g, 0, 0.025);
-      ramp(b, 0.4, 0.02);
       return;
     }
     ramp(b, 0, 0.04);
@@ -1123,7 +1151,7 @@ class Component extends DCLogic {
     document.documentElement.style.setProperty('--cs-jp-kern', L === 'jp' ? 'normal' : 'auto');
     document.documentElement.style.setProperty('--cs-jp-palt', L === 'jp' ? '"palt" 1, "kern" 1' : 'normal');
     // JP/CN run with no spaces; keep-all treats the whole line as unbreakable and overflows
-    document.documentElement.style.setProperty('--cs-wb', (this.state.lang === 'jp' || this.state.lang === 'cn') ? 'normal' : 'keep-all');
+    document.documentElement.style.setProperty('--cs-wb', (L === 'jp' || L === 'cn') ? 'normal' : (L === 'th' ? 'break-word' : 'keep-all'));
     this.syncDocumentMeta();
   }
 
@@ -2163,7 +2191,7 @@ class Component extends DCLogic {
         s3Main: 'กลางป่าลึก คิคิพบหม้อซุปหนึ่งใบ\nที่กำลังเดือดอยู่บนกองไฟ',
         stirHint: 'เลื่อนเมาส์ไปที่หม้อเพื่อคนซุป',
         clickMe: 'คลิกที่คิคิ',
-        inter1: 'คิคิคนซุปอย่างเบามือเพื่อไม่ให้ไหม้\nและตั้งแต่คืนนั้นเธอก็กลายเป็นพ่อครัวประจำป่า',
+        inter1: 'คิคิคนซุปอย่างเบามือ\nเพื่อไม่ให้ไหม้\nและตั้งแต่คืนนั้นเธอก็กลายเป็น\nพ่อครัวประจำป่า',
         s4Eyebrow: 'คืนที่สาม แขกที่ตามกลิ่นมา',
         s4Main: 'ไอซุปลอยขึ้นพร้อมแสงอ่อน ๆ\nแล้วแมวดาวตัวอื่น ๆ ก็ทยอยลงมาตามกลิ่นหอมนั้น',
         tapHint: 'แตะการ์ดเพื่อทำความรู้จักแมว',
