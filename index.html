@@ -75,6 +75,7 @@
   .cs-story-pin { height: 100vh !important; height: 100dvh !important; }
   .cs-story-beat { transition: none; }
   .cs-sound-mark { display: none; }
+  .cs-sound.is-off { opacity: .42; }
   .cs-lang-btn, .cs-sound, .cs-nav a { touch-action: manipulation; }
   /* mobile responsive overrides */
   @media (max-width: 720px) {
@@ -90,7 +91,7 @@
     .cs-lang-label { display: none !important; }
     .cs-nav { gap: 8px !important; font-size: 12px !important; }
     .cs-nav a { display: inline !important; padding: 8px 4px; }
-    .cs-sound { padding: 8px 10px !important; min-width: 40px; min-height: 36px; font-size: 16px !important; }
+    .cs-sound { padding: 10px 12px !important; min-width: 44px; min-height: 44px; font-size: 18px !important; }
     .cs-sound-full { display: none !important; }
     .cs-sound-mark { display: inline !important; }
     .cs-story { height: 480vh !important; }
@@ -262,7 +263,7 @@
     <div class="cs-nav" style="display: flex; align-items: center; gap: 16px; font-size: 14px; white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word;">
       <a href="#story" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navStory }}</a>
       <a href="#download" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navDownload }}</a>
-      <button class="cs-sound" onClick="{{ toggleSound }}" title="{{ soundLabel }}" aria-label="{{ soundLabel }}" style="cursor: pointer; border: 1px solid rgba(240,185,92,.6); background: rgba(19,23,48,.55); color: #f0b95c; font-family: 'Gowun Dodum', sans-serif; font-size: 13px; padding: 8px 14px; border-radius: 999px; white-space: nowrap;"><span class="cs-sound-full">{{ soundLabel }}</span><span class="cs-sound-mark" aria-hidden="true">♪</span></button>
+      <button type="button" class="cs-sound" ref="{{ soundBtnRef }}" title="{{ soundLabel }}" aria-label="{{ soundLabel }}" style="cursor: pointer; border: 1px solid rgba(240,185,92,.6); background: rgba(19,23,48,.55); color: #f0b95c; font-family: 'Gowun Dodum', sans-serif; font-size: 13px; padding: 8px 14px; border-radius: 999px; white-space: nowrap; position: relative; z-index: 30;"><span class="cs-sound-full">{{ soundLabel }}</span><span class="cs-sound-mark" aria-hidden="true">♪</span></button>
     </div>
   </div>
 
@@ -511,6 +512,9 @@ class Component extends DCLogic {
       a.loop = true;
       a.preload = 'auto';
       a.volume = 0;
+      a.playsInline = true;
+      a.setAttribute('playsinline', '');
+      a.setAttribute('webkit-playsinline', '');
       document.body.appendChild(a);
       window.__csBgm = a;
     }
@@ -518,6 +522,67 @@ class Component extends DCLogic {
     if (!window.__csBgm.isConnected) document.body.appendChild(window.__csBgm);
     this._bgm = window.__csBgm;
     return this._bgm;
+  }
+
+  getGuitar() {
+    if (!window.__csGuitar) {
+      const prior = document.getElementById('cs-guitar');
+      if (prior) window.__csGuitar = prior;
+    }
+    if (!window.__csGuitar) {
+      const a = document.createElement('audio');
+      a.src = 'assets/guitar.mp3';
+      a.id = 'cs-guitar';
+      a.loop = false;
+      a.preload = 'auto';
+      a.volume = 0;
+      a.playsInline = true;
+      a.setAttribute('playsinline', '');
+      a.setAttribute('webkit-playsinline', '');
+      document.body.appendChild(a);
+      window.__csGuitar = a;
+    }
+    if (!window.__csGuitar.isConnected) document.body.appendChild(window.__csGuitar);
+    this._guitar = window.__csGuitar;
+    return this._guitar;
+  }
+
+  soundEnabled() {
+    return this._soundOn !== undefined ? this._soundOn : this.state.sound;
+  }
+
+  unlockAudio() {
+    const a = this.getAudio();
+    const g = this.getGuitar();
+    a.volume = 0;
+    g.volume = 0;
+    a.play().catch(() => {});
+    g.play().then(() => { g.pause(); g.currentTime = 0; }).catch(() => {});
+  }
+
+  toggleSoundNow() {
+    const now = Date.now();
+    if (this._soundTapAt && now - this._soundTapAt < 400) return;
+    this._soundTapAt = now;
+    const on = !this.soundEnabled();
+    this._soundOn = on;
+    if (this.refs2.soundBtn) this.refs2.soundBtn.classList.toggle('is-off', !on);
+    clearInterval(this._fade);
+    clearInterval(this._bRamp); this._bRamp = null; this._t_bRamp = undefined;
+    clearInterval(this._gRamp); this._gRamp = null; this._t_gRamp = undefined;
+    const el = this.getAudio();
+    const g = this.getGuitar();
+    if (on) {
+      el.muted = false;
+      el.volume = 0.4;
+      el.play().catch(() => {});
+    } else {
+      el.pause();
+      el.volume = 0;
+      g.pause();
+      g.volume = 0;
+    }
+    this.setState({ sound: on });
   }
 
   componentDidUpdate() { this.applyCjkFont(); }
@@ -555,7 +620,12 @@ class Component extends DCLogic {
   updateAudioZones(h) {
     if (!this._loaderGone) return;
     this._zonesLive = true;
-    if (!this.state.sound || this._yielded) return;
+    if (!this.soundEnabled() || this._yielded) {
+      for (const a of [window.__csBgm, window.__csGuitar]) {
+        if (a && !a.paused) { a.pause(); a.volume = 0; }
+      }
+      return;
+    }
     // watchdog: revive a track that reports playing but whose clock has stalled
     const now = Date.now();
     if (!this._wdAt || now - this._wdAt > 1200) {
@@ -578,19 +648,7 @@ class Component extends DCLogic {
       const r = el.getBoundingClientRect();
       return r.top < h * (1 - (ratio || 0.25)) && r.bottom > h * (ratio || 0.25);
     };
-    if (!window.__csGuitar) {
-      const prior = document.getElementById('cs-guitar');
-      if (prior) window.__csGuitar = prior;
-    }
-    if (!window.__csGuitar) {
-      const a = document.createElement('audio');
-      a.src = 'assets/guitar.mp3';
-      a.id = 'cs-guitar';
-      a.loop = false; a.volume = 0;
-      document.body.appendChild(a);
-      window.__csGuitar = a;
-    }
-    const g = (this._guitar = window.__csGuitar);
+    const g = this.getGuitar();
     const ramp = (audio, target, step) => {
       const key = audio === g ? '_gRamp' : '_bRamp';
       // a ramp toward this same target is already in flight — never restart it
@@ -614,19 +672,20 @@ class Component extends DCLogic {
       }, 60);
     };
     const gs = this.refs2.guitarSection;
-    const inGuitar = on(gs, 0.25);
+    const gs2 = this.refs2.guitarSection2;
+    const mobile = window.innerWidth <= 720;
+    const inGuitar = on(gs, mobile ? 0.06 : 0.22) || on(gs2, mobile ? 0.12 : 0.28);
     const pastGuitar = gs && gs.getBoundingClientRect().bottom < 0 && !inGuitar;
     const inTrailer = on(this.refs2.trailerSection, 0.35);
     const b = this._bgm;
     if (inGuitar) {
-      // fade the BGM down, then let the guitar in once it is quiet
-      if (b) ramp(b, 0, 0.02);
-      const bgmQuiet = !b || b.paused || b.volume < 0.05;
-      if (!this._guitarPlayed && bgmQuiet) {
+      if (b) ramp(b, 0, 0.03);
+      if (!this._guitarPlayed) {
         this._guitarPlayed = true;
-        g.currentTime = 0;
-        ramp(g, 0.55, 0.02);
+        try { g.currentTime = 0; } catch (e) {}
       }
+      g.play().catch(() => { this._guitarPlayed = false; });
+      ramp(g, 0.55, 0.03);
     } else {
       // let the song finish; only cut it once the scene is fully behind us
       if (pastGuitar || inTrailer) ramp(g, 0, 0.012);
@@ -1864,45 +1923,25 @@ class Component extends DCLogic {
       mainUiVisibility: this.state.langConfirmed ? 'visible' : 'hidden',
       pickerLangs,
       confirmLoader: () => {
-        // unlock audio inside the click gesture, but keep it silent until the loader is gone
-        const a = this.getAudio();
-        a.volume = 0;
-        a.play().catch(() => {});
+        // unlock both tracks inside the click gesture — iOS will not start guitar later on scroll
+        this.unlockAudio();
         this._pendingBgm = true;
         this.setState({ langConfirmed: true }, () => this.loadAssets());
       },
       cats,
       soundLabel: '♪ ' + (this.state.sound ? (T[lang] || T.kr).bgmOff : (T[lang] || T.kr).bgmOn),
       bgmRef: this.ref('bgm'),
-      toggleSound: () => {
-        const el = this.getAudio();
-        const on = !this.state.sound;
-        {
-          clearInterval(this._fade);
-          // kill any in-flight zone ramps so they cannot override this choice
-          clearInterval(this._bRamp); this._bRamp = null; this._t_bRamp = undefined;
-          clearInterval(this._gRamp); this._gRamp = null; this._t_gRamp = undefined;
-          if (this._guitar && !on) { this._guitar.pause(); this._guitar.volume = 0; }
-          if (on) {
-            el.muted = false;
-            el.volume = 0.4;              // audible immediately (avoid silent-fade race)
-            const p = el.play();
-            if (p && p.catch) {
-              p.catch(() => {
-                // retry once on the next real pointer gesture
-                const retry = () => { el.play().catch(() => {}); window.removeEventListener('pointerdown', retry); };
-                window.addEventListener('pointerdown', retry, { once: true });
-              });
-            }
-          } else {
-            this._fade = setInterval(() => {
-              el.volume = Math.max(0, el.volume - 0.06);
-              if (el.volume <= 0.001) { el.pause(); clearInterval(this._fade); }
-            }, 60);
-          }
-        }
-        this.setState({ sound: on });
+      soundBtnRef: (el) => {
+        this.refs2.soundBtn = el;
+        if (!el || el._csSoundBound) return;
+        el._csSoundBound = true;
+        el.addEventListener('pointerup', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.toggleSoundNow();
+        }, { passive: false });
       },
+      toggleSound: () => this.toggleSoundNow(),
       meow: () => {
         const a = this.ensureAudio();
         a.ctx.resume();
