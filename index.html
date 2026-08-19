@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>고양이와 스프 · Cats &amp; Soup</title>
 <meta name="description" content="별에서 온 고양이들의 아주 작은 수프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
 <meta name="theme-color" content="#131730">
@@ -71,40 +71,64 @@
   @keyframes csRipple { 0% { transform: scale(.4); opacity: .7; } 100% { transform: scale(1.5); opacity: 0; } }
   @keyframes csScrollHint { 0%,100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(8px); opacity: .4; } }
   .yt-cover iframe { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100%; min-width: 177.78vh; transform: translate(-50%,-50%); pointer-events: none; }
+  .cs-hero { min-height: 100vh !important; min-height: 100dvh !important; }
+  .cs-story-pin { height: 100vh !important; height: 100dvh !important; }
+  .cs-story-beat { transition: none; }
+  .cs-sound-mark { display: none; }
+  .cs-lang-btn, .cs-sound, .cs-nav a { touch-action: manipulation; }
   /* mobile responsive overrides */
   @media (max-width: 720px) {
-    .cs-topbar { padding: 12px 14px !important; gap: 8px !important; }
+    .cs-topbar {
+      padding: 12px 14px !important;
+      padding-top: max(12px, env(safe-area-inset-top)) !important;
+      padding-left: max(14px, env(safe-area-inset-left)) !important;
+      padding-right: max(14px, env(safe-area-inset-right)) !important;
+      gap: 8px !important;
+    }
     .cs-topbar-left { gap: 10px !important; }
     .cs-logo-top { height: 26px !important; }
-    .cs-nav { gap: 10px !important; font-size: 12px !important; }
-    .cs-nav a { display: none !important; }
+    .cs-lang-label { display: none !important; }
+    .cs-nav { gap: 8px !important; font-size: 12px !important; }
+    .cs-nav a { display: inline !important; padding: 8px 4px; }
+    .cs-sound { padding: 8px 10px !important; min-width: 40px; min-height: 36px; font-size: 16px !important; }
+    .cs-sound-full { display: none !important; }
+    .cs-sound-mark { display: inline !important; }
+    .cs-story { height: 480vh !important; }
     .cs-story-main { font-size: 26px !important; line-height: 1.8 !important; }
     .cs-story-eyebrow { font-size: 13px !important; letter-spacing: 3px !important; }
     .cs-story-sub { font-size: 13px !important; }
     .cs-heroline { font-size: 20px !important; }
     .cs-herotag { font-size: 15px !important; }
+    .cs-origin-quote { font-size: 26px !important; }
+    .cs-origin-note { font-size: 16px !important; }
     .cs-potrow { flex-direction: column !important; align-items: center !important; gap: 40px !important; }
     .cs-pot { transform: scale(.82); transform-origin: 50% 100%; }
     .cs-observatory { transform: scale(.6); transform-origin: 100% 100%; right: 2vw !important; }
     .cs-shot { width: min(300px, 78vw) !important; }
+    .cs-storebtns { padding-bottom: max(28px, env(safe-area-inset-bottom)) !important; }
     .cs-storebtns a { font-size: 14px !important; padding: 13px 22px !important; }
-    .cs-footer { flex-direction: column !important; align-items: flex-start !important; padding: 32px 20px 40px !important; }
+    .cs-footer {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      padding: 32px 20px 40px !important;
+      padding-bottom: max(40px, calc(20px + env(safe-area-inset-bottom))) !important;
+    }
     .cs-moon { width: 76px !important; height: 76px !important; top: 9vh !important; right: 8vw !important; }
-    .cs-const { opacity: .3 !important; width: min(190px, 40vw) !important; }
+    .cs-const { opacity: .16 !important; width: min(190px, 40vw) !important; }
     .cs-const-fish { display: none !important; }
-    .cs-dipper { top: 11vh !important; left: 4vw !important; width: min(285px, 62vw) !important; opacity: .38 !important; }
+    .cs-dipper { top: 11vh !important; left: 4vw !important; width: min(285px, 62vw) !important; opacity: .18 !important; }
     .cs-catstar { transform: scale(.7); transform-origin: 100% 0; right: 4vw !important; }
     .cs-cook { width: min(276px, 74vw) !important; height: min(276px, 74vw) !important; }
-    .cs-scene3 { min-height: auto !important; padding: 9vh 20px !important; gap: 34px !important; }
-    .cs-interlude { min-height: auto !important; padding: 9vh 20px !important; gap: 30px !important; }
-    .cs-cats { min-height: auto !important; padding: 9vh 20px !important; }
+    .cs-scene3, .cs-interlude, .cs-cats, .cs-tall {
+      min-height: auto !important;
+      padding: 9vh 20px !important;
+      gap: 30px !important;
+    }
+    .cs-download { min-height: auto !important; padding: 12vh 20px 6vh !important; }
+    .cs-download-copy { min-height: 0 !important; }
     .cs-hero { padding: 82px 20px 28px !important; }
     .cs-story-beat { padding: 0 20px !important; }
     .cs-story-beat > div { max-width: 100% !important; }
-  }
-  .cs-story-beat { transition: opacity .5s ease; }
-  @media (max-width: 720px) {
-    /* the room + kiki pair overflows a phone width side by side */
     .cs-roomrow { gap: 6px !important; }
     .cs-room { width: min(210px, 46vw) !important; }
     .cs-kiki { width: min(120px, 27vw) !important; }
@@ -122,11 +146,15 @@
     .cs-picklabel { width: min(320px, 86vw) !important; font-size: 15px !important; letter-spacing: 2px !important; }
   }
   @media (max-width: 480px) {
+    .cs-story { height: 420vh !important; }
     .cs-story-main { font-size: 22px !important; }
+    .cs-origin-quote { font-size: 22px !important; }
     .cs-cook { width: min(228px, 79vw) !important; height: min(228px, 79vw) !important; }
     .cs-roomrow { flex-direction: column !important; align-items: center !important; gap: 14px !important; }
     .cs-room { width: min(230px, 66vw) !important; }
     .cs-kiki { width: min(140px, 42vw) !important; }
+    .cs-langgrid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; width: min(320px, 92vw) !important; }
+    .cs-langgrid button { height: 44px !important; font-size: 14px !important; }
   }
 </style>
 </helmet>
@@ -148,7 +176,7 @@
       <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 18px; letter-spacing: 3px; color: #9aa3d1; margin-right: -3px; height: 30px; width: min(430px, 88vw); display: flex; align-items: center; justify-content: center; white-space: nowrap;" class="cs-picklabel">{{ t.pickLanguage }}</div>
       <div dir="ltr" class="cs-langgrid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; justify-content: center; width: min(430px, 88vw);">
         <sc-for list="{{ pickerLangs }}" as="l" hint-placeholder-count="6">
-          <button onClick="{{ l.pick }}" style="width: 100%; height: 46px; padding: 0 6px; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgba(240,185,92,.5); background: {{ l.bg }}; color: {{ l.fg }}; cursor: pointer; font-family: inherit; white-space: nowrap;">{{ l.label }}</button>
+          <button class="cs-lang-btn" onClick="{{ l.pick }}" style="width: 100%; height: 46px; padding: 0 6px; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgba(240,185,92,.5); background: {{ l.bg }}; color: {{ l.fg }}; cursor: pointer; font-family: inherit; white-space: nowrap;">{{ l.label }}</button>
         </sc-for>
       </div>
       <button onClick="{{ confirmLoader }}" style="margin-top: 6px; height: 56px; width: 220px; padding: 0 16px; border-radius: 999px; border: 0; background: #f0b95c; color: #1a1330; font-size: 19px; font-weight: var(--cs-weight, 700); cursor: pointer; font-family: inherit; white-space: nowrap;">{{ t.okStart }}</button>
@@ -223,7 +251,7 @@
     <div class="cs-topbar-left" style="display: flex; align-items: center; gap: 18px;">
       <button onClick="{{ reopenLangGate }}" style="display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit;">
         <img ref="{{ logoTopRef }}" class="cs-logo-top" src="assets/cat_face_star.webp" alt="Cats &amp; Soup" style="height: 34px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));">
-        <span style="font-family: 'Gowun Dodum', sans-serif; font-size: 13px; color: #c3c9e8; white-space: nowrap; text-shadow: 0 1px 6px rgba(0,0,0,.4);">{{ t.pickLanguage }}</span>
+        <span class="cs-lang-label" style="font-family: 'Gowun Dodum', sans-serif; font-size: 13px; color: #c3c9e8; white-space: nowrap; text-shadow: 0 1px 6px rgba(0,0,0,.4);">{{ t.pickLanguage }}</span>
       </button>
       <div style="display: none; gap: 4px; background: rgba(19,23,48,.55); border: 1px solid rgba(154,163,209,.35); border-radius: 999px; padding: 3px;">
         <sc-for list="{{ langs }}" as="lg" hint-placeholder-count="4">
@@ -234,7 +262,7 @@
     <div class="cs-nav" style="display: flex; align-items: center; gap: 16px; font-size: 14px; white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word;">
       <a href="#story" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navStory }}</a>
       <a href="#download" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navDownload }}</a>
-      <button onClick="{{ toggleSound }}" style="cursor: pointer; border: 1px solid rgba(240,185,92,.6); background: rgba(19,23,48,.55); color: #f0b95c; font-family: 'Gowun Dodum', sans-serif; font-size: 13px; padding: 8px 14px; border-radius: 999px; white-space: nowrap;">{{ soundLabel }}</button>
+      <button class="cs-sound" onClick="{{ toggleSound }}" title="{{ soundLabel }}" aria-label="{{ soundLabel }}" style="cursor: pointer; border: 1px solid rgba(240,185,92,.6); background: rgba(19,23,48,.55); color: #f0b95c; font-family: 'Gowun Dodum', sans-serif; font-size: 13px; padding: 8px 14px; border-radius: 999px; white-space: nowrap;"><span class="cs-sound-full">{{ soundLabel }}</span><span class="cs-sound-mark" aria-hidden="true">♪</span></button>
     </div>
   </div>
 
@@ -261,8 +289,8 @@
   </section>
 
   <!-- SCENE 2 : falling star cat -->
-  <section id="story" data-screen-label="2 별에서 온 고양이" ref="{{ scene2Ref }}" style="position: relative; z-index: 3; height: 930vh; margin-bottom: 30vh;">
-    <div style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
+  <section id="story" class="cs-story" data-screen-label="2 별에서 온 고양이" ref="{{ scene2Ref }}" style="position: relative; z-index: 3; height: 930vh; margin-bottom: 0;">
+    <div class="cs-story-pin" style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
 
       <!-- beat visuals -->
       
@@ -313,7 +341,7 @@
     </div>
 
     <!-- interactive cook -->
-    <div ref="{{ tiltCatRef }}" class="cs-soup" onClick="{{ meow }}" style="position: relative; width: min(350px, 68vw); aspect-ratio: 800 / 727; cursor: pointer; filter: drop-shadow(rgba(0,0,0,.4) 0 6px 14px);">
+    <div ref="{{ tiltCatRef }}" class="cs-soup" onClick="{{ meow }}" onTouchStart="{{ stirStart }}" onTouchMove="{{ stirTouch }}" onTouchEnd="{{ stirEnd }}" style="position: relative; width: min(350px, 68vw); aspect-ratio: 800 / 727; cursor: pointer; filter: drop-shadow(rgba(0,0,0,.4) 0 6px 14px); touch-action: manipulation;">
       <img src="assets/soup_pot.webp" alt="끓고 있는 수프 한 냄비" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
       <div ref="{{ steamRef }}" style="position: absolute; left: 50%; bottom: 58%; width: 40%; height: 1px; transform: translateX(-50%); pointer-events: none; z-index: 3;"></div>
       <div ref="{{ meowBubbleRef }}" data-cs-meow="1" style="display: none; position: absolute; top: 10px; right: 0; padding: 6px 12px; background: #f3efe2; color: #2c2418; font-size: 13px; border-radius: 12px 12px 12px 2px; opacity: 0; transition: opacity .25s;">야옹 ~</div>
@@ -347,7 +375,7 @@
   </section>
 
   <!-- INTERLUDE : night deepens, dawn nears -->
-  <section ref="{{ guitarSection2Ref }}" data-screen-label="4.5 깊어가는 밤" style="position: relative; z-index: 3; min-height: 125vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 46px;">
+  <section ref="{{ guitarSection2Ref }}" class="cs-tall" data-screen-label="4.5 깊어가는 밤" style="position: relative; z-index: 3; min-height: 125vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 46px;">
     <div class="cs-reveal cs-camping" style="position: relative; width: min(360px, 70vw); margin: 0 auto 26px; will-change: opacity, transform;">
       <img src="assets/camping_cat.webp" alt="모닥불 곁의 고양이" style="width: 100%; display: block;">
       <div style="position: absolute; left: 62%; top: 70%; width: 46%; height: 34%; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(255,196,90,.55) 0%, rgba(255,150,60,.26) 42%, rgba(255,140,60,0) 72%); mix-blend-mode: screen; pointer-events: none; animation: csFireGlow 2.4s ease-in-out infinite;"></div>
@@ -369,7 +397,7 @@
   </section>
 
   <!-- SCENE 4.3 : the guitar cat -->
-  <section ref="{{ guitarSectionRef }}" data-screen-label="4.3 기타 치는 고양이" style="position: relative; z-index: 3; width: 100%; min-height: 160vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 30px; box-sizing: border-box;">
+  <section ref="{{ guitarSectionRef }}" class="cs-tall" data-screen-label="4.3 기타 치는 고양이" style="position: relative; z-index: 3; width: 100%; min-height: 160vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 30px; box-sizing: border-box;">
     <div style="position: relative; width: min(504px, 86vw); margin: 0 auto; flex-shrink: 0;">
       <img class="cs-guitarcat" src="assets/guitar_show.webp" alt="기타 치는 고양이" style="width: 100%; display: block; filter: drop-shadow(0 8px 28px rgba(255,220,150,.22));">
       <span style="position: absolute; left: 30%; top: 22%; font-size: 40px; color: #ffd48a; opacity: 0; animation: csNote 3.6s ease-out infinite;">♪</span>
@@ -382,18 +410,18 @@
 
   <!-- SCENE 5 : dawn / download -->
   <!-- EPILOGUE : where the story came from -->
-  <section data-screen-label="4.9 이야기의 시작" style="position: relative; z-index: 3; min-height: 110vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px;">
+  <section class="cs-tall" data-screen-label="4.9 이야기의 시작" style="position: relative; z-index: 3; min-height: 110vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px;">
     <div class="cs-reveal" style="max-width: 660px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
       <img src="assets/origin_cat.webp" alt="" style="width: min(200px, 35.2vw); display: block; margin: 0 auto 26px;">
       <div style="width: 44px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 0 auto 34px;"></div>
       <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; font-size: 16px; color: #9aa3d1; margin-bottom: 26px;">{{ t.originEyebrow }}</div>
-      <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 46px; line-height: var(--cs-lead, 1.85); color: #f3efe2; margin: 0 0 26px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originQuote }}</p>
-      <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-size: 21px; line-height: var(--cs-lead, 1.9); color: #9aa3d1; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originNote }}</p>
+      <p class="cs-origin-quote" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 46px; line-height: var(--cs-lead, 1.85); color: #f3efe2; margin: 0 0 26px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originQuote }}</p>
+      <p class="cs-origin-note" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-size: 21px; line-height: var(--cs-lead, 1.9); color: #9aa3d1; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originNote }}</p>
     </div>
   </section>
 
   <!-- SCENE 4.7 : game trailer -->
-  <section ref="{{ trailerSectionRef }}" data-screen-label="4.7 게임 영상" style="position: relative; z-index: 3; min-height: 140vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12vh 24px;">
+  <section ref="{{ trailerSectionRef }}" class="cs-tall" data-screen-label="4.7 게임 영상" style="position: relative; z-index: 3; min-height: 140vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12vh 24px;">
     <div class="cs-reveal" style="text-align: center; max-width: 640px; margin-bottom: 44px; will-change: opacity, transform;">
       <div style="font-size: 13px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.trailerEyebrow }}</div>
       <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: 26px; line-height: 1.7; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.trailerMain }}</p>
@@ -412,7 +440,7 @@
     <a href="https://www.youtube.com/watch?v=z5gwT8qzqFU" target="_blank" rel="noopener" style="margin-top: 18px; font-size: 13px; color: #9aa3d1;">▶ {{ t.trailerYoutube }}</a>
   </section>
 
-  <section id="download" data-screen-label="5 아침과 다운로드" ref="{{ scene5Ref }}" style="position: relative; z-index: 3; min-height: 150vh; padding: 34vh 24px 0; display: flex; flex-direction: column; align-items: center; color: #3a2f22;">
+  <section id="download" class="cs-download" data-screen-label="5 아침과 다운로드" ref="{{ scene5Ref }}" style="position: relative; z-index: 3; min-height: 150vh; padding: 34vh 24px 0; display: flex; flex-direction: column; align-items: center; color: #3a2f22;">
     <div style="position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; background: linear-gradient(180deg, rgba(243,230,200,0) 0%, rgba(243,230,200,.55) 9%, #f3e6c8 20%, #f7edd6 46%, #f4ead0 100%);">
       <img src="assets/meadow.webp" alt="" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 34%; object-fit: cover; object-position: center bottom; mask-image: linear-gradient(180deg, transparent 0%, black 22%); -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 22%); opacity: .95;">
     </div>
@@ -420,7 +448,7 @@
       <img class="cs-shop" src="assets/shop_open.webp" alt="문을 연 수프 가게" style="width: min(340px, 68vw); display: block;">
       <img class="cs-chefcat" src="assets/chef_cat.webp" alt="요리사 고양이" style="width: min(72px, 14.4vw); display: block; margin-bottom: 4px;">
     </div>
-    <div style="position: relative; z-index: 1; text-align: center; width: 100%; max-width: 680px; margin-bottom: 0; min-height: 300px; display: flex; flex-direction: column; justify-content: flex-start;">
+    <div class="cs-download-copy" style="position: relative; z-index: 1; text-align: center; width: 100%; max-width: 680px; margin-bottom: 0; min-height: 300px; display: flex; flex-direction: column; justify-content: flex-start;">
       <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; color: #a08a5f; margin-bottom: 18px;">{{ t.s5Eyebrow }}</div>
       <h2 style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: clamp(34px, 4.5vw, 52px); line-height: 1.25; margin: 0 0 20px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s5Heading }}</h2>
       <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-size: 16px; line-height: var(--cs-lead, 1.9); color: #6d5c42; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s5Main }}</p>
@@ -713,9 +741,10 @@ class Component extends DCLogic {
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     const size = () => { cv.width = cv.clientWidth * dpr; cv.height = cv.clientHeight * dpr; };
     size();
-    const stars = Array.from({ length: 130 }, () => ({
+    const mobile = window.innerWidth <= 720;
+    const stars = Array.from({ length: mobile ? 36 : 130 }, () => ({
       x: Math.random(), y: Math.random(),
-      r: (Math.random() * 1.3 + 0.4) * dpr,
+      r: (Math.random() * (mobile ? 1.0 : 1.3) + 0.35) * dpr,
       ph: Math.random() * Math.PI * 2,
       sp: 0.6 + Math.random() * 1.4
     }));
@@ -723,7 +752,7 @@ class Component extends DCLogic {
       if (this._loaderGone && this._loaderStarsStop) return;
       ctx.clearRect(0, 0, cv.width, cv.height);
       for (const s of stars) {
-        const a = 0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t / 1000 * s.sp + s.ph));
+        const a = (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t / 1000 * s.sp + s.ph))) * (mobile ? 0.45 : 1);
         ctx.globalAlpha = a;
         ctx.fillStyle = '#e9edff';
         ctx.beginPath();
@@ -865,11 +894,13 @@ class Component extends DCLogic {
     this.killStrayAudio();
     this.applyCjkFont();
     const density = this.props.particleDensity ?? 1;
+    const mobileSky = window.innerWidth <= 720;
+    const skyMul = mobileSky ? 0.22 : 1;
     const W = () => window.innerWidth, H = () => window.innerHeight;
-    for (let i = 0; i < Math.round(130 * density); i++) {
-      this.stars.push({ x: Math.random(), y: Math.random() * 0.9, r: Math.random() * 1.6 + 0.4, p: Math.random() * Math.PI * 2, s: 0.5 + Math.random() * 1.5 });
+    for (let i = 0; i < Math.round(130 * density * skyMul); i++) {
+      this.stars.push({ x: Math.random(), y: Math.random() * 0.9, r: Math.random() * (mobileSky ? 1.1 : 1.6) + 0.35, p: Math.random() * Math.PI * 2, s: 0.5 + Math.random() * 1.5 });
     }
-    for (let i = 0; i < Math.round(26 * density); i++) {
+    for (let i = 0; i < Math.round(26 * density * (mobileSky ? 0.3 : 1)); i++) {
       this.fireflies.push({ x: Math.random(), y: 0.45 + Math.random() * 0.5, vx: (Math.random() - .5) * .0006, vy: (Math.random() - .5) * .0004, p: Math.random() * Math.PI * 2 });
     }
     this.onScroll = () => { this.updateScroll(); this.enforceSilenceBelow(); };
@@ -995,31 +1026,41 @@ class Component extends DCLogic {
       const yTop = pad + head;
       const yBot = Math.max(yTop + 1, h - ch * rigScale - pad);
       // she only starts her descent on the third beat
-      const pf = Math.max(0, Math.min(1, (p - 0.84) / 0.11));
-      const y = yTop + pf * (yBot - yTop);
+      const pf = Math.max(0, Math.min(1, (p - 0.60) / 0.38));
+      const fall = pf * pf * (3 - 2 * pf);
+      const y = yTop + fall * (yBot - yTop);
       // fall straight down along the right edge, clear of the centered copy
       const halfW = window.innerWidth / 2;
       const x = Math.max(0, halfW - cw / 2 - Math.max(pad, window.innerWidth * 0.16));
-      const rot = Math.sin(pf * 6) * 6;
+      const rot = Math.sin(fall * Math.PI) * 3.5;
       cf.style.transform = 'translate(' + x + 'px,' + y + 'px) rotate(' + rot + 'deg) scale(' + rigScale + ')';
       // fade in on arrival, fade out once she has landed
-      const fadeIn = Math.min(1, pf / 0.14);
-      const fadeOut = Math.min(1, Math.max(0, (1 - pf) / 0.12));
+      const fadeIn = Math.min(1, pf / 0.16);
+      const fadeOut = Math.min(1, Math.max(0, (1 - pf) / 0.14));
       cf.style.opacity = String(Math.min(fadeIn, fadeOut));
-      // beat windows: fade in/out as scroll advances
-      const win = (el, a, b, drift) => {
+      // each beat rides the scroll: enter from below, leave upward
+      const win = (el, a, b) => {
         if (!el) return;
-        const mid = (a + b) / 2, half = (b - a) / 2;
-        const o = Math.max(0, 1 - Math.abs(p - mid) / half);
-        el.style.opacity = String(Math.min(1, o * 4.4));
-        el.style.transform = 'translateY(' + ((p - mid) * -(drift || 420)) + 'px)';
+        const fade = Math.min(0.10, (b - a) * 0.32);
+        let o = 0;
+        if (p > a && p < b) {
+          const inn = Math.min(1, (p - a) / fade);
+          const out = Math.min(1, (b - p) / fade);
+          const t = Math.min(inn, out);
+          o = t * t * (3 - 2 * t);
+        }
+        el.style.opacity = String(o);
+        el.style.pointerEvents = o > 0.08 ? 'auto' : 'none';
+        const span = Math.max(0.001, b - a);
+        const t = Math.max(0, Math.min(1, (p - a) / span));
+        const travel = h * 0.58;
+        el.style.transform = 'translateY(' + ((0.5 - t) * travel) + 'px)';
       };
-      // three equal thirds with a small crossfade overlap — no dead gaps
-      win(this.refs2.beat1, -0.02, 0.33);
-      win(this.refs2.beat2, 0.40, 0.80);
-      win(this.refs2.beat3, 0.83, 1.02);
+      win(this.refs2.beat1, -0.02, 0.34);
+      win(this.refs2.beat2, 0.26, 0.72);
+      win(this.refs2.beat3, 0.64, 1.05);
       // kiki plays her own timed entrance once beat2 comes into view
-      if (this.refs2.kikiStar && !this._kikiFlew && p > 0.41) {
+      if (this.refs2.kikiStar && !this._kikiFlew && p > 0.34) {
         this._kikiFlew = true;
         const el = this.refs2.kikiStar;
         el.style.transition = 'opacity 2.6s ease, transform 3.4s cubic-bezier(.34,0,.5,1)';
@@ -1036,17 +1077,19 @@ class Component extends DCLogic {
       }
 
       if (this.refs2.clouds) {
-        const o = Math.max(0, Math.min(1, (p - 0.62) / 0.2));
+        const raw = Math.max(0, Math.min(1, (p - 0.58) / 0.22));
+        const o = raw * raw * (3 - 2 * raw);
         this.refs2.clouds.style.opacity = String(o * 0.95);
-        this.refs2.clouds.style.transform = 'translateY(' + ((1 - o) * 22) + 'vh)';
+        this.refs2.clouds.style.transform = 'translateY(' + ((1 - o) * 10) + 'vh)';
       }
     }
     // gentle fade-up reveals, driven per frame from live rects
     for (const el of document.querySelectorAll('.cs-reveal')) {
       const r = el.getBoundingClientRect();
-      const o = Math.max(0, Math.min(1, (h * 0.86 - r.top) / (h * 0.32)));
+      const raw = Math.max(0, Math.min(1, (h * 0.88 - r.top) / (h * 0.28)));
+      const o = raw * raw * (3 - 2 * raw);
       el.style.opacity = String(o);
-      el.style.transform = 'translateY(' + ((1 - o) * 34) + 'px)';
+      el.style.transform = 'translateY(' + ((1 - o) * 16) + 'px)';
     }
     // cloud cat + audience cats (rect-driven; IO does not fire in this host)
     const co = this.refs2.catOther;
@@ -1101,7 +1144,7 @@ class Component extends DCLogic {
     if (night > 0.02) {
       const near = [];
       for (const s of this.stars) {
-        const a = (0.35 + 0.65 * Math.abs(Math.sin(t * s.s + s.p))) * night;
+        const a = (0.35 + 0.65 * Math.abs(Math.sin(t * s.s + s.p))) * night * (window.innerWidth <= 720 ? 0.4 : 1);
         // gentle mouse parallax (depth from twinkle speed)
         const ox = heroVisible ? -px * s.s * 18 * dpr : 0;
         const oy = heroVisible ? -py * s.s * 12 * dpr : 0;
@@ -1193,7 +1236,7 @@ class Component extends DCLogic {
             f.y += f.vy + Math.cos(t * 0.5 + f.p) * 0.0003;
             if (f.x < 0) f.x = 1; if (f.x > 1) f.x = 0;
             if (f.y < 0.3) f.y = 0.95; if (f.y > 1) f.y = 0.35;
-            const a = (0.25 + 0.75 * Math.abs(Math.sin(t * 1.4 + f.p * 3))) * vis * night;
+            const a = (0.25 + 0.75 * Math.abs(Math.sin(t * 1.4 + f.p * 3))) * vis * night * (window.innerWidth <= 720 ? 0.45 : 1);
             ctx.globalAlpha = a;
             ctx.fillStyle = '#d9f79a';
             ctx.shadowColor = '#d9f79a';
@@ -1894,10 +1937,11 @@ class Component extends DCLogic {
         if (this.magicShots.length > 6) this.magicShots.shift();
       },
       stirTouch: (e) => {
-        const area = this.refs2.potArea;
-        if (!area || !e.touches || !e.touches[0]) return;
+        const area = this.refs2.potArea || this.refs2.tiltCat;
+        const t = e && e.touches && e.touches[0];
+        if (!area || !t) return;
         const r = area.getBoundingClientRect();
-        const dx = (e.touches[0].clientX - (r.left + r.width / 2)) / (r.width / 2);
+        const dx = (t.clientX - (r.left + r.width / 2)) / (r.width / 2);
         if (this.refs2.ladle) this.refs2.ladle.style.transform = 'rotate(' + (Math.max(-1, Math.min(1, dx)) * 24) + 'deg)';
         const now = performance.now();
         if (now - this.lastSteam > 160) {
@@ -1911,7 +1955,7 @@ class Component extends DCLogic {
         if (this.refs2.ladle) this.refs2.ladle.style.transform = 'rotate(0deg)';
       },
       stirMove: (e) => {
-        const area = this.refs2.potArea;
+        const area = this.refs2.potArea || this.refs2.tiltCat;
         if (!area) return;
         const r = area.getBoundingClientRect();
         const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
@@ -1968,7 +2012,22 @@ class Component extends DCLogic {
       steamRef: this.ref('steam'),
       steam2Ref: this.ref('steam2'),
       soupRippleRef: this.ref('soupRipple'),
-      tiltCatRef: this.ref('tiltCat'),
+      tiltCatRef: (el) => {
+        this.refs2.tiltCat = el;
+        if (!el || el._csStirBound) return;
+        el._csStirBound = true;
+        el.addEventListener('touchstart', () => { this.stirring = true; }, { passive: true });
+        el.addEventListener('touchmove', (e) => {
+          const t = e.touches && e.touches[0];
+          if (!t) return;
+          const now = performance.now();
+          if (now - this.lastSteam > 160) {
+            this.lastSteam = now;
+            this.spawnSteam(true);
+          }
+        }, { passive: true });
+        el.addEventListener('touchend', () => { this.stirring = false; }, { passive: true });
+      },
       cookFrame1Ref: this.ref('cookFrame1'),
       cookFrameRef: (el) => {
         this.refs2.cookFrame = el;
