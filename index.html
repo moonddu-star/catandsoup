@@ -70,15 +70,21 @@
   @keyframes csEmber { 0% { opacity: 0; transform: translateY(0) scale(.7); } 20% { opacity: .9; } 100% { opacity: 0; transform: translateY(-120px) translateX(24px) scale(.3); } }
   @keyframes csRipple { 0% { transform: scale(.4); opacity: .7; } 100% { transform: scale(1.5); opacity: 0; } }
   @keyframes csScrollHint { 0%,100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(8px); opacity: .4; } }
+  @keyframes csPawDown {
+    0%   { transform: translateY(-6px); opacity: .2; }
+    22%  { opacity: 1; }
+    72%  { transform: translateY(12px); opacity: .8; }
+    100% { transform: translateY(20px); opacity: 0; }
+  }
   .cs-morestar {
-    width: 12px;
-    height: 12px;
-    margin: 28px auto 0;
-    background: #ffd77e;
-    border-radius: 50%;
-    box-shadow: 0 0 18px 6px rgba(255,215,126,.5);
-    animation: csTwinkle 2.6s ease-in-out infinite;
+    width: 34px;
+    height: 34px;
+    margin: 22px auto 0;
+    background: url('assets/cat_paw.webp') center / contain no-repeat;
+    animation: csPawDown 1.85s cubic-bezier(.22, .62, .28, 1) infinite;
     pointer-events: none;
+    filter: drop-shadow(0 0 4px rgba(255, 215, 126, 0.7)) drop-shadow(0 0 10px rgba(255, 215, 126, 0.35));
+    will-change: transform, opacity;
   }
   .cs-storebadge {
     height: 52px;
@@ -314,10 +320,9 @@
     <h1 style="margin: 0 0 34px;"><img ref="{{ logoHeroRef }}" src="assets/logo_kr_trim.webp" alt="고양이와 스프 · Cats &amp; Soup" style="width: min(676px, 88vw); display: block; filter: drop-shadow(0 6px 22px rgba(0,0,0,.45));"></h1>
     <div class="cs-heroline" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: var(--cs-weight, 700); font-size: clamp(24px, 2.6vw, 34px); line-height: 1.5; margin: 0 0 18px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.heroHeadline }}</div>
     <p class="cs-herotag" style="font-size: 19px; line-height: 1.8; color: #c3c9e8; max-width: 560px; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.heroTag }}</p>
-    <div style="margin-top: 34px; animation: csScrollHint 2.2s ease-in-out infinite; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #9aa3d1; font-size: 18px;">
+    <div style="margin-top: 34px; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #9aa3d1; font-size: 18px;">
       <div>{{ t.scrollHint }}</div>
       <div class="cs-morestar" aria-hidden="true" style="margin-top: 6px;"></div>
-      <div style="width: 1px; height: 44px; background: linear-gradient(180deg, #9aa3d1, transparent);"></div>
     </div>
   </section>
 
@@ -960,7 +965,7 @@ class Component extends DCLogic {
       'assets/soup_pot.png', 'assets/cat_back.png', 'assets/forrest_pattern_s.png',
       'assets/cat_other.png', 'assets/cats_surround.png', 'assets/guitar_show.png',
       'assets/camping_cat.png', 'assets/cat_rest.png', 'assets/shop_open.png',
-      'assets/googleplay.png', 'assets/appstore.png',
+      'assets/googleplay.png', 'assets/appstore.png', 'assets/cat_paw.png',
       'assets/logo_' + (['kr', 'en', 'jp', 'cn'].includes(lang) ? lang : 'en') + '_trim.png',
       'assets/meadow.png', 'assets/bgm.mp3', 'assets/guitar.mp3'
     ];
