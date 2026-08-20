@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<meta name="referrer" content="origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>고양이와 스프 · Cats &amp; Soup</title>
 <meta name="description" content="별에서 온 고양이들의 아주 작은 수프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
@@ -83,11 +84,11 @@
   .cs-morestar {
     width: 34px;
     height: 34px;
-    margin: 22px auto 0;
+    margin: 22px auto 28px;
     background: url('assets/cat_paw.webp') center / contain no-repeat;
     animation: csPawDown 1.85s cubic-bezier(.22, .62, .28, 1) infinite;
     pointer-events: none;
-    filter: drop-shadow(0 0 4px rgba(255, 215, 126, 0.7)) drop-shadow(0 0 10px rgba(255, 215, 126, 0.35));
+    filter: drop-shadow(0 0 2px rgba(255, 215, 126, 0.35)) drop-shadow(0 0 5px rgba(255, 215, 126, 0.18));
     will-change: transform, opacity;
   }
   .cs-storebadge {
@@ -135,7 +136,100 @@
   .cs-sound.is-off .cs-sound-icon-on { display: none; }
   .cs-sound.is-off .cs-sound-icon-off { display: block; }
   .cs-sound:hover { opacity: .82; }
-  .cs-lang-btn, .cs-sound, .cs-nav a, .cs-menubtn { touch-action: manipulation; }
+  .cs-lang-btn, .cs-sound, .cs-nav a, .cs-menubtn, .cs-ytlink, .cs-coupon, .cs-footlink, .cs-social { touch-action: manipulation; }
+  .cs-social-icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    background: currentColor;
+    -webkit-mask: center / contain no-repeat;
+    mask: center / contain no-repeat;
+  }
+  .cs-social-icon.is-ig {
+    -webkit-mask-image: url('assets/instagram.svg');
+    mask-image: url('assets/instagram.svg');
+  }
+  .cs-social-icon.is-yt {
+    -webkit-mask-image: url('assets/youtube.svg');
+    mask-image: url('assets/youtube.svg');
+  }
+  .cs-social-icon.is-tt {
+    -webkit-mask-image: url('assets/tik-tok.svg');
+    mask-image: url('assets/tik-tok.svg');
+  }
+  .cs-social-icon.is-pin {
+    -webkit-mask-image: url('assets/pinterest.svg');
+    mask-image: url('assets/pinterest.svg');
+  }
+  .cs-social-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .cs-socials { display: none; }
+  .cs-social-wrap.is-open .cs-socials {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 46;
+  }
+  .cs-social-wrap .cs-social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: #f0b95c;
+    background: rgba(8, 10, 26, 0.72);
+    box-shadow: 0 2px 12px rgba(0,0,0,.35);
+  }
+  .cs-social-wrap .cs-social:hover {
+    color: #ffd48a;
+    background: rgba(8, 10, 26, 0.88);
+  }
+  .cs-nav {
+    font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif;
+    letter-spacing: var(--cs-track, 0px);
+    font-weight: var(--cs-weight, 700);
+  }
+  .cs-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: inherit;
+    letter-spacing: inherit;
+    font-weight: inherit;
+  }
+  .cs-extlink {
+    width: 16px;
+    height: 16px;
+    display: block;
+    flex-shrink: 0;
+    pointer-events: none;
+    background: currentColor;
+    -webkit-mask: url('assets/icon_link.png') center / contain no-repeat;
+    mask: url('assets/icon_link.png') center / contain no-repeat;
+    filter: drop-shadow(0 1px 6px rgba(0,0,0,.4));
+  }
+  .cs-ytlink,
+  .cs-coupon,
+  .cs-footlink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+  .cs-ytlink { padding: 12px 16px; font-size: 16px; }
+  .cs-coupon { padding: 12px 16px; }
+  .cs-footlink { padding: 12px 14px; }
+  .cs-footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
   .cs-menubtn { display: none; }
   .cs-menu-scrim { display: none; }
   .cs-topbar-center {
@@ -162,6 +256,7 @@
   .cs-herotag {
     text-align: center !important;
     text-align-last: center;
+    text-wrap: balance;
   }
   html[lang="th"] .cs-story-main,
   html[lang="th"] .cs-origin-quote,
@@ -172,114 +267,183 @@
     word-break: break-word !important;
     overflow-wrap: anywhere;
   }
-  /* mobile responsive overrides */
-  @media (max-width: 720px) {
-    .cs-topbar {
-      padding: 10px 14px !important;
-      padding-top: max(10px, env(safe-area-inset-top)) !important;
-      padding-left: max(14px, env(safe-area-inset-left)) !important;
-      padding-right: max(14px, env(safe-area-inset-right)) !important;
-      gap: 8px !important;
-      z-index: 40 !important;
-      align-items: center !important;
-    }
-    .cs-topbar-left {
-      gap: 2px !important;
-      position: relative;
-      z-index: 45;
-      align-items: center !important;
-      height: 62px;
-    }
-    .cs-lang-icon-btn,
-    .cs-sound,
-    .cs-menubtn {
-      height: 62px;
-      align-items: center;
-      justify-content: center;
-    }
-    .cs-logo-top { width: 40px !important; height: 40px !important; }
-    .cs-lang-label { display: none !important; }
-    .cs-sound { padding: 0 !important; margin-left: 0; }
-    .cs-sound-icon-on { width: 62px !important; height: 62px !important; }
-    .cs-sound-icon-off { width: 61px !important; height: 61px !important; }
-    .cs-menubtn {
-      display: inline-flex;
-      width: 46px;
-      min-width: 44px;
-      min-height: 44px;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      cursor: pointer;
-      position: relative;
-      z-index: 45;
-      line-height: 0;
-    }
-    .cs-menu-icon {
-      display: block;
-      pointer-events: none;
-      filter: drop-shadow(0 1px 4px rgba(0,0,0,.45));
-    }
-    .cs-menu-icon-open { width: 46px; height: 34px; }
-    .cs-menu-icon-close { width: 22px; height: 22px; display: none; }
-    .cs-menubtn.is-open .cs-menu-icon-open { display: none; }
-    .cs-menubtn.is-open .cs-menu-icon-close { display: block; }
-    .cs-menu-scrim.is-open {
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
-      min-height: 100vh;
-      min-height: 100dvh;
-      background: rgba(13, 16, 38, 0.75);
-      z-index: 38;
-    }
-    .cs-topbar.is-menu-open {
-      background: transparent;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-    .cs-topbar.is-menu-open .cs-topbar-left,
-    .cs-topbar.is-menu-open .cs-topbar-center { z-index: 1; }
-    .cs-topbar.is-menu-open .cs-menu-scrim.is-open { z-index: 20; }
-    .cs-topbar.is-menu-open .cs-nav.is-open { z-index: 30; }
-    .cs-topbar.is-menu-open .cs-menubtn { z-index: 45; }
-    .cs-nav {
-      display: none !important;
-      position: fixed !important;
-      inset: 0;
-      z-index: 39;
-      padding: calc(88px + env(safe-area-inset-top, 0px)) 24px 48px !important;
-      padding-bottom: max(48px, env(safe-area-inset-bottom)) !important;
-      background: transparent;
-      flex-direction: column !important;
-      align-items: stretch !important;
-      justify-content: flex-start !important;
-      gap: 0 !important;
-      font-size: 28px !important;
-      font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif !important;
-      letter-spacing: var(--cs-track, 0px);
-      font-weight: var(--cs-weight, 700) !important;
-      flex-wrap: nowrap !important;
-      white-space: normal !important;
-    }
-    .cs-nav.is-open { display: flex !important; }
-    .cs-nav a {
-      display: block !important;
-      padding: 20px 12px !important;
-      text-align: center;
-      font-size: 28px !important;
-      font-family: inherit;
-      font-weight: inherit;
-      letter-spacing: inherit;
-      text-shadow: 0 1px 8px rgba(0,0,0,.45);
-      border-bottom: 1px solid rgba(240, 185, 92, .16);
-    }
-    .cs-nav a:last-child { border-bottom: 0; }
+  html[lang="zh-Hans"] .cs-story-main,
+  html[lang="zh-Hans"] .cs-origin-quote,
+  html[lang="zh-Hans"] .cs-origin-note,
+  html[lang="zh-Hans"] .cs-s5main,
+  html[lang="zh-Hans"] .cs-heroline,
+  html[lang="zh-Hans"] .cs-herotag,
+  html[lang="zh-Hans"] .cs-nav {
+    font-feature-settings: "palt" 1, "kern" 1;
+    font-kerning: normal;
+    font-variant-east-asian: proportional-width;
+    text-spacing-trim: trim-both;
+  }
+  html[lang="zh-Hans"] .cs-cn-punct {
+    display: inline-block;
+    letter-spacing: 0;
+    vertical-align: baseline;
+  }
+  html[lang="zh-Hans"] .cs-cn-punct[data-p="comma"] {
+    margin-left: -0.4em;
+    margin-right: 0;
+  }
+  html[lang="zh-Hans"] .cs-cn-punct[data-p="bang"],
+  html[lang="zh-Hans"] .cs-cn-punct[data-p="ask"] {
+    margin-left: -0.22em;
+    margin-right: 0;
+  }
+  /* hamburger chrome: phones and desktop when nav collides with the language cat */
+  html.cs-hamburger .cs-topbar {
+    padding: 10px 14px !important;
+    padding-top: max(10px, env(safe-area-inset-top)) !important;
+    padding-left: max(14px, env(safe-area-inset-left)) !important;
+    padding-right: max(14px, env(safe-area-inset-right)) !important;
+    gap: 8px !important;
+    z-index: 40 !important;
+    align-items: center !important;
+  }
+  html.cs-hamburger .cs-topbar-left {
+    gap: 2px !important;
+    position: relative;
+    z-index: 45;
+    align-items: center !important;
+    height: 62px;
+  }
+  html.cs-hamburger .cs-lang-icon-btn,
+  html.cs-hamburger .cs-sound,
+  html.cs-hamburger .cs-menubtn {
+    height: 62px;
+    align-items: center;
+    justify-content: center;
+  }
+  html.cs-hamburger .cs-logo-top { width: 40px !important; height: 40px !important; }
+  html.cs-hamburger .cs-lang-label { display: none !important; }
+  html.cs-hamburger .cs-sound { padding: 0 !important; margin-left: 0; }
+  html.cs-hamburger .cs-sound-icon-on { width: 62px !important; height: 62px !important; }
+  html.cs-hamburger .cs-sound-icon-off { width: 61px !important; height: 61px !important; }
+  html.cs-hamburger .cs-menubtn {
+    display: inline-flex;
+    width: 46px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    z-index: 45;
+    line-height: 0;
+  }
+  html.cs-hamburger .cs-menu-icon {
+    display: block;
+    pointer-events: none;
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,.45));
+  }
+  html.cs-hamburger .cs-menu-icon-open { width: 46px; height: 34px; }
+  html.cs-hamburger .cs-menu-icon-close { width: 22px; height: 22px; display: none; }
+  html.cs-hamburger .cs-menubtn.is-open .cs-menu-icon-open { display: none; }
+  html.cs-hamburger .cs-menubtn.is-open .cs-menu-icon-close { display: block; }
+  html.cs-hamburger .cs-menu-scrim.is-open {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: rgba(13, 16, 38, 0.75);
+    z-index: 38;
+  }
+  html.cs-hamburger .cs-topbar.is-menu-open {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+    html.cs-hamburger .cs-topbar.is-menu-open .cs-menu-scrim.is-open { z-index: 20; }
+    html.cs-hamburger .cs-topbar.is-menu-open .cs-nav.is-open { z-index: 30; }
+    html.cs-hamburger .cs-topbar.is-menu-open .cs-topbar-left,
+    html.cs-hamburger .cs-topbar.is-menu-open .cs-topbar-center,
+    html.cs-hamburger .cs-topbar.is-menu-open .cs-menubtn { z-index: 45; }
+  html.cs-hamburger .cs-nav {
+    display: none !important;
+    position: fixed !important;
+    inset: 0;
+    z-index: 39;
+    padding: calc(88px + env(safe-area-inset-top, 0px)) 24px 48px !important;
+    padding-bottom: max(48px, env(safe-area-inset-bottom)) !important;
+    background: transparent;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+    font-size: 28px !important;
+    font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif !important;
+    letter-spacing: var(--cs-track, 0px);
+    font-weight: var(--cs-weight, 700) !important;
+    flex-wrap: nowrap !important;
+    white-space: normal !important;
+  }
+  html.cs-hamburger .cs-nav.is-open { display: flex !important; }
+  html.cs-hamburger .cs-nav a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center;
+    padding: 20px 12px !important;
+    text-align: center;
+    font-size: 28px !important;
+    font-family: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    text-shadow: 0 1px 8px rgba(0,0,0,.45);
+    border-bottom: 1px solid rgba(240, 185, 92, .16);
+    white-space: nowrap !important;
+  }
+  html.cs-hamburger .cs-extlink {
+    width: 19px;
+    height: 19px;
+  }
+  html.cs-hamburger .cs-nav > a:last-of-type { border-bottom: 0; }
+  html.cs-hamburger .cs-social-wrap {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  html.cs-hamburger .cs-nav-social { display: none !important; }
+  html.cs-hamburger .cs-social-wrap .cs-socials,
+  html.cs-hamburger .cs-social-wrap.is-open .cs-socials {
+    display: flex !important;
+    flex-direction: row !important;
+    position: static !important;
+    transform: none !important;
+    top: auto;
+    left: auto;
+    gap: 18px;
+    margin-top: 8px;
+    padding: 16px 12px 8px;
+    border: 0;
+  }
+  html.cs-hamburger .cs-nav .cs-social {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0 !important;
+    border: 0 !important;
+    border-bottom: 0 !important;
+    font-size: 0 !important;
+  }
+  html.cs-hamburger .cs-social-icon { width: 26px; height: 26px; }
+  /* phones, plus short landscape (iPhone 14 landscape is 844×390) */
+  @media (max-width: 720px), (max-height: 540px) and (hover: none) {
     .cs-story { height: 480vh !important; }
     .cs-story-main { font-size: 26px !important; line-height: 1.8 !important; }
     .cs-story-eyebrow { font-size: 13px !important; letter-spacing: 3px !important; }
@@ -331,7 +495,7 @@
     .cs-restcat { width: min(240px, 62vw) !important; }
     .cs-shop { width: min(240px, 62vw) !important; }
     .cs-chefcat { width: min(54px, 12vw) !important; }
-    .cs-camping { width: 400px !important; max-width: 92vw !important; aspect-ratio: 600 / 581; }
+    .cs-camping { width: min(240px, 68vw) !important; max-width: 68vw !important; aspect-ratio: 600 / 581; }
     .cs-langgrid { width: min(320px, 86vw) !important; }
     .cs-langgrid button { height: 42px !important; font-size: 13px !important; }
     .cs-picklabel { width: min(320px, 86vw) !important; font-size: 15px !important; letter-spacing: 2px !important; }
@@ -344,8 +508,31 @@
     .cs-roomrow { flex-direction: column !important; align-items: center !important; gap: 14px !important; }
     .cs-room { width: min(230px, 66vw) !important; }
     .cs-kiki { width: min(140px, 42vw) !important; }
+    .cs-camping { width: min(210px, 62vw) !important; max-width: 62vw !important; }
     .cs-langgrid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; width: min(320px, 92vw) !important; }
     .cs-langgrid button { height: 44px !important; font-size: 14px !important; }
+  }
+  @media (max-height: 540px) and (hover: none) {
+    html.cs-hamburger .cs-topbar-left,
+    html.cs-hamburger .cs-lang-icon-btn,
+    html.cs-hamburger .cs-sound,
+    html.cs-hamburger .cs-menubtn { height: 48px; }
+    html.cs-hamburger .cs-sound-icon-on { width: 48px !important; height: 48px !important; }
+    html.cs-hamburger .cs-sound-icon-off { width: 47px !important; height: 47px !important; }
+    html.cs-hamburger .cs-logo-top { width: 36px !important; height: 36px !important; }
+    html.cs-hamburger .cs-nav { padding-top: calc(64px + env(safe-area-inset-top, 0px)) !important; }
+    html.cs-hamburger .cs-nav a { padding: 14px 12px !important; font-size: 22px !important; }
+    html.cs-hamburger .cs-extlink { width: 16px; height: 16px; }
+    html.cs-hamburger .cs-nav .cs-socials { gap: 14px; padding: 4px 12px max(16px, env(safe-area-inset-bottom)); }
+    html.cs-hamburger .cs-nav .cs-social {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 !important;
+    }
+    html.cs-hamburger .cs-social-icon { width: 22px; height: 22px; }
+    .cs-hero { padding-top: 64px !important; }
   }
 </style>
 </helmet>
@@ -455,11 +642,20 @@
       <img ref="{{ logoTopRef }}" class="cs-logo-top" src="assets/cat_face_star.webp" alt="Cats &amp; Soup" width="50" height="50" style="width: 50px; height: 50px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));">
     </button>
     <div class="cs-menu-scrim" ref="{{ menuScrimRef }}" aria-hidden="true"></div>
-    <div class="cs-nav" id="cs-nav" ref="{{ navRef }}" style="display: flex; align-items: center; gap: 24px; font-size: 22px; font-weight: 600; white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; flex-wrap: wrap; justify-content: flex-end;">
+    <div class="cs-nav" id="cs-nav" ref="{{ navRef }}" style="display: flex; align-items: center; gap: 24px; font-size: 22px; font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: var(--cs-weight, 700); white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; flex-wrap: wrap; justify-content: flex-end;">
       <a href="#story" ref="{{ storyNavRef }}" onClick="{{ goStory }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navStory }}</a>
-      <a href="https://www.youtube.com/c/kittypawpaw" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navUpdate }}</a>
-      <a href="https://apps.apple.com/us/app/cats-soup-magic-recipe/id6446347021" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navRecipe }}</a>
-      <a href="#social" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navSocial }}</a>
+      <a href="https://www.youtube.com/c/kittypawpaw" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navUpdate }}<span class="cs-extlink" aria-hidden="true"></span></a>
+      <a href="https://redeem.catsnsoup.com/" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navCoupon }}<span class="cs-extlink" aria-hidden="true"></span></a>
+      <a href="https://apps.apple.com/us/app/cats-soup-magic-recipe/id6446347021" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navRecipe }}<span class="cs-extlink" aria-hidden="true"></span></a>
+      <div class="cs-social-wrap" ref="{{ socialWrapRef }}">
+        <a class="cs-nav-social" href="#social" ref="{{ socialNavRef }}" aria-haspopup="true" aria-expanded="false" aria-controls="cs-socials" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navSocial }}</a>
+        <div class="cs-socials" id="cs-socials" role="group" aria-label="{{ t.navSocial }}">
+          <a class="cs-social" href="https://www.instagram.com/catsnsoup.official/" target="_blank" rel="noopener" onClick="{{ closeMenu }}" title="Instagram" aria-label="Instagram"><span class="cs-social-icon is-ig" aria-hidden="true"></span></a>
+          <a class="cs-social" href="https://www.youtube.com/c/kittypawpaw" target="_blank" rel="noopener" onClick="{{ closeMenu }}" title="YouTube" aria-label="YouTube"><span class="cs-social-icon is-yt" aria-hidden="true"></span></a>
+          <a class="cs-social" href="https://www.tiktok.com/@catsnsoup.official" target="_blank" rel="noopener" onClick="{{ closeMenu }}" title="TikTok" aria-label="TikTok"><span class="cs-social-icon is-tt" aria-hidden="true"></span></a>
+          <a class="cs-social" href="https://www.pinterest.com/catsnsoup.official/" target="_blank" rel="noopener" onClick="{{ closeMenu }}" title="Pinterest" aria-label="Pinterest"><span class="cs-social-icon is-pin" aria-hidden="true"></span></a>
+        </div>
+      </div>
     </div>
     <button type="button" class="cs-menubtn" ref="{{ menuBtnRef }}" title="{{ menuLabel }}" aria-label="{{ menuLabel }}" aria-expanded="false" aria-controls="cs-nav">
       <img class="cs-menu-icon cs-menu-icon-open" src="assets/menu.webp" alt="" width="57" height="43">
@@ -515,7 +711,7 @@
         <div style="max-width: 720px; text-align: center;">
           <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.beat2 }}</p>
           <div class="cs-morestar" aria-hidden="true"></div>
-          <div class="cs-roomrow" style="display: flex; align-items: flex-end; justify-content: center; gap: 12px; margin-top: 30px;">
+          <div class="cs-roomrow" style="display: flex; align-items: flex-end; justify-content: center; gap: 12px; margin-top: 36px;">
             <img class="cs-room" src="assets/room.webp" alt="천문대의 방" style="width: min(320px, 44vw); display: block; filter: drop-shadow(0 6px 20px rgba(0,0,0,.28));">
             <img ref="{{ kikiStarRef }}" class="cs-kiki cs-meowcat" src="assets/kiki_star.webp" alt="키키" style="width: min(180px, 30vw); display: block; filter: drop-shadow(0 6px 24px rgba(255,220,150,.25)); will-change: transform, opacity; opacity: 0; transform: translateX(62vw) rotate(10deg);">
           </div>
@@ -553,10 +749,8 @@
   <!-- INTERLUDE : the forest cook -->
   <section data-screen-label="3.5 숲의 요리사" class="cs-interlude" style="position: relative; z-index: 3; min-height: 125vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 44px; padding: 10vh 24px;">
     <div class="cs-reveal" style="max-width: 720px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
-      <div style="width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 0 auto 30px;"></div>
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.inter1 }}</p>
       <div class="cs-morestar" aria-hidden="true"></div>
-      <div style="width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 30px auto 0;"></div>
     </div>
     <div class="cs-reveal cs-cook cs-meowcat" style="position: relative; width: 396px; height: 396px; will-change: opacity, transform;">
       <img ref="{{ cookFrame1Ref }}" src="assets/cat_cook_01.webp" alt="수프를 젓는 키키" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); left: -4px; top: 8px; opacity: 1; transition: opacity .55s ease;">
@@ -572,7 +766,7 @@
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s4Main }}</p>
       <div class="cs-morestar" aria-hidden="true"></div>
       
-    </div><img ref="{{ catOtherRef }}" class="cs-meowcat" src="assets/cat_other.webp" alt="별고양이들" style="width: min(200px, 45vw); display: block; margin: 20px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(46vw, -38vh) rotate(14deg); transition: opacity 2.4s ease, transform 4.2s cubic-bezier(.42,0,.72,1);">
+    </div><img ref="{{ catOtherRef }}" class="cs-meowcat" src="assets/cat_other.webp" alt="별고양이들" style="width: min(200px, 45vw); display: block; margin: 28px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(46vw, -38vh) rotate(14deg); transition: opacity 2.4s ease, transform 4.2s cubic-bezier(.42,0,.72,1);">
     <img ref="{{ catsSurroundRef }}" class="cs-audience cs-meowcat" src="assets/cats_surround.webp" alt="구경하는 고양이들" style="width: min(620px, 88vw); display: block; margin: -10px auto 0; opacity: 0; transform: translateY(24px); transition: opacity 2.2s ease, transform 2.2s ease;">
   </section>
 
@@ -617,7 +811,6 @@
   <section class="cs-tall" data-screen-label="4.9 이야기의 시작" style="position: relative; z-index: 3; min-height: 110vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px;">
     <div class="cs-reveal" style="max-width: 660px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
       <img class="cs-meowcat" src="assets/origin_cat.webp" alt="" style="width: min(140px, 24.6vw); height: auto; display: block; margin: 0 auto 26px;">
-      <div style="width: 44px; height: 1px; background: linear-gradient(90deg, transparent, #9aa3d1, transparent); margin: 0 auto 34px;"></div>
       <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; font-size: 16px; color: #9aa3d1; margin-bottom: 26px;">{{ t.originEyebrow }}</div>
       <p class="cs-origin-quote" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 46px; line-height: var(--cs-lead, 1.85); color: #f3efe2; margin: 0 0 26px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originQuote }}</p>
       <p class="cs-origin-note" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-size: 21px; line-height: var(--cs-lead, 1.9); color: #9aa3d1; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originNote }}</p>
@@ -631,18 +824,17 @@
       <div style="font-size: 13px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.trailerEyebrow }}</div>
       <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: 26px; line-height: 1.7; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.trailerMain }}</p>
     </div>
-    <div class="cs-reveal" onClick="{{ trailerPlay }}" style="position: relative; width: min(960px, 92vw); aspect-ratio: 16/9; border-radius: 20px; overflow: hidden; border: 1px solid rgba(154,163,209,.35); background: #0b0f22; box-shadow: 0 24px 60px rgba(0,0,0,.4); cursor: pointer; will-change: opacity, transform;">
-      <iframe ref="{{ trailerFrameRef }}" title="Cats &amp; Soup trailer" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="{{ true }}" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: none;"></iframe>
+    <div class="cs-reveal" ref="{{ trailerBoxRef }}" onClick="{{ trailerPlay }}" style="position: relative; width: min(960px, 92vw); aspect-ratio: 16/9; border-radius: 20px; overflow: hidden; border: 1px solid rgba(154,163,209,.35); background: #0b0f22; box-shadow: 0 24px 60px rgba(0,0,0,.4); cursor: pointer; will-change: opacity, transform;">
       <!-- facade poster (YouTube thumbnail) -->
       <div ref="{{ trailerPosterRef }}" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
-        <img src="https://img.youtube.com/vi/z5gwT8qzqFU/maxresdefault.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+        <img src="https://img.youtube.com/vi/u2pUaW_JTMI/maxresdefault.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
         <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,15,34,.15), rgba(11,15,34,.45));"></div>
         <div style="position: relative; width: 84px; height: 84px; border-radius: 50%; background: rgba(240,185,92,.95); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(240,185,92,.4);">
           <div style="width: 0; height: 0; border-left: 26px solid #1b1409; border-top: 16px solid transparent; border-bottom: 16px solid transparent; margin-left: 6px;"></div>
         </div>
       </div>
     </div>
-    <a href="https://www.youtube.com/watch?v=z5gwT8qzqFU" target="_blank" rel="noopener" style="margin-top: 18px; font-size: 13px; color: #9aa3d1;">▶ {{ t.trailerYoutube }}</a>
+    <a class="cs-ytlink" href="https://www.youtube.com/watch?v=u2pUaW_JTMI&amp;t=2s" target="_blank" rel="noopener" style="margin-top: 10px; color: #9aa3d1;">▶ {{ t.trailerYoutube }}</a>
   </section>
 
   <section id="download" class="cs-download" data-screen-label="5 아침과 다운로드" ref="{{ scene5Ref }}" style="position: relative; z-index: 3; min-height: 150vh; padding: 34vh 24px 0; display: flex; flex-direction: column; align-items: center; color: #3a2f22;">
@@ -673,16 +865,16 @@
           <img class="cs-storebadge" src="assets/appstore.webp" alt="{{ t.btnApple }}" width="308" height="102">
         </a>
       </div>
-      <a class="cs-coupon" href="https://redeem.catsnsoup.com/" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 20px; color: #6d5c42; border-bottom: 1px solid rgba(109,92,66,.4); padding-bottom: 2px;" style-hover="color: #3a2f22; border-bottom-color: #3a2f22;">{{ t.btnCoupon }}</a>
+      <a class="cs-coupon" href="https://redeem.catsnsoup.com/" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 20px; color: #6d5c42; border-bottom: 1px solid rgba(109,92,66,.4);" style-hover="color: #3a2f22; border-bottom-color: #3a2f22;">{{ t.btnCoupon }}</a>
     </div>
   </section>
 
   <!-- footer -->
   <footer data-screen-label="푸터" class="cs-footer" style="position: relative; z-index: 3; padding: 40px 36px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; color: #93815f; font-size: 13px;">
     <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: 16px; color: #6d5c42;">{{ t.brandName }}</div>
-    <div style="display: flex; gap: 20px;">
-      <a href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
-      <a href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
+    <div class="cs-footer-links">
+      <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
+      <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
     <div>© NEOWIZ All rights reserved.</div>
   </footer>
@@ -742,7 +934,7 @@ class Component extends DCLogic {
       const a = document.createElement('audio');
       a.src = 'assets/guitar.mp3';
       a.id = 'cs-guitar';
-      a.loop = false;
+      a.loop = true;
       a.preload = 'auto';
       a.volume = 0;
       a.playsInline = true;
@@ -756,9 +948,9 @@ class Component extends DCLogic {
     if (!this._guitar._csEndedBound) {
       this._guitar._csEndedBound = true;
       this._guitar.addEventListener('ended', () => {
+        if (this._guitar.loop) return;
         this._guitarDone = true;
         this.stopTrack(this._guitar);
-        this.stopTrack(window.__csBgm);
       });
     }
     return this._guitar;
@@ -794,8 +986,77 @@ class Component extends DCLogic {
     return this._volOk;
   }
 
+  compactUi() {
+    return window.matchMedia('(max-width: 720px), (max-height: 540px) and (hover: none)').matches;
+  }
+
+  hamburgerUi() {
+    return this.compactUi() || document.documentElement.classList.contains('cs-hamburger');
+  }
+
+  scheduleNavMode() {
+    if (this._navModeRaf) return;
+    this._navModeRaf = requestAnimationFrame(() => {
+      this._navModeRaf = 0;
+      this.updateNavMode();
+    });
+  }
+
+  setHamburger(on) {
+    on = !!on;
+    const was = !!this._hamburgerOn;
+    document.documentElement.classList.toggle('cs-hamburger', on);
+    this._hamburgerOn = on;
+    if (on) this.closeSocial();
+    if (was && !on) this.closeMenu();
+  }
+
+  measureDesktopNavWidth(nav) {
+    const probe = nav.cloneNode(true);
+    probe.removeAttribute('id');
+    probe.className = 'cs-nav-probe';
+    probe.setAttribute('aria-hidden', 'true');
+    probe.style.cssText = 'display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:24px;font-size:22px;font-family:var(--cs-cjk, "Gowun Batang"), "Gowun Batang", serif;letter-spacing:var(--cs-track, 0px);font-weight:var(--cs-weight, 700);white-space:nowrap;flex-wrap:nowrap;position:absolute;left:-9999px;top:0;visibility:hidden;pointer-events:none;margin:0;padding:0;width:max-content;max-width:none;height:auto;background:transparent;';
+    document.body.appendChild(probe);
+    try {
+      return probe.getBoundingClientRect().width;
+    } finally {
+      probe.remove();
+    }
+  }
+
+  navCollides() {
+    const topbar = this.refs2.topbar;
+    const nav = this.refs2.nav;
+    if (!topbar || !nav) return false;
+    const center = topbar.querySelector('.cs-topbar-center');
+    if (!center) return false;
+    const centerRight = center.getBoundingClientRect().right;
+    const gap = 150;
+    const hamburger = document.documentElement.classList.contains('cs-hamburger');
+    const extra = hamburger ? 16 : 0;
+    let navLeft;
+    if (hamburger) {
+      const width = this.measureDesktopNavWidth(nav);
+      if (!(width > 0)) return true;
+      navLeft = topbar.getBoundingClientRect().right - 36 - width;
+    } else {
+      const links = nav.querySelectorAll(':scope > a, :scope > .cs-social-wrap');
+      const first = links[0];
+      const last = links[links.length - 1];
+      if (first && last && last.offsetTop > first.offsetTop + 4) return true;
+      const rect = nav.getBoundingClientRect();
+      navLeft = rect.width > 0 ? rect.left : (last || nav).getBoundingClientRect().left;
+    }
+    return centerRight + gap + extra > navLeft;
+  }
+
+  updateNavMode() {
+    this.setHamburger(this.compactUi() || this.navCollides());
+  }
+
   hardAudioCut() {
-    return window.innerWidth <= 720 || !this.audioVolumeWorks(window.__csBgm || window.__csGuitar);
+    return this.compactUi() || !this.audioVolumeWorks(window.__csBgm || window.__csGuitar);
   }
 
   silenceAll() {
@@ -805,6 +1066,13 @@ class Component extends DCLogic {
       a.volume = 0;
       a.muted = true;
     }
+  }
+
+  muteForVideo() {
+    this._videoMute = true;
+    clearInterval(this._bRamp); this._bRamp = null; this._t_bRamp = undefined;
+    clearInterval(this._gRamp); this._gRamp = null; this._t_gRamp = undefined;
+    this.silenceAll();
   }
 
   unlockAudio() {
@@ -840,7 +1108,39 @@ class Component extends DCLogic {
     this.setState({ sound: on });
   }
 
+  closeSocial() {
+    const wrap = this.refs2.socialWrap;
+    if (!wrap) return;
+    wrap.classList.remove('is-open');
+    const btn = this.refs2.socialNav || wrap.querySelector('.cs-nav-social');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+
+  toggleSocialNow(e) {
+    if (e) {
+      if (e.preventDefault) e.preventDefault();
+      if (e.stopPropagation) e.stopPropagation();
+    }
+    if (this.hamburgerUi()) return;
+    const wrap = this.refs2.socialWrap;
+    if (!wrap) return;
+    const open = !wrap.classList.contains('is-open');
+    wrap.classList.toggle('is-open', open);
+    const btn = this.refs2.socialNav || wrap.querySelector('.cs-nav-social');
+    if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (!this._socialDocBound) {
+      this._socialDocBound = true;
+      document.addEventListener('pointerdown', (ev) => {
+        const w = this.refs2.socialWrap;
+        if (!w || !w.classList.contains('is-open')) return;
+        if (w.contains(ev.target)) return;
+        this.closeSocial();
+      });
+    }
+  }
+
   closeMenu() {
+    this.closeSocial();
     if (!this._menuOpen && !(this.refs2.nav && this.refs2.nav.classList.contains('is-open'))) return;
     this._menuOpen = false;
     if (this.refs2.menuBtn) {
@@ -885,10 +1185,10 @@ class Component extends DCLogic {
     if (!this._menuEscBound) {
       this._menuEscBound = true;
       window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') this.closeMenu();
+        if (e.key === 'Escape') { this.closeSocial(); this.closeMenu(); }
       });
       window.addEventListener('resize', () => {
-        if (window.innerWidth > 720) this.closeMenu();
+        if (!this.hamburgerUi()) this.closeMenu();
       });
     }
   }
@@ -949,26 +1249,27 @@ class Component extends DCLogic {
       this.silenceAll();
       return;
     }
-    const on = (el, ratio) => {
-      if (!el) return false;
-      const r = el.getBoundingClientRect();
-      return r.top < h * (1 - (ratio || 0.25)) && r.bottom > h * (ratio || 0.25);
-    };
+    if (this._videoMute) {
+      const tr = this.refs2.trailerSection;
+      if (tr) {
+        const r = tr.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > h) this._videoMute = false;
+      }
+      if (this._videoMute) {
+        this.silenceAll();
+        return;
+      }
+    }
     const g = this.getGuitar();
     const b = this.getAudio();
     const gs = this.refs2.guitarSection;
-    const gs2 = this.refs2.guitarSection2;
-    const mobile = window.innerWidth <= 720;
-    const inGuitar = on(gs, mobile ? 0.06 : 0.22) || on(gs2, mobile ? 0.12 : 0.28);
-    const inTrailer = on(this.refs2.trailerSection, 0.35);
-    const firstG = gs2 || gs;
-    const lastG = gs || gs2;
-    const beforeGuitar = !firstG || firstG.getBoundingClientRect().top > h * 0.4;
-    const pastGuitar = lastG && lastG.getBoundingClientRect().bottom < 0;
-    const guitarOver = this._guitarDone || (g && g.ended);
-    const guitarOnce = !!(this._guitarPlayed && !guitarOver && g && !g.ended);
-    const silent = inTrailer || pastGuitar || (guitarOver && !beforeGuitar);
-    const active = silent ? null : ((inGuitar && !guitarOver) || guitarOnce ? g : (beforeGuitar ? b : null));
+    if (gs) this._guitarPageY = window.scrollY + gs.getBoundingClientRect().top;
+    const guitarTop = gs
+      ? gs.getBoundingClientRect().top
+      : (this._guitarPageY != null ? this._guitarPageY - window.scrollY : Infinity);
+    if (guitarTop < h * 0.45) this._guitarReached = true;
+    const wantGuitar = this._guitarReached ? guitarTop < h * 0.55 : guitarTop < h * 0.45;
+    const active = wantGuitar ? g : b;
 
     const now = Date.now();
     if (!this._wdAt || now - this._wdAt > 1200) {
@@ -1039,29 +1340,7 @@ class Component extends DCLogic {
       }, 60);
     };
 
-    if (inTrailer || pastGuitar) {
-      if (this._guitarPlayed) this._guitarDone = true;
-      ramp(b, 0, 0.04);
-      ramp(g, 0, 0.03);
-      return;
-    }
-    if (beforeGuitar && !guitarOnce) {
-      ramp(g, 0, 0.025);
-      ramp(b, 0.4, 0.02);
-      return;
-    }
-    if (beforeGuitar && guitarOnce) {
-      this._guitarDone = true;
-      ramp(g, 0, 0.025);
-      ramp(b, 0.4, 0.02);
-      return;
-    }
-    if (guitarOver) {
-      ramp(b, 0, 0.04);
-      ramp(g, 0, 0.03);
-      return;
-    }
-    if (inGuitar || guitarOnce) {
+    if (wantGuitar) {
       ramp(b, 0, 0.02);
       if (!this._guitarPlayed) {
         this._guitarPlayed = true;
@@ -1069,7 +1348,8 @@ class Component extends DCLogic {
         try { g.currentTime = 0; } catch (e) {}
         g.volume = 0;
       }
-      if (g.paused && !g.ended) {
+      g.loop = true;
+      if (g.paused) {
         if (!this._gRamp && !this.hardAudioCut()) g.volume = 0;
         g.muted = false;
         g.play().catch(() => { this._guitarPlayed = false; });
@@ -1077,8 +1357,8 @@ class Component extends DCLogic {
       ramp(g, 0.55, 0.025);
       return;
     }
-    ramp(b, 0, 0.04);
-    ramp(g, 0, 0.03);
+    ramp(g, 0, 0.025);
+    ramp(b, 0.4, 0.02);
   }
 
   // hard rule: nothing plays once the guitar scene is fully above the viewport
@@ -1135,7 +1415,7 @@ class Component extends DCLogic {
     this.ensureFont(picked);
     document.documentElement.style.setProperty('--cs-cjk', "'" + picked + "'");
     const track = { kr: -1, en: p.trackEn, jp: p.trackJp, cn: p.trackCn, es: p.trackEs, fr: p.trackFr, th: p.trackTh, pt: p.trackPt, id: p.trackId }[L] ?? 0;
-    document.documentElement.style.setProperty('--cs-track', (L === 'cn' ? Math.max(-1, Math.min(1, track)) : track) + 'px');
+    document.documentElement.style.setProperty('--cs-track', (L === 'cn' ? Math.max(-2, Math.min(0.5, track || -1)) : track) + 'px');
     let lead = { kr: p.leadingKr, en: p.leadingEn, jp: p.leadingJp, cn: p.leadingCn, es: p.leadingEs, fr: p.leadingFr, th: p.leadingTh, pt: p.leadingPt, id: p.leadingId }[L] ?? 1.85;
     // Thai stacked vowels/tone marks need a taller line box
     if (L === 'th') lead = Math.max(1.7, Math.min(2.0, lead ?? 1.8));
@@ -1148,11 +1428,57 @@ class Component extends DCLogic {
     // ES: accents, ñ and ¿¡ need vertical room; long words dislike tight tracking
     if (L === 'es') lead = Math.max(1.2, Math.min(1.5, lead ?? 1.4));
     document.documentElement.style.setProperty('--cs-lead', String(lead));
-    document.documentElement.style.setProperty('--cs-jp-kern', L === 'jp' ? 'normal' : 'auto');
-    document.documentElement.style.setProperty('--cs-jp-palt', L === 'jp' ? '"palt" 1, "kern" 1' : 'normal');
+    document.documentElement.style.setProperty('--cs-jp-kern', (L === 'jp' || L === 'cn') ? 'normal' : 'auto');
+    document.documentElement.style.setProperty('--cs-jp-palt', L === 'jp' ? '"palt" 1, "kern" 1' : (L === 'cn' ? '"palt" 1, "kern" 1' : 'normal'));
     // JP/CN run with no spaces; keep-all treats the whole line as unbreakable and overflows
     document.documentElement.style.setProperty('--cs-wb', (L === 'jp' || L === 'cn') ? 'normal' : (L === 'th' ? 'break-word' : 'keep-all'));
     this.syncDocumentMeta();
+    this.scheduleCnPunct();
+  }
+
+  scheduleCnPunct() {
+    if (this._cnPunctRaf) cancelAnimationFrame(this._cnPunctRaf);
+    this._cnPunctRaf = requestAnimationFrame(() => {
+      this._cnPunctRaf = 0;
+      this.syncCnPunct();
+    });
+  }
+
+  syncCnPunct() {
+    const marks = /[，！？!?]/;
+    const split = /([，！？!?])/;
+    const kind = (ch) => (ch === '，' || ch === ',') ? 'comma' : ((ch === '？' || ch === '?') ? 'ask' : 'bang');
+    if ((this.state && this.state.lang) !== 'cn') {
+      document.querySelectorAll('.cs-cn-punct').forEach((el) => el.replaceWith(document.createTextNode(el.textContent)));
+      return;
+    }
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: (node) => {
+        if (!node.nodeValue || !marks.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+        const p = node.parentElement;
+        if (!p || p.closest('.cs-cn-punct, script, style, canvas, .cs-nav-probe')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    for (const node of nodes) {
+      const parts = node.nodeValue.split(split);
+      const frag = document.createDocumentFragment();
+      for (const part of parts) {
+        if (!part) continue;
+        if (part.length === 1 && marks.test(part)) {
+          const span = document.createElement('span');
+          span.className = 'cs-cn-punct';
+          span.dataset.p = kind(part);
+          span.textContent = part;
+          frag.appendChild(span);
+        } else {
+          frag.appendChild(document.createTextNode(part));
+        }
+      }
+      node.replaceWith(frag);
+    }
   }
 
   syncDocumentMeta() {
@@ -1172,6 +1498,7 @@ class Component extends DCLogic {
     set('meta[property="og:locale"]', 'content', ogLocale);
     set('meta[name="twitter:title"]', 'content', title);
     set('meta[name="twitter:description"]', 'content', desc);
+    this.scheduleNavMode();
   }
 
   ref2(name) { return (el) => { this.refs2[name] = el; }; }
@@ -1183,7 +1510,7 @@ class Component extends DCLogic {
     const dpr = Math.min(1.5, window.devicePixelRatio || 1);
     const size = () => { cv.width = cv.clientWidth * dpr; cv.height = cv.clientHeight * dpr; };
     size();
-    const mobile = window.innerWidth <= 720;
+    const mobile = this.compactUi();
     const stars = Array.from({ length: mobile ? 28 : 70 }, () => ({
       x: Math.random(), y: Math.random(),
       r: (Math.random() * (mobile ? 1.0 : 1.3) + 0.35) * dpr,
@@ -1341,8 +1668,9 @@ class Component extends DCLogic {
     window.addEventListener('beforeunload', toTop);
     this.killStrayAudio();
     this.applyCjkFont();
+    this.updateNavMode();
     const density = Math.min(1, this.props.particleDensity ?? 1);
-    const mobileSky = window.innerWidth <= 720;
+    const mobileSky = this.compactUi();
     const skyMul = mobileSky ? 0.28 : 1;
     for (let i = 0; i < Math.round(90 * density * skyMul); i++) {
       this.stars.push({ x: Math.random(), y: Math.random() * 0.9, r: Math.random() * (mobileSky ? 1.1 : 1.6) + 0.35, p: Math.random() * Math.PI * 2, s: 0.5 + Math.random() * 1.5 });
@@ -1358,7 +1686,7 @@ class Component extends DCLogic {
       });
     };
     this.onMove = (e) => { this.mx = e.clientX; this.my = e.clientY; };
-    this.onResize = () => { this._balloonEl = null; this.sizeCanvas(); this.updateScroll(); };
+    this.onResize = () => { this._balloonEl = null; this.sizeCanvas(); this.updateScroll(); this.scheduleNavMode(); };
     window.addEventListener('scroll', this.onScroll, { passive: true, capture: true });
     window.addEventListener('mousemove', this.onMove, { passive: true });
     window.addEventListener('resize', this.onResize);
@@ -1476,7 +1804,7 @@ class Component extends DCLogic {
       const p = Math.max(0, Math.min(1, -r.top / (r.height - h)));
       const cf = this.refs2.catFall;
       const cw = cf.offsetWidth || 190, ch = cf.offsetHeight || 250;
-      const pad = window.innerWidth <= 720 ? 14 : 24;
+      const pad = this.compactUi() ? 14 : 24;
       // keep the cat fully inside the sticky viewport at every scroll position
       // room above for the balloon bunch she holds, measured not guessed
       if (!this._balloonEl || this._balloonEl.parentNode !== cf) {
@@ -1485,7 +1813,7 @@ class Component extends DCLogic {
       const balloon = this._balloonEl;
       let head = balloon ? balloon.offsetHeight * 0.82 : 220;
       // narrow screens: the rig reads much larger against the viewport, so scale it down
-      let rigScale = window.innerWidth <= 480 ? 0.62 : window.innerWidth <= 720 ? 0.74 : 1;
+      let rigScale = window.innerWidth <= 480 ? 0.62 : this.compactUi() ? 0.74 : 1;
       // short viewports: shrink the rig until the descent keeps a usable travel distance
       const minTravel = h * 0.34;
       const travelAt = (s) => (h - pad - ch * s) - (pad + head * s);
@@ -1630,7 +1958,7 @@ class Component extends DCLogic {
     const mx = (this.mx || -9999) * dpr, my = (this.my || -9999) * dpr;
     const px = heroVisible ? ((this.mx || window.innerWidth / 2) / window.innerWidth - 0.5) : 0;
     const py = heroVisible ? ((this.my || window.innerHeight / 2) / window.innerHeight - 0.5) : 0;
-    const mobileDim = window.innerWidth <= 720 ? 0.4 : 1;
+    const mobileDim = this.compactUi() ? 0.4 : 1;
     const nearR2 = (170 * dpr) * (170 * dpr);
     if (night > 0.02) {
       ctx.fillStyle = '#e9edff';
@@ -1709,7 +2037,7 @@ class Component extends DCLogic {
       const vis = this._s3Vis || 0;
       if (vis > 0.05) {
         ctx.fillStyle = '#d9f79a';
-        const ffDim = window.innerWidth <= 720 ? 0.45 : 1;
+        const ffDim = this.compactUi() ? 0.45 : 1;
         for (let i = 0; i < this.fireflies.length; i++) {
           const f = this.fireflies[i];
           f.x += f.vx + Math.sin(t * 0.7 + f.p) * 0.0004;
@@ -1734,8 +2062,8 @@ class Component extends DCLogic {
     const build = () => {
       if (!window.YT || !window.YT.Player) return false;
       this.ytPlayer = new window.YT.Player(holder, {
-        videoId: 'z5gwT8qzqFU',
-        playerVars: { autoplay: 1, mute: 1, controls: 0, loop: 1, playlist: 'z5gwT8qzqFU', modestbranding: 1, playsinline: 1, rel: 0, disablekb: 1, fs: 0 },
+        videoId: 'u2pUaW_JTMI',
+        playerVars: { autoplay: 1, mute: 1, controls: 0, loop: 1, playlist: 'u2pUaW_JTMI', start: 2, modestbranding: 1, playsinline: 1, rel: 0, disablekb: 1, fs: 0 },
         events: {
           onReady: (e) => {
             e.target.mute();
@@ -1916,41 +2244,41 @@ class Component extends DCLogic {
     const T = {
       kr: {
         gateLabel: '숲의 문을 열다',
-        originEyebrow: '이야기의 시작', originQuote: '“아빠, 고양이 키워도 돼?”', originNote: '고양이와 스프는 한 아이의 이 질문에서\n시작되었습니다.',
+        originEyebrow: '이야기의 시작', originQuote: '“아빠, 고양이 키워도 돼?”', originNote: '고양이와 스프는\n한 아이의 이 질문에서 시작되었습니다.',
         meowText: '야옹 ~',
         brandName: '고양이와 스프',
         loadingLabel: '이야기를 불러오는 중...',
         pickLanguage: '언어를 선택해주세요', okStart: '시작하기',
         loadingVoice: '아빠! 고양이 키워도 돼?',
         heroEyebrow: '잠들기 전에 읽는 이야기',
-        heroHeadline: '밤하늘에서 수프 냄새가 나요',
+        heroHeadline: '밤하늘에서\n수프 냄새가 나요',
         voice1: '아빠.',
         voice2: '아빠, 이 고양이 이름은 뭐야?',
         voice3a: '아빠.',
         voice3b: '고마워.',
-        heroTag: '별에서 온 고양이들의 아주 작은 수프 가게.',
+        heroTag: '별에서 온 고양이들의\n아주 작은 수프 가게.',
         scrollHint: '아래로 스크롤해 이야기를 시작하세요',
-        storyEyebrow: '첫 번째 밤, 하늘로 오른 작은 불빛',
-        beat1: '어느 밤, 낡은 천문대에서\n작은 불빛 여러개를 하늘로 쏘아 올렸어요.',
-        beat2: '그 빛은 별들 사이를 지나 고양이 별에 닿았어요.\n그곳엔 호기심 많은 별고양이 키키가 살고 있었죠.',
-        beat3: '키키는 별빛의 리본을 타고\n구름을 지나 잠든 숲으로 내려왔답니다.',
+        storyEyebrow: '첫 번째 밤,\n하늘로 오른 작은 불빛',
+        beat1: '어느 밤, 낡은 천문대에서\n작은 불빛 여러 개를\n하늘로 쏘아 올렸어요.',
+        beat2: '그 빛은 별들 사이를 지나\n고양이 별에 닿았어요.\n호기심 많은 별고양이 키키가 살고 있었죠.',
+        beat3: '키키는 별빛의 리본을 타고\n구름을 지나\n잠든 숲으로 내려왔답니다.',
         catStar: '고양이 별',
-        s3Eyebrow: '두 번째 밤, 보글보글 끓는 냄비',
-        s3Main: '숲 속에서 키키가 발견한 건,\n모닥불 위에서 보글보글 끓고 있는 수프 한 냄비.',
+        s3Eyebrow: '두 번째 밤,\n보글보글 끓는 냄비',
+        s3Main: '숲 속에서 키키가 발견한 건,\n모닥불 위에서 보글보글 끓는\n수프 한 냄비.',
         stirHint: '냄비 위에 마우스를 올려 수프를 저어 보세요',
         clickMe: '키키를 눌러 보세요',
-        inter1: '키키는 수프가 눋지 않도록 조심조심, 냄비를 저었어요.\n그날 밤부터 키키는 숲의 요리사가 되었답니다.',
-        s4Eyebrow: '세 번째 밤, 향기를 따라온 손님들',
-        s4Main: '수프의 김을 타고 은은한 빛이 피어오르자,\n하나둘 다른 별고양이들이 향기를 따라 내려왔어요.',
+        inter1: '키키는 수프가 눋지 않도록\n조심조심 냄비를 저었어요.\n그날 밤부터 키키는\n숲의 요리사가 되었답니다.',
+        s4Eyebrow: '세 번째 밤,\n향기를 따라온 손님들',
+        s4Main: '수프의 김을 타고\n은은한 빛이 피어오르자,\n하나둘 별고양이들이\n향기를 따라 내려왔어요.',
         tapHint: '카드를 눌러 고양이를 만나 보세요',
         guitarMain: '어디선가 한 고양이는 기타를 치고\n노래를 부르기 시작해요.\n사랑의 노래를.',
-        inter2: '밤이 깊도록 수프는 보글보글 끓고,\n고양이들은 모닥불 곁에서 그르렁 그르렁...\n숲은 어느새 작은 마을이 되었어요.',
-        dawnHint: '그리고, 동쪽 하늘이 밝아오기 시작했어요',
+        inter2: '밤이 깊도록 수프는 보글보글 끓고,\n고양이들은 모닥불 곁에서\n그르렁 그르렁...\n숲은 어느새 작은 마을이 되었어요.',
+        dawnHint: '그리고, 동쪽 하늘이\n밝아오기 시작했어요',
         s5Eyebrow: '그리고, 아침',
         s5Heading: '아침이 밝고,\n작은 수프 가게가 문을 열었어요',
-        s5Main: '이제, 이 숲의 집사는 당신이에요.\n고양이들과 함께 수프를 끓여 보세요.',
+        s5Main: '이제, 이 숲의 집사는 당신이에요.\n고양이들과 함께\n수프를 끓여 보세요.',
         lblBreed: '품종', lblBirthday: '생일', lblFood: '좋아하는 음식',
-        navStory: '이야기', navUpdate: '업데이트', navRecipe: '마법 레시피', navSocial: '소셜', navCats: '고양이들', navDownload: '다운로드', navMenu: '메뉴', navClose: '닫기',
+        navStory: '이야기', navUpdate: '업데이트', navCoupon: '쿠폰 코드', navRecipe: '마법 레시피', navSocial: '소셜', navCats: '고양이들', navDownload: '다운로드', navMenu: '메뉴', navClose: '닫기',
         btnGoogle: 'Google Play에서 받기', btnApple: 'App Store에서 받기', btnCoupon: '쿠폰 코드 입력',
         bgmOn: '배경음 켜기', bgmOff: '배경음 끄기',
         ftTerms: '이용약관', ftPrivacy: '개인정보처리방침',
@@ -1958,41 +2286,41 @@ class Component extends DCLogic {
       },
       en: {
         gateLabel: 'OPEN THE DOOR',
-        originEyebrow: 'WHERE IT BEGAN', originQuote: '“Dad, can we get a cat?”', originNote: 'Cats & Soup began with one child’s\nsimple question.',
+        originEyebrow: 'WHERE IT BEGAN', originQuote: '“Dad, can we get a cat?”', originNote: 'Cats & Soup\nbegan with one child’s question.',
         meowText: 'Meow ~',
         brandName: 'Cats & Soup',
         loadingLabel: 'Preparing the story...',
         pickLanguage: 'Choose your language', okStart: 'Start',
         loadingVoice: 'Dad! Can we get a cat?',
         heroEyebrow: 'A COZY BEDTIME STORY',
-        heroHeadline: 'The night sky smells of soup',
+        heroHeadline: 'The night sky\nsmells of soup',
         voice1: 'Dad.',
         voice2: 'Dad, what\'s this cat\'s name?',
         voice3a: 'Dad.',
         voice3b: 'Thank you.',
-        heroTag: 'A tiny soup shop run by cats from the stars.',
+        heroTag: 'A tiny soup shop\nrun by cats from the stars.',
         scrollHint: 'Scroll down to begin the story',
-        storyEyebrow: 'THE FIRST NIGHT, A SPARK SENT SKYWARD',
-        beat1: 'One night, from an old observatory,\nmany tiny sparks were cast into the sky.',
-        beat2: 'The spark drifted past the stars to the Cat Star.\nThere lived a curious star-cat named KiKi.',
-        beat3: 'KiKi rode a ribbon of starlight past the clouds,\ndown into a sleeping forest.',
+        storyEyebrow: 'THE FIRST NIGHT,\nA SPARK SENT SKYWARD',
+        beat1: 'One night, from an old observatory,\nmany tiny sparks\nwere sent up into the sky.',
+        beat2: 'The light passed between the stars\nand reached the Cat Star.\nThere lived a curious star-cat named KiKi.',
+        beat3: 'KiKi rode a ribbon of starlight\nthrough the clouds\ndown into the sleeping forest.',
         catStar: 'THE CAT STAR',
-        s3Eyebrow: 'THE SECOND NIGHT, A POT LEFT SIMMERING',
-        s3Main: 'Deep in the woods, KiKi found a lone pot of soup,\nhumming over a crackling campfire.',
+        s3Eyebrow: 'THE SECOND NIGHT,\nA POT LEFT SIMMERING',
+        s3Main: 'What KiKi found in the woods\nwas a pot bubbling over the fire.\nOne pot of soup.',
         stirHint: 'Hover over the pot to stir the soup',
         clickMe: 'Click KiKi',
-        inter1: "KiKi gave the pot a gentle stir so the soup wouldn't scorch.\nFrom that night on, KiKi was the cook of the forest.",
-        s4Eyebrow: 'THE THIRD NIGHT, GUESTS WHO FOLLOWED THE SCENT',
-        s4Main: 'A pearly light rose with the steam,\nand one by one, other star-cats followed the scent.',
+        inter1: "So the soup would not scorch,\nKiKi stirred the pot with care.\nFrom that night on,\nKiKi was the cook of the forest.",
+        s4Eyebrow: 'THE THIRD NIGHT,\nGUESTS WHO FOLLOWED THE SCENT',
+        s4Main: 'A soft light rose with the steam,\nand one by one\nthe star-cats\nfollowed the scent down.',
         tapHint: 'Tap a card to meet a cat',
-        guitarMain: 'Somewhere, a cat starts playing guitar and singing.\nA love song.',
-        inter2: 'The soup bubbled late into the night,\nthe cats purred by the fire,\nand little by little, the forest became a village.',
-        dawnHint: 'Then, the east began to glow',
+        guitarMain: 'Somewhere, a cat starts playing guitar\nand begins to sing.\nA love song.',
+        inter2: 'The soup bubbled late into the night,\nthe cats by the fire\npurred and purred...\nand the forest became a little village.',
+        dawnHint: 'Then the eastern sky\nbegan to glow',
         s5Eyebrow: 'AND THEN, MORNING',
         s5Heading: 'Morning came,\nand the little soup shop opened its doors',
-        s5Main: 'Now the forest is yours to care for.\nCome cook soup with the cats.',
+        s5Main: 'Now the forest is yours to care for.\nCome cook soup\nwith the cats.',
         lblBreed: 'Breed', lblBirthday: 'Birthday', lblFood: 'Favorite Food',
-        navStory: 'Story', navUpdate: 'Update', navRecipe: 'Magic Recipe', navSocial: 'Social', navCats: 'Cats', navDownload: 'Download', navMenu: 'Menu', navClose: 'Close',
+        navStory: 'Story', navUpdate: 'Update', navCoupon: 'Coupon Code', navRecipe: 'Magic Recipe', navSocial: 'Social', navCats: 'Cats', navDownload: 'Download', navMenu: 'Menu', navClose: 'Close',
         btnGoogle: 'Get it on Google Play', btnApple: 'Download on the App Store', btnCoupon: 'Enter Coupon Code',
         bgmOn: 'Music On', bgmOff: 'Music Off',
         ftTerms: 'Terms of Service', ftPrivacy: 'Privacy Policy',
@@ -2000,41 +2328,41 @@ class Component extends DCLogic {
       },
       jp: {
         gateLabel: '森のとびらをひらく',
-        originEyebrow: 'はじまりのおはなし', originQuote: '「パパ、ねこ飼ってもいい？」', originNote: '『猫とスープ』は、ひとりの子どもの\nこの質問から生まれました。',
+        originEyebrow: 'はじまりのおはなし', originQuote: '「パパ、ねこ飼ってもいい？」', originNote: '『猫とスープ』は、\nひとりの子どものこの質問から生まれました。',
         meowText: 'にゃあ ~',
         brandName: '猫とスープ',
         loadingLabel: '物語を準備中...',
         pickLanguage: '言語を選んでください', okStart: 'はじめる',
         loadingVoice: 'パパ！ネコ、飼ってもいい？',
         heroEyebrow: 'ねむる前に読むおはなし',
-        heroHeadline: '夜空から、スープの香り',
+        heroHeadline: '夜空から、\nスープの香り',
         voice1: 'パパ。',
         voice2: 'パパ、このネコの名前はなに？',
         voice3a: 'パパ。',
         voice3b: 'ありがとう。',
-        heroTag: '星からやってきた猫たちの、ちいさなスープ屋さん。',
+        heroTag: '星からやってきた猫たちの、\nちいさなスープ屋さん。',
         scrollHint: 'スクロールして物語をはじめよう',
-        storyEyebrow: '最初の夜、空へ送られた小さな光',
-        beat1: 'ある夜、古い天文台から小さな光がいくつも、\n空へ打ち上げられました。',
-        beat2: 'その光は星々のあいだを抜けて、猫の星へ。\nそこには好奇心いっぱいの星猫キキが住んでいました。',
-        beat3: 'キキは星あかりのリボンに乗って雲を抜け、\n眠る森へ降りていきました。',
+        storyEyebrow: '最初の夜、\n空へ送られた小さな光',
+        beat1: 'ある夜、古い天文台から、\n小さな光がいくつも\n空へ打ち上げられました。',
+        beat2: 'その光は星々のあいだを抜けて\n猫の星へ届きました。\n好奇心いっぱいの星猫キキが住んでいました。',
+        beat3: 'キキは星あかりのリボンに乗って、\n雲を抜け、\n眠る森へ降りていきました。',
         catStar: '猫の星',
-        s3Eyebrow: '二番目の夜、ことこと煮える鍋',
-        s3Main: '森の中でキキが見つけたのは、\n焚き火の上でことこと煮える一つの鍋。',
+        s3Eyebrow: '二番目の夜、\nことこと煮える鍋',
+        s3Main: '森の中でキキが見つけたのは、\n焚き火の上でことこと煮える、\nスープの鍋ひとつ。',
         stirHint: '鍋にカーソルを重ねて、スープをかき混ぜてみて',
         clickMe: 'キキをクリック',
-        inter1: 'スープが焦げないように、キキはそっと鍋をかき混ぜました。\nその夜から、キキは森の料理人になったのです。',
-        s4Eyebrow: '三番目の夜、香りをたどってきたお客さん',
-        s4Main: '湯気とともに淡い光が立ちのぼると、\nほかの星猫たちも香りをたどって降りてきました。',
+        inter1: 'スープが焦げないように、\nキキはそっと鍋をかき混ぜました。\nその夜からキキは、\n森の料理人になったのです。',
+        s4Eyebrow: '三番目の夜、\n香りをたどってきたお客さん',
+        s4Main: 'スープの湯気に乗って、\n淡い光が立ちのぼると、\n星猫たちがひとつ、またひとつ、\n香りをたどって降りてきました。',
         tapHint: 'カードをタップして猫に会おう',
-        guitarMain: 'どこかで一匹の猫がギターを弾き、歌をうたいはじめます。\n愛の歌を。',
-        inter2: '夜が更けるまでスープはことこと、猫たちは焚き火のそばでごろごろ。\n森はいつしか小さな村になりました。',
-        dawnHint: 'そして、東の空が明るみはじめました',
+        guitarMain: 'どこかで一匹の猫がギターを弾き、\n歌をうたいはじめます。\n愛の歌を。',
+        inter2: '夜が更けるまでスープはことこと、\n猫たちは焚き火のそばで\nごろごろ……\n森はいつしか小さな村になりました。',
+        dawnHint: 'そして、東の空が\n明るみはじめました',
         s5Eyebrow: 'そして、朝',
         s5Heading: '朝が来て、\nちいさなスープ屋さんが店をひらきました',
-        s5Main: 'これからは、あなたがこの森の飼い主。\n猫たちといっしょにスープを作りましょう。',
+        s5Main: 'これからは、あなたがこの森の飼い主。\n猫たちといっしょに\nスープを作りましょう。',
         lblBreed: '猫種', lblBirthday: '誕生日', lblFood: '好きな食べ物',
-        navStory: '物語', navUpdate: 'アップデート', navRecipe: '魔法のレシピ', navSocial: 'ソーシャル', navCats: '猫たち', navDownload: 'ダウンロード', navMenu: 'メニュー', navClose: '閉じる',
+        navStory: '物語', navUpdate: 'アップデート', navCoupon: 'クーポンコード', navRecipe: '魔法のレシピ', navSocial: 'ソーシャル', navCats: '猫たち', navDownload: 'ダウンロード', navMenu: 'メニュー', navClose: '閉じる',
         btnGoogle: 'Google Playで手に入れる', btnApple: 'App Storeでダウンロード', btnCoupon: 'クーポンコード入力',
         bgmOn: '背景音楽 オン', bgmOff: '背景音楽 オフ',
         ftTerms: '利用規約', ftPrivacy: 'プライバシーポリシー',
@@ -2042,41 +2370,41 @@ class Component extends DCLogic {
       },
       cn: {
         gateLabel: '推开森林的门',
-        originEyebrow: '故事的起点', originQuote: '“爸爸，我们能养只猫吗？”', originNote: '《猫咪汤》始于一个孩子的\n这句提问。',
+        originEyebrow: '故事的起点', originQuote: '“爸爸，我们能养只猫吗？”', originNote: '《猫咪汤》\n从一个孩子的这句提问里开始了。',
         meowText: '喵 ~',
         brandName: '猫咪汤',
         loadingLabel: '正在准备故事...',
         pickLanguage: '请选择语言', okStart: '开始',
         loadingVoice: '爸爸！我们能养只猫吗？',
         heroEyebrow: '睡前读的小故事',
-        heroHeadline: '夜空里飘来汤的香气',
+        heroHeadline: '夜空里\n飘来汤的香气',
         voice1: '爸爸。',
         voice2: '爸爸，这只猫叫什么名字呀？',
         voice3a: '爸爸。',
         voice3b: '谢谢你。',
-        heroTag: '来自星星的猫咪们开的小小汤铺。',
+        heroTag: '来自星星的猫咪们开的\n小小汤铺。',
         scrollHint: '向下滚动，开始这个故事',
-        storyEyebrow: '第一夜，送上夜空的微光',
-        beat1: '一天夜里，从一座老天文台，\n好几点微光被送上了夜空。',
-        beat2: '那道光穿过群星，来到了猫咪星。\n好奇的星猫奇奇就住在那里。',
-        beat3: '奇奇乘着星光的缎带，穿过云层，\n来到了沉睡的森林。',
+        storyEyebrow: '第一夜，\n送上夜空的微光',
+        beat1: '一天夜里，从一座老天文台，\n好几点微光\n被送上了夜空。',
+        beat2: '那道光穿过群星，\n来到了猫咪星。\n好奇的星猫奇奇就住在那里。',
+        beat3: '奇奇乘着星光的缎带，\n穿过云层，\n来到了沉睡的森林。',
         catStar: '猫咪星',
-        s3Eyebrow: '第二夜，咕嘢咕嘢冒泡的汤锅',
-        s3Main: '在森林深处，奇奇发现了\n一口在篝火上咕嘟咕嘟冒泡的汤锅。',
+        s3Eyebrow: '第二夜，\n咕嘢咕嘢冒泡的汤锅',
+        s3Main: '在森林深处，奇奇发现了\n篝火上咕嘟咕嘟冒泡的\n一口汤锅。',
         stirHint: '把鼠标移到锅上，搅一搅汤吧',
         clickMe: '点点奇奇',
-        inter1: '奇奇小心翼翼地搅动着锅，不让汤烧糊。\n从那晚起，奇奇成了森林的厨师。',
-        s4Eyebrow: '第三夜，循香而来的客人',
-        s4Main: '柔和的光随着热气升起，\n星猫们一只接一只，循着香气来到了森林。',
+        inter1: '为了不让汤烧糊，\n奇奇小心翼翼地搅着锅。\n从那晚起，奇奇成了\n森林的厨师。',
+        s4Eyebrow: '第三夜，\n循香而来的客人',
+        s4Main: '柔和的光随着热气升起，\n星猫们一只接一只，\n循着香气\n来到了森林。',
         tapHint: '点击卡片，认识猫咪',
-        guitarMain: '不知从哪里，一只猫咪抱起吉他，唱起了歌。\n一首爱的歌。',
-        inter2: '汤咕嘟咕嘟煮到深夜，猫咪们在火边打着呼噜。\n不知不觉，森林变成了一座小村庄。',
-        dawnHint: '然后，东方的天空开始泛白',
+        guitarMain: '不知从哪里，一只猫咪抱起吉他，\n唱起了歌。\n一首爱的歌。',
+        inter2: '汤咕嘟咕嘟煮到深夜，\n猫咪们在火边\n打着呼噜。\n不知不觉，森林变成了一座小村庄。',
+        dawnHint: '然后，东方的天空\n开始泛白',
         s5Eyebrow: '然后，天亮了',
         s5Heading: '天亮了，\n小小的汤铺开门了',
-        s5Main: '现在，你就是这片森林的管家。\n来和猫咪们一起煮汤吧。',
+        s5Main: '现在，你就是这片森林的管家。\n来和猫咪们一起\n煮汤吧。',
         lblBreed: '品种', lblBirthday: '生日', lblFood: '喜欢的食物',
-        navStory: '故事', navUpdate: '更新', navRecipe: '魔法食谱', navSocial: '社交', navCats: '猫咪们', navDownload: '下载', navMenu: '菜单', navClose: '关闭',
+        navStory: '故事', navUpdate: '更新', navCoupon: '优惠码', navRecipe: '魔法食谱', navSocial: '社交', navCats: '猫咪们', navDownload: '下载', navMenu: '菜单', navClose: '关闭',
         btnGoogle: '在 Google Play 下载', btnApple: '在 App Store 下载', btnCoupon: '输入优惠码',
         bgmOn: '开启音乐', bgmOff: '关闭音乐',
         ftTerms: '服务条款', ftPrivacy: '隐私政策',
@@ -2084,41 +2412,41 @@ class Component extends DCLogic {
       },
       es: {
         gateLabel: 'ABRE LA PUERTA',
-        originEyebrow: 'DÓNDE EMPEZÓ', originQuote: '«Papá, ¿podemos tener un gato?»', originNote: 'Cats & Soup nació de la pregunta\nsencilla de una niña.',
+        originEyebrow: 'DÓNDE EMPEZÓ', originQuote: '«Papá, ¿podemos tener un gato?»', originNote: 'Cats & Soup\nnació de la pregunta sencilla de una niña.',
         meowText: 'Miau ~',
         brandName: 'Cats & Soup',
         loadingLabel: 'Preparando la historia...',
         pickLanguage: 'Elige tu idioma', okStart: 'Comenzar',
         loadingVoice: '¡Papá! ¿Podemos tener un gato?',
         heroEyebrow: 'UN CUENTO PARA ANTES DE DORMIR',
-        heroHeadline: 'El cielo nocturno huele a sopa',
+        heroHeadline: 'El cielo nocturno\nhuele a sopa',
         voice1: 'Papá.',
         voice2: 'Papá, ¿cómo se llama este gato?',
         voice3a: 'Papá.',
         voice3b: 'Gracias.',
-        heroTag: 'Una diminuta tienda de sopa regentada por gatos venidos de las estrellas.',
+        heroTag: 'Una diminuta tienda de sopa\nde gatos venidos de las estrellas.',
         scrollHint: 'Desplázate hacia abajo para comenzar la historia',
-        storyEyebrow: 'LA PRIMERA NOCHE, UNA CHISPA HACIA EL CIELO',
-        beat1: 'Una noche, desde un viejo observatorio,\nvarias pequeñas chispas fueron lanzadas al cielo.',
-        beat2: 'La chispa cruzó las estrellas hasta la Estrella de los Gatos.\nAllí vivía un curioso gato estelar llamado KiKi.',
-        beat3: 'KiKi montó una cinta de luz estelar más allá de las nubes,\nhasta un bosque dormido.',
+        storyEyebrow: 'LA PRIMERA NOCHE,\nUNA CHISPA HACIA EL CIELO',
+        beat1: 'Una noche, desde un viejo observatorio,\nvarias pequeñas chispas\nfueron lanzadas al cielo.',
+        beat2: 'La luz cruzó las estrellas\ny llegó a la Estrella de los Gatos.\nAllí vivía un curioso gato estelar llamado KiKi.',
+        beat3: 'KiKi montó una cinta de luz estelar,\nbajó entre las nubes\nhasta un bosque dormido.',
         catStar: 'LA ESTRELLA DE LOS GATOS',
-        s3Eyebrow: 'LA SEGUNDA NOCHE, UNA OLLA A FUEGO LENTO',
-        s3Main: 'En lo profundo del bosque, KiKi encontró una olla de sopa,\ncanturreando sobre una fogata crepitante.',
+        s3Eyebrow: 'LA SEGUNDA NOCHE,\nUNA OLLA A FUEGO LENTO',
+        s3Main: 'En lo profundo del bosque, KiKi encontró\nuna olla burbujeando sobre el fuego.\nUna olla de sopa.',
         stirHint: 'Pasa el ratón sobre la olla para remover la sopa',
         clickMe: 'Haz clic en KiKi',
-        inter1: 'KiKi removió la olla con cuidado para que la sopa no se quemara.\nDesde esa noche fue el cocinero del bosque.',
-        s4Eyebrow: 'LA TERCERA NOCHE, INVITADOS TRAS EL AROMA',
-        s4Main: 'Una luz nacarada se elevó con el vapor,\ny uno a uno, otros gatos estelares siguieron el aroma.',
+        inter1: 'Para que la sopa no se quemara,\nKiKi removió la olla con cuidado.\nDesde esa noche,\nfue el cocinero del bosque.',
+        s4Eyebrow: 'LA TERCERA NOCHE,\nINVITADOS TRAS EL AROMA',
+        s4Main: 'Con el vapor de la sopa\nse elevó una luz suave,\ny uno a uno los gatos estelares\nbajaron siguiendo el aroma.',
         tapHint: 'Toca una tarjeta para conocer a un gato',
-        guitarMain: 'En algún lugar, un gato toma una guitarra y empieza a cantar.\nUna canción de amor.',
-        inter2: 'La sopa hirvió hasta bien entrada la noche,\nlos gatos ronroneaban junto al fuego,\ny poco a poco el bosque se convirtió en una aldea.',
-        dawnHint: 'Entonces, el este empezó a brillar',
+        guitarMain: 'En algún lugar, un gato toma una guitarra\ny empieza a cantar.\nUna canción de amor.',
+        inter2: 'La sopa hirvió hasta bien entrada la noche,\nlos gatos junto al fuego\nronroneaban...\ny el bosque se volvió una pequeña aldea.',
+        dawnHint: 'Entonces el cielo del este\nempezó a brillar',
         s5Eyebrow: 'Y ENTONCES, LA MAÑANA',
         s5Heading: 'Llegó la mañana,\ny la pequeña tienda de sopa abrió sus puertas',
-        s5Main: 'Ahora el bosque está a tu cuidado.\nVen a cocinar sopa con los gatos.',
+        s5Main: 'Ahora el bosque está a tu cuidado.\nVen a cocinar sopa\ncon los gatos.',
         lblBreed: 'Raza', lblBirthday: 'Cumpleaños', lblFood: 'Comida favorita',
-        navStory: 'Historia', navUpdate: 'Novedades', navRecipe: 'Receta mágica', navSocial: 'Social', navCats: 'Gatos', navDownload: 'Descargar', navMenu: 'Menú', navClose: 'Cerrar',
+        navStory: 'Historia', navUpdate: 'Novedades', navCoupon: 'Código de cupón', navRecipe: 'Receta mágica', navSocial: 'Social', navCats: 'Gatos', navDownload: 'Descargar', navMenu: 'Menú', navClose: 'Cerrar',
         btnGoogle: 'Consíguelo en Google Play', btnApple: 'Descárgalo en el App Store', btnCoupon: 'Introducir código',
         bgmOn: 'Música activada', bgmOff: 'Música desactivada',
         ftTerms: 'Términos del servicio', ftPrivacy: 'Política de privacidad',
@@ -2126,41 +2454,41 @@ class Component extends DCLogic {
       },
       fr: {
         gateLabel: 'OUVRIR LA PORTE',
-        originEyebrow: 'AU COMMENCEMENT', originQuote: '« Papa, on peut avoir un chat ? »', originNote: 'Cats & Soup est né de la question\ntout simple d’une enfant.',
+        originEyebrow: 'AU COMMENCEMENT', originQuote: '« Papa, on peut avoir un chat ? »', originNote: 'Cats & Soup\nest né de la question toute simple d’une enfant.',
         meowText: 'Miaou ~',
         brandName: 'Cats & Soup',
         loadingLabel: 'Préparation de l’histoire...',
         pickLanguage: 'Choisissez votre langue', okStart: 'Commencer',
         loadingVoice: 'Papa ! On peut avoir un chat ?',
         heroEyebrow: 'UNE HISTOIRE POUR LE SOIR',
-        heroHeadline: 'Le ciel nocturne sent la soupe',
+        heroHeadline: 'Le ciel nocturne\nsent la soupe',
         voice1: 'Papa.',
         voice2: 'Papa, il s’appelle comment, ce chat ?',
         voice3a: 'Papa.',
         voice3b: 'Merci.',
-        heroTag: 'Une toute petite échoppe de soupe tenue par des chats venus des étoiles.',
+        heroTag: 'Une toute petite échoppe de soupe\ntenue par des chats venus des étoiles.',
         scrollHint: 'Faites défiler vers le bas pour commencer l’histoire',
-        storyEyebrow: 'LA PREMIÈRE NUIT, UNE ÉTINCELLE VERS LE CIEL',
-        beat1: 'Une nuit, depuis un vieil observatoire,\nplusieurs petites étincelles furent lancées dans le ciel.',
-        beat2: 'L’étincelle traversa les étoiles jusqu’à l’Étoile des Chats.\nLà vivait un curieux chat des étoiles nommé KiKi.',
-        beat3: 'KiKi s’envola sur un ruban de lumière d’étoiles au-delà des nuages,\njusqu’à une forêt endormie.',
+        storyEyebrow: 'LA PREMIÈRE NUIT,\nUNE ÉTINCELLE VERS LE CIEL',
+        beat1: 'Une nuit, depuis un vieil observatoire,\nplusieurs petites étincelles\nfurent lancées dans le ciel.',
+        beat2: 'La lumière traversa les étoiles\net rejoignit l’Étoile des Chats.\nLà vivait un curieux chat des étoiles nommé KiKi.',
+        beat3: 'KiKi s’envola sur un ruban de lumière d’étoiles,\nà travers les nuages,\njusqu’à une forêt endormie.',
         catStar: 'L’ÉTOILE DES CHATS',
-        s3Eyebrow: 'LA DEUXIÈME NUIT, UNE MARMITE QUI MIJOTE',
-        s3Main: 'Au cœur des bois, KiKi trouva une marmite de soupe,\nfredonnant au-dessus d’un feu de camp.',
+        s3Eyebrow: 'LA DEUXIÈME NUIT,\nUNE MARMITE QUI MIJOTE',
+        s3Main: 'Au cœur des bois, KiKi trouva\nune marmite mijotant sur le feu.\nUne marmite de soupe.',
         stirHint: 'Survolez la marmite pour remuer la soupe',
         clickMe: 'Cliquez sur KiKi',
-        inter1: 'KiKi remua doucement la marmite pour que la soupe ne brûle pas.\nDès cette nuit-là, il devint le cuisinier de la forêt.',
-        s4Eyebrow: 'LA TROISIÈME NUIT, DES INVITÉS SUIVANT LE PARFUM',
-        s4Main: 'Une lumière nacrée s’éleva avec la vapeur,\net un à un, d’autres chats des étoiles suivirent le parfum.',
+        inter1: 'Pour que la soupe ne brûle pas,\nKiKi remua doucement la marmite.\nDès cette nuit-là,\nil devint le cuisinier de la forêt.',
+        s4Eyebrow: 'LA TROISIÈME NUIT,\nDES INVITÉS SUIVANT LE PARFUM',
+        s4Main: 'Avec la vapeur de la soupe\ns’éleva une lumière douce,\net un à un les chats des étoiles\ndescendirent en suivant le parfum.',
         tapHint: 'Touchez une carte pour rencontrer un chat',
-        guitarMain: 'Quelque part, un chat prend une guitare et se met à chanter.\nUne chanson d’amour.',
-        inter2: 'La soupe mijota tard dans la nuit,\nles chats ronronnaient près du feu,\net peu à peu la forêt devint un village.',
-        dawnHint: 'Puis, l’est se mit à briller',
+        guitarMain: 'Quelque part, un chat prend une guitare\net se met à chanter.\nUne chanson d’amour.',
+        inter2: 'La soupe mijota tard dans la nuit,\nles chats près du feu\nronronnaient...\net la forêt devint un petit village.',
+        dawnHint: 'Puis le ciel de l’est\nse mit à briller',
         s5Eyebrow: 'ET PUIS, LE MATIN',
         s5Heading: 'Le matin vint,\net la petite échoppe de soupe ouvrit ses portes',
-        s5Main: 'La forêt est désormais à votre charge.\nVenez cuisiner de la soupe avec les chats.',
+        s5Main: 'La forêt est désormais à votre charge.\nVenez cuisiner de la soupe\navec les chats.',
         lblBreed: 'Race', lblBirthday: 'Anniversaire', lblFood: 'Plat préféré',
-        navStory: 'Histoire', navUpdate: 'Mises à jour', navRecipe: 'Recette magique', navSocial: 'Social', navCats: 'Chats', navDownload: 'Télécharger', navMenu: 'Menu', navClose: 'Fermer',
+        navStory: 'Histoire', navUpdate: 'Mises à jour', navCoupon: 'Code promo', navRecipe: 'Recette magique', navSocial: 'Social', navCats: 'Chats', navDownload: 'Télécharger', navMenu: 'Menu', navClose: 'Fermer',
         btnGoogle: 'Disponible sur Google Play', btnApple: 'Télécharger dans l’App Store', btnCoupon: 'Saisir un code',
         bgmOn: 'Musique activée', bgmOff: 'Musique désactivée',
         ftTerms: 'Conditions d’utilisation', ftPrivacy: 'Politique de confidentialité',
@@ -2168,41 +2496,41 @@ class Component extends DCLogic {
       },
       th: {
         gateLabel: 'เปิดประตูสู่ป่า',
-        originEyebrow: 'จุดเริ่มต้นของเรื่องนี้', originQuote: '“พ่อคะ เราเลี้ยงแมวได้ไหม?”', originNote: 'Cats & Soup เริ่มต้นจากคำถามง่าย ๆ\nของเด็กคนหนึ่ง',
+        originEyebrow: 'จุดเริ่มต้นของเรื่องนี้', originQuote: '“พ่อคะ เราเลี้ยงแมวได้ไหม?”', originNote: 'Cats & Soup\nเริ่มจากคำถามง่าย ๆ ของเด็กคนหนึ่ง',
         meowText: 'เมี้ยว ~',
         brandName: 'Cats & Soup',
         loadingLabel: 'กำลังเตรียมเรื่องเล่า...',
         pickLanguage: 'เลือกภาษาของคุณ', okStart: 'เริ่ม',
         loadingVoice: 'พ่อคะ! เราเลี้ยงแมวได้ไหม?',
         heroEyebrow: 'นิทานก่อนนอน',
-        heroHeadline: 'ท้องฟ้ายามค่ำมีกลิ่นซุป',
+        heroHeadline: 'ท้องฟ้ายามค่ำ\nมีกลิ่นซุป',
         voice1: 'พ่อคะ',
         voice2: 'พ่อคะ แมวตัวนี้ชื่ออะไร?',
         voice3a: 'พ่อคะ',
         voice3b: 'ขอบคุณนะ',
-        heroTag: 'ร้านซุปเล็ก ๆ ของเหล่าแมวที่มาจากดวงดาว',
+        heroTag: 'ร้านซุปเล็ก ๆ ของเหล่าแมว\nที่มาจากดวงดาว',
         scrollHint: 'เลื่อนลงเพื่อเริ่มเรื่องเล่า',
-        storyEyebrow: 'คืนแรก แสงน้อย ๆ ที่ลอยขึ้นฟ้า',
-        beat1: 'คืนหนึ่ง หอดูดาวเก่าแก่\nส่งประกายแสงเล็ก ๆ หลายดวงขึ้นไปบนท้องฟ้า',
-        beat2: 'แสงนั้นลอยผ่านหมู่ดาวไปจนถึงดาวแมว\nที่ซึ่งคิคิ แมวดาวผู้ช่างสงสัยอาศัยอยู่',
-        beat3: 'คิคินั่งริบบิ้นแสงดาว ผ่านหมู่เมฆ\nลงมาสู่ป่าที่กำลังหลับใหล',
+        storyEyebrow: 'คืนแรก\nแสงน้อย ๆ ที่ลอยขึ้นฟ้า',
+        beat1: 'คืนหนึ่ง หอดูดาวเก่าแก่\nส่งประกายแสงเล็ก ๆ หลายดวง\nขึ้นไปบนท้องฟ้า',
+        beat2: 'แสงนั้นลอยผ่านหมู่ดาว\nไปจนถึงดาวแมว\nคิคิ แมวดาวผู้ช่างสงสัยอาศัยอยู่ที่นั่น',
+        beat3: 'คิคินั่งริบบิ้นแสงดาว\nผ่านหมู่เมฆ\nลงมาสู่ป่าที่กำลังหลับใหล',
         catStar: 'ดาวแมว',
-        s3Eyebrow: 'คืนที่สอง หม้อที่เดือดปุด ๆ',
-        s3Main: 'กลางป่าลึก คิคิพบหม้อซุปหนึ่งใบ\nที่กำลังเดือดอยู่บนกองไฟ',
+        s3Eyebrow: 'คืนที่สอง\nหม้อที่เดือดปุด ๆ',
+        s3Main: 'กลางป่าลึก คิคิพบ\nหม้อที่เดือดอยู่บนกองไฟ\nซุปหนึ่งใบ',
         stirHint: 'เลื่อนเมาส์ไปที่หม้อเพื่อคนซุป',
         clickMe: 'คลิกที่คิคิ',
         inter1: 'คิคิคนซุปอย่างเบามือ\nเพื่อไม่ให้ไหม้\nและตั้งแต่คืนนั้นเธอก็กลายเป็น\nพ่อครัวประจำป่า',
-        s4Eyebrow: 'คืนที่สาม แขกที่ตามกลิ่นมา',
-        s4Main: 'ไอซุปลอยขึ้นพร้อมแสงอ่อน ๆ\nแล้วแมวดาวตัวอื่น ๆ ก็ทยอยลงมาตามกลิ่นหอมนั้น',
+        s4Eyebrow: 'คืนที่สาม\nแขกที่ตามกลิ่นมา',
+        s4Main: 'ไอซุปลอยขึ้น\nพร้อมแสงอ่อน ๆ\nแล้วแมวดาวก็ทยอยลงมา\nตามกลิ่นหอมนั้น',
         tapHint: 'แตะการ์ดเพื่อทำความรู้จักแมว',
-        guitarMain: 'ที่ไหนสักแห่ง แมวตัวหนึ่งหยิบกีตาร์ขึ้นมา แล้วเริ่มร้องเพลง\nเพลงรัก',
-        inter2: 'ซุปเดือดไปจนดึกดื่น แมว ๆ ครางเบา ๆ ข้างกองไฟ\nและป่าก็กลายเป็นหมู่บ้านเล็ก ๆ โดยไม่รู้ตัว',
-        dawnHint: 'แล้วขอบฟ้าทางตะวันออกก็เริ่มสว่าง',
+        guitarMain: 'ที่ไหนสักแห่ง แมวตัวหนึ่งหยิบกีตาร์ขึ้นมา\nแล้วเริ่มร้องเพลง\nเพลงรัก',
+        inter2: 'ซุปเดือดไปจนดึกดื่น\nแมว ๆ ข้างกองไฟ\nครางเบา ๆ ...\nและป่าก็กลายเป็นหมู่บ้านเล็ก ๆ',
+        dawnHint: 'แล้วขอบฟ้าทางตะวันออก\nก็เริ่มสว่าง',
         s5Eyebrow: 'และแล้ว เช้าก็มาถึง',
         s5Heading: 'เช้ามาเยือน\nและร้านซุปเล็ก ๆ ก็เปิดประตู',
-        s5Main: 'ตั้งแต่นี้ไป ป่าแห่งนี้อยู่ในความดูแลของคุณ\nมาทำซุปกับเหล่าแมวกันเถอะ',
+        s5Main: 'ตั้งแต่นี้ไป ป่าแห่งนี้อยู่ในความดูแลของคุณ\nมาทำซุป\nกับเหล่าแมวกันเถอะ',
         lblBreed: 'สายพันธุ์', lblBirthday: 'วันเกิด', lblFood: 'อาหารโปรด',
-        navStory: 'เรื่องเล่า', navUpdate: 'อัปเดต', navRecipe: 'สูตรเวทมนตร์', navSocial: 'โซเชียล', navCats: 'เหล่าแมว', navDownload: 'ดาวน์โหลด', navMenu: 'เมนู', navClose: 'ปิด',
+        navStory: 'เรื่องเล่า', navUpdate: 'อัปเดต', navCoupon: 'โค้ดคูปอง', navRecipe: 'สูตรเวทมนตร์', navSocial: 'โซเชียล', navCats: 'เหล่าแมว', navDownload: 'ดาวน์โหลด', navMenu: 'เมนู', navClose: 'ปิด',
         btnGoogle: 'ดาวน์โหลดบน Google Play', btnApple: 'ดาวน์โหลดบน App Store', btnCoupon: 'กรอกโค้ด',
         bgmOn: 'เปิดเพลง', bgmOff: 'ปิดเพลง',
         ftTerms: 'ข้อกำหนดการใช้งาน', ftPrivacy: 'นโยบายความเป็นส่วนตัว',
@@ -2210,41 +2538,41 @@ class Component extends DCLogic {
       },
       pt: {
         gateLabel: 'ABRA A PORTA DA FLORESTA',
-        originEyebrow: 'ONDE TUDO COMEÇOU', originQuote: '“Pai, podemos ter um gato?”', originNote: 'Cats & Soup nasceu da pergunta\nsimples de uma criança.',
+        originEyebrow: 'ONDE TUDO COMEÇOU', originQuote: '“Pai, podemos ter um gato?”', originNote: 'Cats & Soup\nnasceu da pergunta simples de uma criança.',
         meowText: 'Miau ~',
         brandName: 'Cats & Soup',
         loadingLabel: 'Preparando a história...',
         pickLanguage: 'Escolha o seu idioma', okStart: 'Começar',
         loadingVoice: 'Pai! Podemos ter um gato?',
         heroEyebrow: 'UMA HISTÓRIA PARA DORMIR',
-        heroHeadline: 'O céu noturno cheira a sopa',
+        heroHeadline: 'O céu noturno\ncheira a sopa',
         voice1: 'Pai.',
         voice2: 'Pai, como se chama este gato?',
         voice3a: 'Pai.',
         voice3b: 'Obrigada.',
-        heroTag: 'Uma pequenina casa de sopas dos gatos vindos das estrelas.',
+        heroTag: 'Uma pequenina casa de sopas\ndos gatos vindos das estrelas.',
         scrollHint: 'Role para baixo para começar a história',
-        storyEyebrow: 'PRIMEIRA NOITE, AS LUZINHAS QUE SUBIRAM AO CÉU',
-        beat1: 'Certa noite, um velho observatório\nlançou ao céu várias pequenas faíscas.',
-        beat2: 'A luz atravessou as estrelas e chegou à Estrela dos Gatos.\nLá vivia KiKi, uma gatinha estelar muito curiosa.',
-        beat3: 'KiKi subiu numa fita de luz estelar, atravessou as nuvens\ne desceu até uma floresta adormecida.',
+        storyEyebrow: 'PRIMEIRA NOITE,\nAS LUZINHAS QUE SUBIRAM AO CÉU',
+        beat1: 'Certa noite, um velho observatório\nlançou várias pequenas faíscas\nao céu.',
+        beat2: 'A luz atravessou as estrelas\ne chegou à Estrela dos Gatos.\nLá vivia KiKi, uma gatinha estelar muito curiosa.',
+        beat3: 'KiKi subiu numa fita de luz estelar,\npassou pelas nuvens\ne desceu até uma floresta adormecida.',
         catStar: 'Estrela dos Gatos',
-        s3Eyebrow: 'SEGUNDA NOITE, A PANELA QUE BORBULHAVA',
-        s3Main: 'No meio da floresta, KiKi encontrou uma panela de sopa\na ferver sobre a fogueira.',
+        s3Eyebrow: 'SEGUNDA NOITE,\nA PANELA QUE BORBULHAVA',
+        s3Main: 'No meio da floresta, KiKi encontrou\numa panela a ferver sobre a fogueira.\nUma panela de sopa.',
         stirHint: 'Passe o cursor sobre a panela para mexer a sopa',
         clickMe: 'Clique na KiKi',
-        inter1: 'KiKi mexeu a panela com todo o cuidado para a sopa não queimar.\nDaquela noite em diante, tornou-se a cozinheira da floresta.',
-        s4Eyebrow: 'TERCEIRA NOITE, OS CONVIDADOS DO AROMA',
-        s4Main: 'Com o vapor da sopa subiu uma luz suave,\ne um a um os outros gatos estelares desceram seguindo o aroma.',
+        inter1: 'Para a sopa não queimar,\nKiKi mexeu a panela com cuidado.\nDaquela noite em diante,\ntornou-se a cozinheira da floresta.',
+        s4Eyebrow: 'TERCEIRA NOITE,\nOS CONVIDADOS DO AROMA',
+        s4Main: 'Com o vapor da sopa\nsubiu uma luz suave,\ne um a um os gatos estelares\ndesceram seguindo o aroma.',
         tapHint: 'Toque no cartão para conhecer o gato',
-        guitarMain: 'Nalgum lugar, um gato pega numa guitarra e começa a cantar.\nUma canção de amor.',
-        inter2: 'A sopa ferveu noite adentro,\nos gatos ronronaram junto à fogueira,\ne pouco a pouco a floresta virou uma pequena aldeia.',
-        dawnHint: 'E então o céu a leste começou a clarear',
+        guitarMain: 'Nalgum lugar, um gato pega numa guitarra\ne começa a cantar.\nUma canção de amor.',
+        inter2: 'A sopa ferveu noite adentro,\nos gatos junto à fogueira\nronronaram...\ne a floresta virou uma pequena aldeia.',
+        dawnHint: 'E então o céu a leste\ncomeçou a clarear',
         s5Eyebrow: 'E ENTÃO, A MANHÃ',
         s5Heading: 'A manhã chegou,\ne a pequena casa de sopas abriu as portas',
-        s5Main: 'Agora esta floresta está aos seus cuidados.\nVenha cozinhar sopa com os gatos.',
+        s5Main: 'Agora esta floresta está aos seus cuidados.\nVenha cozinhar sopa\ncom os gatos.',
         lblBreed: 'Raça', lblBirthday: 'Aniversário', lblFood: 'Comida preferida',
-        navStory: 'História', navUpdate: 'Atualizações', navRecipe: 'Receita mágica', navSocial: 'Social', navCats: 'Gatos', navDownload: 'Descarregar', navMenu: 'Menu', navClose: 'Fechar',
+        navStory: 'História', navUpdate: 'Atualizações', navCoupon: 'Código de cupão', navRecipe: 'Receita mágica', navSocial: 'Social', navCats: 'Gatos', navDownload: 'Descarregar', navMenu: 'Menu', navClose: 'Fechar',
         btnGoogle: 'Baixar no Google Play', btnApple: 'Baixar na App Store', btnCoupon: 'Resgatar código',
         bgmOn: 'Música ligada', bgmOff: 'Música desligada',
         ftTerms: 'Termos de utilização', ftPrivacy: 'Política de privacidade',
@@ -2252,41 +2580,41 @@ class Component extends DCLogic {
       },
       id: {
         gateLabel: 'BUKA PINTU HUTAN',
-        originEyebrow: 'AWAL CERITANYA', originQuote: '“Ayah, boleh kita pelihara kucing?”', originNote: 'Cats & Soup lahir dari satu pertanyaan\nsederhana seorang anak.',
+        originEyebrow: 'AWAL CERITANYA', originQuote: '“Ayah, boleh kita pelihara kucing?”', originNote: 'Cats & Soup\nlahir dari pertanyaan sederhana seorang anak.',
         meowText: 'Meong ~',
         brandName: 'Cats & Soup',
         loadingLabel: 'Menyiapkan ceritanya...',
         pickLanguage: 'Pilih bahasamu', okStart: 'Mulai',
         loadingVoice: 'Ayah! Boleh kita pelihara kucing?',
         heroEyebrow: 'CERITA PENGANTAR TIDUR',
-        heroHeadline: 'Langit malam beraroma sup',
+        heroHeadline: 'Langit malam\nberaroma sup',
         voice1: 'Ayah.',
         voice2: 'Ayah, siapa nama kucing ini?',
         voice3a: 'Ayah.',
         voice3b: 'Terima kasih.',
-        heroTag: 'Kedai sup mungil milik para kucing dari bintang.',
+        heroTag: 'Kedai sup mungil\nmilik para kucing dari bintang.',
         scrollHint: 'Gulir ke bawah untuk memulai cerita',
-        storyEyebrow: 'MALAM PERTAMA, CAHAYA KECIL YANG NAIK KE LANGIT',
-        beat1: 'Suatu malam, dari sebuah observatorium tua,\nbeberapa cahaya kecil dilepaskan ke langit.',
-        beat2: 'Cahaya itu melintasi bintang-bintang hingga sampai di Bintang Kucing.\nDi sanalah KiKi, kucing bintang yang penasaran, tinggal.',
-        beat3: 'KiKi menaiki pita cahaya bintang, melewati awan,\nlalu turun ke hutan yang tertidur.',
+        storyEyebrow: 'MALAM PERTAMA,\nCAHAYA KECIL YANG NAIK KE LANGIT',
+        beat1: 'Suatu malam, dari sebuah observatorium tua,\nbeberapa cahaya kecil\ndilepaskan ke langit.',
+        beat2: 'Cahaya itu melintasi bintang-bintang\ndan sampai di Bintang Kucing.\nDi sanalah KiKi, kucing bintang yang penasaran, tinggal.',
+        beat3: 'KiKi menaiki pita cahaya bintang,\nmelewati awan,\nlalu turun ke hutan yang tertidur.',
         catStar: 'BINTANG KUCING',
-        s3Eyebrow: 'MALAM KEDUA, PANCI YANG MENDIDIH PELAN',
-        s3Main: 'Di dalam hutan, KiKi menemukan sepanci sup\nyang mendidih di atas api unggun.',
+        s3Eyebrow: 'MALAM KEDUA,\nPANCI YANG MENDIDIH PELAN',
+        s3Main: 'Di dalam hutan, KiKi menemukan\nsepanci yang mendidih di atas api unggun.\nSepanci sup.',
         stirHint: 'Arahkan kursor ke panci untuk mengaduk sup',
         clickMe: 'Klik KiKi',
-        inter1: 'KiKi mengaduk panci perlahan agar sup tidak gosong.\nSejak malam itu ia menjadi juru masak hutan.',
-        s4Eyebrow: 'MALAM KETIGA, TAMU YANG MENGIKUTI AROMA',
-        s4Main: 'Cahaya lembut naik bersama uap,\ndan satu per satu kucing bintang lain turun mengikuti aromanya.',
+        inter1: 'Agar sup tidak gosong,\nKiKi mengaduk panci perlahan.\nSejak malam itu,\nia menjadi juru masak hutan.',
+        s4Eyebrow: 'MALAM KETIGA,\nTAMU YANG MENGIKUTI AROMA',
+        s4Main: 'Bersama uap sup\nnaik cahaya lembut,\ndan satu per satu kucing bintang\nturun mengikuti aromanya.',
         tapHint: 'Ketuk kartu untuk berkenalan dengan kucing',
-        guitarMain: 'Di suatu tempat, seekor kucing memetik gitar dan mulai bernyanyi.\nSebuah lagu cinta.',
-        inter2: 'Sup mendidih hingga larut malam,\npara kucing mendengkur di dekat api unggun,\ndan hutan pun perlahan menjadi sebuah desa kecil.',
-        dawnHint: 'Lalu langit timur mulai terang',
+        guitarMain: 'Di suatu tempat, seekor kucing memetik gitar\ndan mulai bernyanyi.\nSebuah lagu cinta.',
+        inter2: 'Sup mendidih hingga larut malam,\npara kucing di dekat api unggun\nmendengkur...\ndan hutan menjadi sebuah desa kecil.',
+        dawnHint: 'Lalu langit timur\nmulai terang',
         s5Eyebrow: 'DAN KEMUDIAN, PAGI',
         s5Heading: 'Pagi tiba,\ndan kedai sup mungil itu membuka pintunya',
-        s5Main: 'Kini hutan ini ada dalam asuhanmu.\nMasaklah sup bersama para kucing.',
+        s5Main: 'Kini hutan ini ada dalam asuhanmu.\nMasaklah sup\nbersama para kucing.',
         lblBreed: 'Ras', lblBirthday: 'Ulang tahun', lblFood: 'Makanan favorit',
-        navStory: 'Cerita', navUpdate: 'Pembaruan', navRecipe: 'Resep ajaib', navSocial: 'Sosial', navCats: 'Kucing', navDownload: 'Unduh', navMenu: 'Menu', navClose: 'Tutup',
+        navStory: 'Cerita', navUpdate: 'Pembaruan', navCoupon: 'Kode kupon', navRecipe: 'Resep ajaib', navSocial: 'Sosial', navCats: 'Kucing', navDownload: 'Unduh', navMenu: 'Menu', navClose: 'Tutup',
         btnGoogle: 'Dapatkan di Google Play', btnApple: 'Unduh di App Store', btnCoupon: 'Masukkan kode',
         bgmOn: 'Musik menyala', bgmOff: 'Musik mati',
         ftTerms: 'Ketentuan Layanan', ftPrivacy: 'Kebijakan Privasi',
@@ -2341,6 +2669,9 @@ class Component extends DCLogic {
         this._pendingBgm = false;
         this._guitarPlayed = false;
         this._guitarDone = false;
+        this._guitarReached = false;
+        this._guitarPageY = undefined;
+        this._videoMute = false;
         for (const a of [window.__csBgm, window.__csGuitar]) {
           if (a) { a.pause(); a.volume = 0; a.currentTime = 0; }
         }
@@ -2402,10 +2733,18 @@ class Component extends DCLogic {
           this.toggleMenuNow();
         }, { passive: false });
       },
+      socialWrapRef: (el) => { this.refs2.socialWrap = el; },
+      socialNavRef: (el) => {
+        this.refs2.socialNav = el;
+        if (!el || el._csSocialBound) return;
+        el._csSocialBound = true;
+        el.addEventListener('click', (e) => this.toggleSocialNow(e));
+      },
       navRef: (el) => {
         this.refs2.nav = el;
         if (!el) return;
         el.classList.toggle('is-open', !!this._menuOpen);
+        this.scheduleNavMode();
         if (el._csNavBound) return;
         el._csNavBound = true;
         el.addEventListener('click', (e) => {
@@ -2427,14 +2766,17 @@ class Component extends DCLogic {
       toggleSound: () => this.toggleSoundNow(),
       meow: (e) => this.playMeow((e && e.currentTarget) || this.refs2.tiltCat),
       trailerSectionRef: (el) => { this.refs2.trailerSection = el; if (el) requestAnimationFrame(() => this.watchTrailerFade(el)); },
-      trailerFrameRef: this.ref('trailerFrame'),
+      trailerBoxRef: (el) => { this.refs2.trailerBox = el; },
       trailerPosterRef: this.ref('trailerPoster'),
       trailerPlay: () => {
-        const f = this.refs2.trailerFrame, p = this.refs2.trailerPoster;
-        if (!f || f.style.display !== 'none') return;
-        f.src = 'https://www.youtube.com/embed/z5gwT8qzqFU?autoplay=1&playsinline=1&rel=0';
-        f.style.display = 'block';
+        this.muteForVideo();
+        const host = this.refs2.trailerBox;
+        const p = this.refs2.trailerPoster;
+        if (!host || host.querySelector('iframe.cs-ytplayer')) return;
         if (p) p.style.display = 'none';
+        host.insertAdjacentHTML('beforeend',
+          '<iframe class="cs-ytplayer" src="https://www.youtube.com/embed/u2pUaW_JTMI?autoplay=1&amp;start=2&amp;playsinline=1&amp;rel=0" title="Cats &amp; Soup trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>'
+        );
       },
       goStory: (e) => this.jumpToStory(e),
       storyNavRef: (el) => {
