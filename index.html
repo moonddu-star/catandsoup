@@ -5,7 +5,7 @@
 <meta name="referrer" content="origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>고양이와 스프 · Cats &amp; Soup</title>
-<meta name="description" content="별에서 온 고양이들의 아주 작은 수프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
+<meta name="description" content="별에서 온 고양이들의 아주 작은 스프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
 <meta name="theme-color" content="#131730">
 <link rel="canonical" href="https://moonddu-star.github.io/catandsoup/">
 <link rel="icon" href="assets/favicon.ico" sizes="any">
@@ -16,13 +16,13 @@
 <meta property="og:locale" content="ko_KR">
 <meta property="og:url" content="https://moonddu-star.github.io/catandsoup/">
 <meta property="og:title" content="고양이와 스프 · Cats &amp; Soup">
-<meta property="og:description" content="별에서 온 고양이들의 아주 작은 수프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
+<meta property="og:description" content="별에서 온 고양이들의 아주 작은 스프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
 <meta property="og:image" content="https://moonddu-star.github.io/catandsoup/assets/og-share.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="고양이와 스프 · Cats &amp; Soup">
-<meta name="twitter:description" content="별에서 온 고양이들의 아주 작은 수프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
+<meta name="twitter:description" content="별에서 온 고양이들의 아주 작은 스프 가게. 밤하늘 이야기를 읽고 고양이와 스프를 만나 보세요.">
 <meta name="twitter:image" content="https://moonddu-star.github.io/catandsoup/assets/og-share.png">
 <script src="./support.js"></script>
 </head>
@@ -355,7 +355,7 @@
     height: 100%;
     min-height: 100vh;
     min-height: 100dvh;
-    background: rgba(13, 16, 38, 0.75);
+    background: #1d2042;
     z-index: 38;
   }
   html.cs-hamburger .cs-topbar.is-menu-open {
@@ -440,6 +440,7 @@
     border: 0 !important;
     border-bottom: 0 !important;
     font-size: 0 !important;
+    background: #1d2042;
   }
   html.cs-hamburger .cs-social-icon { width: 26px; height: 26px; }
   /* phones, plus short landscape (iPhone 14 landscape is 844×390) */
@@ -642,7 +643,7 @@
       <img ref="{{ logoTopRef }}" class="cs-logo-top" src="assets/cat_face_star.webp" alt="Cats &amp; Soup" width="50" height="50" style="width: 50px; height: 50px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));">
     </button>
     <div class="cs-menu-scrim" ref="{{ menuScrimRef }}" aria-hidden="true"></div>
-    <div class="cs-nav" id="cs-nav" ref="{{ navRef }}" style="display: flex; align-items: center; gap: 24px; font-size: 22px; font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: var(--cs-weight, 700); white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; flex-wrap: wrap; justify-content: flex-end;">
+    <div class="cs-nav" id="cs-nav" ref="{{ navRef }}" style="display: flex; align-items: center; gap: var(--cs-nav-gap, 18px); font-size: var(--cs-nav-size, 20px); font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: var(--cs-weight, 700); white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; flex-wrap: wrap; justify-content: flex-end;">
       <a href="#story" ref="{{ storyNavRef }}" onClick="{{ goStory }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navStory }}</a>
       <a href="https://www.youtube.com/c/kittypawpaw" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navUpdate }}<span class="cs-extlink" aria-hidden="true"></span></a>
       <a href="https://redeem.catsnsoup.com/" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navCoupon }}<span class="cs-extlink" aria-hidden="true"></span></a>
@@ -729,7 +730,7 @@
   </section>
 
   <!-- SCENE 3 : forest campfire + soup pot -->
-  <section data-screen-label="3 숲과 수프" class="cs-scene3" ref="{{ scene3Ref }}" style="position: relative; z-index: 3; min-height: 150vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 56px;">
+  <section data-screen-label="3 숲과 스프" class="cs-scene3" ref="{{ scene3Ref }}" style="position: relative; z-index: 3; min-height: 150vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 56px;">
     <div class="cs-reveal" style="position: relative; text-align: center; max-width: 740px; will-change: opacity, transform;">
       <div class="cs-story-eyebrow" style="font-size: 18px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.s3Eyebrow }}</div>
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s3Main }}</p>
@@ -738,7 +739,7 @@
 
     <!-- interactive cook -->
     <div ref="{{ tiltCatRef }}" class="cs-soup cs-meowcat" onTouchStart="{{ stirStart }}" onTouchMove="{{ stirTouch }}" onTouchEnd="{{ stirEnd }}" style="position: relative; width: min(350px, 68vw); aspect-ratio: 800 / 727; cursor: pointer; filter: drop-shadow(rgba(0,0,0,.4) 0 6px 14px); touch-action: manipulation;">
-      <img src="assets/soup_pot.webp" alt="끓고 있는 수프 한 냄비" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
+      <img src="assets/soup_pot.webp" alt="끓고 있는 스프 한 냄비" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
       <div ref="{{ steamRef }}" style="position: absolute; left: 50%; bottom: 58%; width: 40%; height: 1px; transform: translateX(-50%); pointer-events: none; z-index: 3;"></div>
       <div ref="{{ meowBubbleRef }}" data-cs-meow="1" style="display: none; position: absolute; top: 10px; right: 0; padding: 6px 12px; background: #f3efe2; color: #2c2418; font-size: 13px; border-radius: 12px 12px 12px 2px; opacity: 0; transition: opacity .25s;">야옹 ~</div>
     </div>
@@ -753,7 +754,7 @@
       <div class="cs-morestar" aria-hidden="true"></div>
     </div>
     <div class="cs-reveal cs-cook cs-meowcat" style="position: relative; width: 396px; height: 396px; will-change: opacity, transform;">
-      <img ref="{{ cookFrame1Ref }}" src="assets/cat_cook_01.webp" alt="수프를 젓는 키키" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); left: -4px; top: 8px; opacity: 1; transition: opacity .55s ease;">
+      <img ref="{{ cookFrame1Ref }}" src="assets/cat_cook_01.webp" alt="스프를 젓는 키키" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); left: -4px; top: 8px; opacity: 1; transition: opacity .55s ease;">
       <img ref="{{ cookFrameRef }}" src="assets/cat_cook_02.webp" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); left: -4px; top: 8px; opacity: 0; transition: opacity .55s ease;">
       <div ref="{{ steam2Ref }}" style="position: absolute; left: calc(50% - 40px); bottom: 52%; width: 34%; height: 1px; transform: translateX(-50%); pointer-events: none; z-index: 3;"></div>
     </div>
@@ -842,7 +843,7 @@
       <img src="assets/meadow.webp" alt="" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 34%; object-fit: cover; object-position: center bottom; mask-image: linear-gradient(180deg, transparent 0%, black 22%); -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 22%); opacity: .95;">
     </div>
     <div style="position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: center; gap: 6px; margin: 0 auto 26px;">
-      <img class="cs-shop" src="assets/shop_open.webp" alt="문을 연 수프 가게" style="width: min(340px, 68vw); display: block;">
+      <img class="cs-shop" src="assets/shop_open.webp" alt="문을 연 스프 가게" style="width: min(340px, 68vw); display: block;">
       <img class="cs-chefcat cs-meowcat" src="assets/chef_cat.webp" alt="요리사 고양이" style="width: min(72px, 14.4vw); display: block; margin-bottom: 4px;">
     </div>
     <div class="cs-download-copy" style="position: relative; z-index: 1; text-align: center; width: 100%; max-width: 680px; margin-bottom: 0; min-height: 300px; display: flex; flex-direction: column; justify-content: flex-start;">
@@ -1016,7 +1017,7 @@ class Component extends DCLogic {
     probe.removeAttribute('id');
     probe.className = 'cs-nav-probe';
     probe.setAttribute('aria-hidden', 'true');
-    probe.style.cssText = 'display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:24px;font-size:22px;font-family:var(--cs-cjk, "Gowun Batang"), "Gowun Batang", serif;letter-spacing:var(--cs-track, 0px);font-weight:var(--cs-weight, 700);white-space:nowrap;flex-wrap:nowrap;position:absolute;left:-9999px;top:0;visibility:hidden;pointer-events:none;margin:0;padding:0;width:max-content;max-width:none;height:auto;background:transparent;';
+    probe.style.cssText = 'display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:var(--cs-nav-gap, 18px);font-size:var(--cs-nav-size, 20px);font-family:var(--cs-cjk, "Gowun Batang"), "Gowun Batang", serif;letter-spacing:var(--cs-track, 0px);font-weight:var(--cs-weight, 700);white-space:nowrap;flex-wrap:nowrap;position:absolute;left:-9999px;top:0;visibility:hidden;pointer-events:none;margin:0;padding:0;width:max-content;max-width:none;height:auto;background:transparent;';
     document.body.appendChild(probe);
     try {
       return probe.getBoundingClientRect().width;
@@ -1414,6 +1415,19 @@ class Component extends DCLogic {
     this._meowText = (this._T && (this._T[L] || this._T.kr) || {}).meowText || '야옹 ~';
     this.ensureFont(picked);
     document.documentElement.style.setProperty('--cs-cjk', "'" + picked + "'");
+    const navMetrics = {
+      kr: [20, 18],
+      en: [19, 16],
+      jp: [18, 14],
+      cn: [20, 18],
+      es: [18, 14],
+      fr: [18, 14],
+      th: [19, 15],
+      pt: [18, 14],
+      id: [19, 15]
+    }[L] || [20, 18];
+    document.documentElement.style.setProperty('--cs-nav-size', navMetrics[0] + 'px');
+    document.documentElement.style.setProperty('--cs-nav-gap', navMetrics[1] + 'px');
     const track = { kr: -1, en: p.trackEn, jp: p.trackJp, cn: p.trackCn, es: p.trackEs, fr: p.trackFr, th: p.trackTh, pt: p.trackPt, id: p.trackId }[L] ?? 0;
     document.documentElement.style.setProperty('--cs-track', (L === 'cn' ? Math.max(-2, Math.min(0.5, track || -1)) : track) + 'px');
     let lead = { kr: p.leadingKr, en: p.leadingEn, jp: p.leadingJp, cn: p.leadingCn, es: p.leadingEs, fr: p.leadingFr, th: p.leadingTh, pt: p.leadingPt, id: p.leadingId }[L] ?? 1.85;
@@ -2197,7 +2211,7 @@ class Component extends DCLogic {
     const CATS = {
       kr: [
         { name: '키키 KiKi', tagline: '마을에 처음 도착한 별고양이', breed: '터키시 앙고라', birthday: '9월 15일', food: '생선', personality: '호기심 많고 영리해서 새로운 재주를 금세 익혀요.', img: true },
-        { name: '???', tagline: '수프 향기를 따라온 둘째', personality: '아직 이름을 알려주지 않았어요. 게임에서 직접 만나 보세요!' },
+        { name: '???', tagline: '스프 향기를 따라온 둘째', personality: '아직 이름을 알려주지 않았어요. 게임에서 직접 만나 보세요!' },
         { name: '???', tagline: '나무 그늘에서 낮잠을 자요', personality: '아직 이름을 알려주지 않았어요. 게임에서 직접 만나 보세요!' },
         { name: '???', tagline: '당근 캐기의 달인', personality: '아직 이름을 알려주지 않았어요. 게임에서 직접 만나 보세요!' }
       ],
@@ -2251,12 +2265,12 @@ class Component extends DCLogic {
         pickLanguage: '언어를 선택해주세요', okStart: '시작하기',
         loadingVoice: '아빠! 고양이 키워도 돼?',
         heroEyebrow: '잠들기 전에 읽는 이야기',
-        heroHeadline: '밤하늘에서\n수프 냄새가 나요',
+        heroHeadline: '밤하늘에서 스프 냄새가 나요',
         voice1: '아빠.',
         voice2: '아빠, 이 고양이 이름은 뭐야?',
         voice3a: '아빠.',
         voice3b: '고마워.',
-        heroTag: '별에서 온 고양이들의\n아주 작은 수프 가게.',
+        heroTag: '별에서 온 고양이들의 아주 작은 스프 가게.',
         scrollHint: '아래로 스크롤해 이야기를 시작하세요',
         storyEyebrow: '첫 번째 밤,\n하늘로 오른 작은 불빛',
         beat1: '어느 밤, 낡은 천문대에서\n작은 불빛 여러 개를\n하늘로 쏘아 올렸어요.',
@@ -2264,19 +2278,19 @@ class Component extends DCLogic {
         beat3: '키키는 별빛의 리본을 타고\n구름을 지나\n잠든 숲으로 내려왔답니다.',
         catStar: '고양이 별',
         s3Eyebrow: '두 번째 밤,\n보글보글 끓는 냄비',
-        s3Main: '숲 속에서 키키가 발견한 건,\n모닥불 위에서 보글보글 끓는\n수프 한 냄비.',
-        stirHint: '냄비 위에 마우스를 올려 수프를 저어 보세요',
+        s3Main: '숲 속에서 키키가 발견한 건,\n모닥불 위에서 보글보글 끓는\n스프 한 냄비.',
+        stirHint: '냄비 위에 마우스를 올려 스프를 저어 보세요',
         clickMe: '키키를 눌러 보세요',
-        inter1: '키키는 수프가 눋지 않도록\n조심조심 냄비를 저었어요.\n그날 밤부터 키키는\n숲의 요리사가 되었답니다.',
+        inter1: '키키는 스프가 눋지 않도록\n조심조심 냄비를 저었어요.\n그날 밤부터 키키는\n숲의 요리사가 되었답니다.',
         s4Eyebrow: '세 번째 밤,\n향기를 따라온 손님들',
-        s4Main: '수프의 김을 타고\n은은한 빛이 피어오르자,\n하나둘 별고양이들이\n향기를 따라 내려왔어요.',
+        s4Main: '스프의 김을 타고\n은은한 빛이 피어오르자,\n하나둘 별고양이들이\n향기를 따라 내려왔어요.',
         tapHint: '카드를 눌러 고양이를 만나 보세요',
         guitarMain: '어디선가 한 고양이는 기타를 치고\n노래를 부르기 시작해요.\n사랑의 노래를.',
-        inter2: '밤이 깊도록 수프는 보글보글 끓고,\n고양이들은 모닥불 곁에서\n그르렁 그르렁...\n숲은 어느새 작은 마을이 되었어요.',
+        inter2: '밤이 깊도록 스프는 보글보글 끓고,\n고양이들은 모닥불 곁에서\n그르렁 그르렁...\n숲은 어느새 작은 마을이 되었어요.',
         dawnHint: '그리고, 동쪽 하늘이\n밝아오기 시작했어요',
         s5Eyebrow: '그리고, 아침',
-        s5Heading: '아침이 밝고,\n작은 수프 가게가 문을 열었어요',
-        s5Main: '이제, 이 숲의 집사는 당신이에요.\n고양이들과 함께\n수프를 끓여 보세요.',
+        s5Heading: '아침이 밝고,\n작은 스프 가게가 문을 열었어요',
+        s5Main: '이제, 이 숲의 집사는 당신이에요.\n고양이들과 함께\n스프를 끓여 보세요.',
         lblBreed: '품종', lblBirthday: '생일', lblFood: '좋아하는 음식',
         navStory: '이야기', navUpdate: '업데이트', navCoupon: '쿠폰 코드', navRecipe: '마법 레시피', navSocial: '소셜', navCats: '고양이들', navDownload: '다운로드', navMenu: '메뉴', navClose: '닫기',
         btnGoogle: 'Google Play에서 받기', btnApple: 'App Store에서 받기', btnCoupon: '쿠폰 코드 입력',
@@ -2293,12 +2307,12 @@ class Component extends DCLogic {
         pickLanguage: 'Choose your language', okStart: 'Start',
         loadingVoice: 'Dad! Can we get a cat?',
         heroEyebrow: 'A COZY BEDTIME STORY',
-        heroHeadline: 'The night sky\nsmells of soup',
+        heroHeadline: 'The night sky smells of soup',
         voice1: 'Dad.',
         voice2: 'Dad, what\'s this cat\'s name?',
         voice3a: 'Dad.',
         voice3b: 'Thank you.',
-        heroTag: 'A tiny soup shop\nrun by cats from the stars.',
+        heroTag: 'A tiny soup shop run by cats from the stars.',
         scrollHint: 'Scroll down to begin the story',
         storyEyebrow: 'THE FIRST NIGHT,\nA SPARK SENT SKYWARD',
         beat1: 'One night, from an old observatory,\nmany tiny sparks\nwere sent up into the sky.',
@@ -2335,12 +2349,12 @@ class Component extends DCLogic {
         pickLanguage: '言語を選んでください', okStart: 'はじめる',
         loadingVoice: 'パパ！ネコ、飼ってもいい？',
         heroEyebrow: 'ねむる前に読むおはなし',
-        heroHeadline: '夜空から、\nスープの香り',
+        heroHeadline: '夜空から、スープの香り',
         voice1: 'パパ。',
         voice2: 'パパ、このネコの名前はなに？',
         voice3a: 'パパ。',
         voice3b: 'ありがとう。',
-        heroTag: '星からやってきた猫たちの、\nちいさなスープ屋さん。',
+        heroTag: '星からやってきた猫たちの、ちいさなスープ屋さん。',
         scrollHint: 'スクロールして物語をはじめよう',
         storyEyebrow: '最初の夜、\n空へ送られた小さな光',
         beat1: 'ある夜、古い天文台から、\n小さな光がいくつも\n空へ打ち上げられました。',
@@ -2377,12 +2391,12 @@ class Component extends DCLogic {
         pickLanguage: '请选择语言', okStart: '开始',
         loadingVoice: '爸爸！我们能养只猫吗？',
         heroEyebrow: '睡前读的小故事',
-        heroHeadline: '夜空里\n飘来汤的香气',
+        heroHeadline: '夜空里飘来汤的香气',
         voice1: '爸爸。',
         voice2: '爸爸，这只猫叫什么名字呀？',
         voice3a: '爸爸。',
         voice3b: '谢谢你。',
-        heroTag: '来自星星的猫咪们开的\n小小汤铺。',
+        heroTag: '来自星星的猫咪们开的小小汤铺。',
         scrollHint: '向下滚动，开始这个故事',
         storyEyebrow: '第一夜，\n送上夜空的微光',
         beat1: '一天夜里，从一座老天文台，\n好几点微光\n被送上了夜空。',
@@ -2419,12 +2433,12 @@ class Component extends DCLogic {
         pickLanguage: 'Elige tu idioma', okStart: 'Comenzar',
         loadingVoice: '¡Papá! ¿Podemos tener un gato?',
         heroEyebrow: 'UN CUENTO PARA ANTES DE DORMIR',
-        heroHeadline: 'El cielo nocturno\nhuele a sopa',
+        heroHeadline: 'El cielo nocturno huele a sopa',
         voice1: 'Papá.',
         voice2: 'Papá, ¿cómo se llama este gato?',
         voice3a: 'Papá.',
         voice3b: 'Gracias.',
-        heroTag: 'Una diminuta tienda de sopa\nde gatos venidos de las estrellas.',
+        heroTag: 'Una diminuta tienda de sopa de gatos venidos de las estrellas.',
         scrollHint: 'Desplázate hacia abajo para comenzar la historia',
         storyEyebrow: 'LA PRIMERA NOCHE,\nUNA CHISPA HACIA EL CIELO',
         beat1: 'Una noche, desde un viejo observatorio,\nvarias pequeñas chispas\nfueron lanzadas al cielo.',
@@ -2461,12 +2475,12 @@ class Component extends DCLogic {
         pickLanguage: 'Choisissez votre langue', okStart: 'Commencer',
         loadingVoice: 'Papa ! On peut avoir un chat ?',
         heroEyebrow: 'UNE HISTOIRE POUR LE SOIR',
-        heroHeadline: 'Le ciel nocturne\nsent la soupe',
+        heroHeadline: 'Le ciel nocturne sent la soupe',
         voice1: 'Papa.',
         voice2: 'Papa, il s’appelle comment, ce chat ?',
         voice3a: 'Papa.',
         voice3b: 'Merci.',
-        heroTag: 'Une toute petite échoppe de soupe\ntenue par des chats venus des étoiles.',
+        heroTag: 'Une toute petite échoppe de soupe tenue par des chats venus des étoiles.',
         scrollHint: 'Faites défiler vers le bas pour commencer l’histoire',
         storyEyebrow: 'LA PREMIÈRE NUIT,\nUNE ÉTINCELLE VERS LE CIEL',
         beat1: 'Une nuit, depuis un vieil observatoire,\nplusieurs petites étincelles\nfurent lancées dans le ciel.',
@@ -2503,12 +2517,12 @@ class Component extends DCLogic {
         pickLanguage: 'เลือกภาษาของคุณ', okStart: 'เริ่ม',
         loadingVoice: 'พ่อคะ! เราเลี้ยงแมวได้ไหม?',
         heroEyebrow: 'นิทานก่อนนอน',
-        heroHeadline: 'ท้องฟ้ายามค่ำ\nมีกลิ่นซุป',
+        heroHeadline: 'ท้องฟ้ายามค่ำมีกลิ่นซุป',
         voice1: 'พ่อคะ',
         voice2: 'พ่อคะ แมวตัวนี้ชื่ออะไร?',
         voice3a: 'พ่อคะ',
         voice3b: 'ขอบคุณนะ',
-        heroTag: 'ร้านซุปเล็ก ๆ ของเหล่าแมว\nที่มาจากดวงดาว',
+        heroTag: 'ร้านซุปเล็ก ๆ ของเหล่าแมวที่มาจากดวงดาว',
         scrollHint: 'เลื่อนลงเพื่อเริ่มเรื่องเล่า',
         storyEyebrow: 'คืนแรก\nแสงน้อย ๆ ที่ลอยขึ้นฟ้า',
         beat1: 'คืนหนึ่ง หอดูดาวเก่าแก่\nส่งประกายแสงเล็ก ๆ หลายดวง\nขึ้นไปบนท้องฟ้า',
@@ -2545,12 +2559,12 @@ class Component extends DCLogic {
         pickLanguage: 'Escolha o seu idioma', okStart: 'Começar',
         loadingVoice: 'Pai! Podemos ter um gato?',
         heroEyebrow: 'UMA HISTÓRIA PARA DORMIR',
-        heroHeadline: 'O céu noturno\ncheira a sopa',
+        heroHeadline: 'O céu noturno cheira a sopa',
         voice1: 'Pai.',
         voice2: 'Pai, como se chama este gato?',
         voice3a: 'Pai.',
         voice3b: 'Obrigada.',
-        heroTag: 'Uma pequenina casa de sopas\ndos gatos vindos das estrelas.',
+        heroTag: 'Uma pequenina casa de sopas dos gatos vindos das estrelas.',
         scrollHint: 'Role para baixo para começar a história',
         storyEyebrow: 'PRIMEIRA NOITE,\nAS LUZINHAS QUE SUBIRAM AO CÉU',
         beat1: 'Certa noite, um velho observatório\nlançou várias pequenas faíscas\nao céu.',
@@ -2587,12 +2601,12 @@ class Component extends DCLogic {
         pickLanguage: 'Pilih bahasamu', okStart: 'Mulai',
         loadingVoice: 'Ayah! Boleh kita pelihara kucing?',
         heroEyebrow: 'CERITA PENGANTAR TIDUR',
-        heroHeadline: 'Langit malam\nberaroma sup',
+        heroHeadline: 'Langit malam beraroma sup',
         voice1: 'Ayah.',
         voice2: 'Ayah, siapa nama kucing ini?',
         voice3a: 'Ayah.',
         voice3b: 'Terima kasih.',
-        heroTag: 'Kedai sup mungil\nmilik para kucing dari bintang.',
+        heroTag: 'Kedai sup mungil milik para kucing dari bintang.',
         scrollHint: 'Gulir ke bawah untuk memulai cerita',
         storyEyebrow: 'MALAM PERTAMA,\nCAHAYA KECIL YANG NAIK KE LANGIT',
         beat1: 'Suatu malam, dari sebuah observatorium tua,\nbeberapa cahaya kecil\ndilepaskan ke langit.',
