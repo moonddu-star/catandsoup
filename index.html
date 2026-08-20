@@ -1355,11 +1355,11 @@ class Component extends DCLogic {
         g.muted = false;
         g.play().catch(() => { this._guitarPlayed = false; });
       }
-      ramp(g, 0.55, 0.025);
+      ramp(g, 0.5, 0.025);
       return;
     }
     ramp(g, 0, 0.025);
-    ramp(b, 0.4, 0.02);
+    ramp(b, 0.25, 0.02);
   }
 
   // hard rule: nothing plays once the guitar scene is fully above the viewport
