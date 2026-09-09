@@ -5,7 +5,7 @@ import subprocess
 
 
 INDEX = Path(__file__).with_name("index.html")
-PATTERN = re.compile(r"(>ver )(\d+\.\d+)(</div>)")
+PATTERN = re.compile(r"(>ver )(\d+\.\d+)(</(?:div|small)>)")
 
 
 def bump_version() -> None:

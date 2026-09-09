@@ -1,0 +1,158 @@
+/* Reading pace and character motion, shared by all nine languages. */
+:root { --cs-header-space: 118px; }
+html { scroll-padding-top: var(--cs-header-space); }
+.cs-hero, .cs-story-beat, .cs-scene3, .cs-interlude, .cs-cats, .cs-tall, .cs-download { box-sizing: border-box; }
+.cs-story { height: 380vh !important; }
+.cs-story-main { font-size: clamp(28px, 3vw, 42px) !important; line-height: var(--cs-lead, 1.65) !important; }
+.cs-scene3, .cs-interlude, .cs-cats, .cs-tall {
+  min-height: 90svh !important;
+  padding: var(--cs-header-space) 24px 54px !important;
+  gap: 24px !important;
+  scroll-margin-top: 0;
+}
+.cs-download { min-height: 100svh !important; padding: var(--cs-header-space) 24px 0 !important; }
+.cs-download-copy { min-height: 0 !important; }
+.cs-download .cs-storebtns { margin-top: 28px !important; }
+.cs-morestar { margin: 16px auto 12px !important; }
+.cs-story-beat { padding: var(--cs-header-space) 24px 42px !important; }
+.cs-story-beat .cs-spark { width: min(300px, 62vw) !important; }
+.cs-story-beat .cs-room { width: min(260px, 40vw) !important; }
+.cs-story-beat .cs-kiki { width: min(145px, 25vw) !important; }
+.cs-mobile-arrival { display: none; }
+.cs-cook { width: 310px !important; height: 310px !important; }
+.cs-camping { width: 285px !important; }
+.cs-restcat { width: 240px !important; }
+.cs-guitarcat { max-height: 36svh; object-fit: contain; }
+.cs-audience { max-height: 27svh; object-fit: contain; }
+.cs-language-panel {
+  position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  width: min(360px, calc(100vw - 32px)); box-sizing: border-box;
+  max-height: calc(100dvh - var(--cs-header-space) - 24px); overflow-y: auto;
+  padding: 20px; border: 1px solid rgba(240,185,92,.4); border-radius: 20px;
+  background: #171c3d; color: #f3efe2; z-index: 70;
+  box-shadow: 0 16px 48px rgba(0,0,0,.32); font-family: 'Gowun Dodum', sans-serif;
+}
+.cs-language-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.cs-language-heading p { margin: 0; font-size: 16px; }
+.cs-language-close { width: 44px; height: 44px; flex-shrink: 0; border: 0; border-radius: 50%; background: transparent; color: #f3efe2; font-size: 26px; cursor: pointer; }
+.cs-language-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.cs-language-options button { min-height: 44px; border: 1px solid rgba(240,185,92,.4); border-radius: 12px; font: inherit; font-size: 14px; cursor: pointer; padding: 10px 6px; }
+.cs-language-options button[aria-pressed="true"] { border-color: #f0b95c; }
+button:focus-visible, a:focus-visible, .cs-meowcat:focus-visible { outline: 2px solid #f0b95c; outline-offset: 5px; }
+.cs-trailer-play { padding: 0; display: block; color: inherit; }
+
+/* Individual transform properties do not replace the scroll transforms. */
+@keyframes csCookFrameOne { 0%,52%,100% { opacity: 1; } 64%,88% { opacity: 0; } }
+@keyframes csCookFrameTwo { 0%,52%,100% { opacity: 0; } 64%,88% { opacity: 1; } }
+.cs-cook img:first-child { animation: csCookFrameOne 3.2s ease-in-out infinite; }
+.cs-cook img:nth-child(2) { animation: csCookFrameTwo 3.2s ease-in-out infinite; }
+@keyframes csBreathe { 0%,100% { scale: 1 1; } 50% { scale: 1.018 1.035; } }
+@keyframes csPlayGuitar { 0%,100% { rotate: -1deg; } 50% { rotate: 1.2deg; } }
+@keyframes csCookSway { 0%,100% { rotate: -.8deg; } 50% { rotate: 1.2deg; } }
+@keyframes csWelcome { 0%,74%,100% { rotate: 0deg; } 82% { rotate: -4deg; } 91% { rotate: 3deg; } }
+@keyframes csFloatArrival { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+.cs-restcat img { animation: csBreathe 4.8s ease-in-out infinite; transform-origin: 50% 80%; }
+.cs-guitarcat { animation: csPlayGuitar 2.8s ease-in-out infinite; transform-origin: 50% 90%; }
+.cs-cook { animation: csCookSway 3.2s ease-in-out infinite; transform-origin: 50% 90%; }
+.cs-chefcat { animation: csWelcome 6s ease-in-out infinite; transform-origin: 50% 100%; }
+.cs-mobile-arrival { animation: csFloatArrival 4.2s ease-in-out infinite; }
+.cs-character-resting, .cs-character-resting * { animation-play-state: paused !important; }
+html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::after { animation-play-state: paused !important; }
+
+/* A full readable scene on phones; long translations can expand naturally. */
+@media (max-width: 720px), (max-height: 540px) and (hover: none) {
+  :root { --cs-header-space: 96px; }
+  .cs-hero { padding: var(--cs-header-space) 22px 40px !important; min-height: 100svh !important; }
+  .cs-story { height: auto !important; }
+  .cs-story-pin { position: relative !important; top: auto !important; height: auto !important; overflow: visible !important; }
+  .cs-story-beat {
+    position: relative !important; inset: auto !important;
+    min-height: 85svh; padding: var(--cs-header-space) 22px 42px !important;
+    opacity: 1 !important; transform: none !important; pointer-events: auto !important;
+  }
+  .cs-story-beat > div { width: 100%; max-width: 560px !important; }
+  .cs-story-main { font-size: clamp(20px, 5.5vw, 25px) !important; line-height: 1.65 !important; }
+  html[lang="th"] .cs-story-main { line-height: 1.8 !important; }
+  .cs-story-eyebrow { margin-bottom: 16px !important; font-size: 13px !important; letter-spacing: 2px !important; }
+  .cs-story-beat .cs-spark { width: min(220px, 58vw) !important; max-height: 28svh; object-fit: contain; margin-top: 22px !important; }
+  .cs-roomrow { flex-direction: row !important; align-items: flex-end !important; gap: 8px !important; margin-top: 24px !important; }
+  .cs-story-beat .cs-room { width: min(200px, 44vw) !important; max-height: 30svh; object-fit: contain; }
+  .cs-story-beat .cs-kiki { width: min(120px, 27vw) !important; max-height: 27svh; object-fit: contain; }
+  .cs-falling-cat { display: none !important; }
+  .cs-story-clouds {
+    display: block !important;
+    height: min(250px, 32svh) !important;
+    opacity: .9 !important;
+    transform: none !important;
+    background-size: auto min(250px, 32svh) !important;
+    z-index: 0;
+  }
+  .cs-story-beat { z-index: 1; }
+  .cs-mobile-arrival { display: block; position: relative; width: 170px; height: 230px; margin: 24px auto 0; }
+  .cs-mobile-arrival .cs-arrival-balloon { position: absolute; width: 82px; top: 0; left: 28px; }
+  .cs-mobile-arrival .cs-meowcat { position: absolute; width: 70px; bottom: 0; left: 78px; }
+  .cs-scene3, .cs-interlude, .cs-cats, .cs-tall {
+    min-height: auto !important; padding: 74px 22px 40px !important; gap: 22px !important;
+  }
+  .cs-reveal { opacity: 1 !important; transform: none !important; }
+  .cs-cook { width: min(240px, 62vw) !important; height: min(240px, 62vw) !important; }
+  .cs-camping { width: min(220px, 56vw) !important; margin-bottom: 0 !important; }
+  .cs-restcat { width: min(200px, 52vw) !important; }
+  .cs-guitarcat { max-height: 32svh; }
+  .cs-audience { max-height: 24svh; }
+  .cs-download { min-height: 100svh !important; padding: var(--cs-header-space) 22px 24px !important; }
+  .cs-download h2 { font-size: clamp(28px, 8vw, 36px) !important; line-height: 1.4 !important; }
+  .cs-s5main { font-size: 19px !important; }
+  .cs-shop { width: min(215px, 58vw) !important; }
+  .cs-dlnow { width: 80px !important; }
+  .cs-storebadge { height: 44px !important; max-width: 42vw; }
+}
+@media (max-height: 540px) and (hover: none) {
+  :root { --cs-header-space: 74px; }
+  .cs-story-beat { min-height: 100svh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .cs-story { height: auto !important; }
+  .cs-story-pin { position: relative !important; height: auto !important; overflow: visible !important; }
+  .cs-story-beat { position: relative !important; inset: auto !important; min-height: 90svh; opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
+  .cs-falling-cat { display: none !important; }
+  .cs-story-clouds {
+    display: block !important;
+    height: min(250px, 32svh) !important;
+    opacity: .9 !important;
+    transform: none !important;
+    background-size: auto min(250px, 32svh) !important;
+    z-index: 0;
+  }
+  .cs-story-beat { z-index: 1; }
+  .cs-reveal, .cs-kiki, .cs-audience, .cs-visiting-cats { opacity: 1 !important; transform: none !important; }
+  .cs-cook img:first-child { opacity: 1 !important; }
+  .cs-cook img:nth-child(2) { opacity: 0 !important; }
+  .cs-morestar { opacity: .7; }
+  .cs-mobile-arrival { display: block; position: relative; width: 170px; height: 230px; margin: 24px auto 0; }
+  .cs-mobile-arrival .cs-arrival-balloon { position: absolute; width: 82px; top: 0; left: 28px; }
+  .cs-mobile-arrival .cs-meowcat { position: absolute; width: 70px; bottom: 0; left: 78px; }
+}
+
+/* Proximity snapping lets a swipe pass chapters freely, settling only nearby. */
+@media (max-width: 720px), (max-height: 540px) and (hover: none) {
+  html {
+    scroll-snap-type: y proximity;
+    scroll-padding-bottom: 24px;
+  }
+  .cs-hero,
+  .cs-story-beat > div,
+  .cs-scene3,
+  .cs-interlude,
+  .cs-cats,
+  .cs-tall,
+  .cs-download {
+    scroll-snap-align: center;
+    scroll-snap-stop: normal;
+  }
+  .cs-footer { scroll-snap-align: end; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-snap-type: none; }
+}

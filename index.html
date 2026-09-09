@@ -469,6 +469,7 @@
     }
     .cs-moon { width: 76px !important; height: 76px !important; top: 9vh !important; right: 8vw !important; }
     .cs-const { opacity: .16 !important; width: min(190px, 40vw) !important; }
+    .cs-const-horse { width: min(285px, 60vw) !important; }
     .cs-const-fish { display: none !important; }
     .cs-dipper { top: 11vh !important; left: 4vw !important; width: min(285px, 62vw) !important; opacity: .18 !important; }
     .cs-catstar { transform: scale(.7); transform-origin: 100% 0; right: 4vw !important; }
@@ -536,32 +537,10 @@
     .cs-hero { padding-top: 64px !important; }
   }
 </style>
+<link rel="stylesheet" href="./experience.css">
 </helmet>
 
 <div data-screen-label="홈 시안 A" style="position: relative; width: 100%; overflow-x: clip; color: #f3efe2;">
-
-  <!-- loading screen -->
-<div ref="{{ loaderRef }}" style="position: fixed; inset: 0; z-index: 100; background: linear-gradient(180deg, #0d1026 0%, #171c3d 40%, #232a55 75%, #2e3763 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; transition: opacity .8s ease; opacity: 1; overflow: hidden; font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif;" dir="ltr">
-    <canvas ref="{{ loaderStarsRef }}" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
-    <img class="cs-loader-star" src="assets/cat_star.webp" alt="" style="width: 80px; height: 80px; display: block; align-self: center; letter-spacing: 0; animation: csTwinkle 1.4s ease-in-out infinite;">
-    <sc-if value="{{ langConfirmed }}" hint-placeholder-val="{{ false }}">
-      <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: var(--cs-weight, 700); font-size: 38px; color: #f3efe2; text-align: center; padding: 0 24px; opacity: 0; animation: csLoaderFadeIn 1.4s ease forwards .3s;">{{ t.loadingVoice }}</div>
-      <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-size: 15px; letter-spacing: 3px; color: #9aa3d1;">{{ t.loadingLabel }}</div>
-      <div style="width: 180px; height: 3px; background: rgba(154,163,209,.25); border-radius: 2px; overflow: hidden;">
-        <div ref="{{ loaderBarRef }}" style="width: 0%; height: 100%; background: #f0b95c; transition: width .3s ease;"></div>
-      </div>
-    </sc-if>
-    <sc-if value="{{ langNotConfirmed }}" hint-placeholder-val="{{ true }}">
-      <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 18px; letter-spacing: 3px; color: #9aa3d1; margin-right: -3px; height: 30px; width: min(430px, 88vw); display: flex; align-items: center; justify-content: center; white-space: nowrap;" class="cs-picklabel">{{ t.pickLanguage }}</div>
-      <div dir="ltr" class="cs-langgrid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; justify-content: center; width: min(430px, 88vw);">
-        <sc-for list="{{ pickerLangs }}" as="l" hint-placeholder-count="6">
-          <button class="cs-lang-btn" onClick="{{ l.pick }}" style="width: 100%; height: 46px; padding: 0 6px; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgba(240,185,92,.5); background: {{ l.bg }}; color: {{ l.fg }}; cursor: pointer; font-family: inherit; white-space: nowrap;">{{ l.label }}</button>
-        </sc-for>
-      </div>
-      <button onClick="{{ confirmLoader }}" style="margin-top: 6px; height: 56px; width: 220px; padding: 0 16px; border-radius: 999px; border: 0; background: #f0b95c; color: #1a1330; font-size: 19px; font-weight: var(--cs-weight, 700); cursor: pointer; font-family: inherit; white-space: nowrap;">{{ t.okStart }}</button>
-    </sc-if>
-    <div style="position: absolute; right: max(16px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); font-family: 'Gowun Dodum', sans-serif; font-size: 11px; letter-spacing: 0.5px; color: #fff; pointer-events: none;">ver 0.51</div>
-  </div>
 
   <!-- fixed backgrounds -->
   <div style="position: fixed; inset: 0; z-index: 0; background: linear-gradient(180deg, #0d1026 0%, #171c3d 40%, #232a55 75%, #2e3763 100%);"></div>
@@ -592,17 +571,22 @@
       <circle cx="18" cy="62" r="2.3" fill="#eef1ff" style="animation: csTwinkle 4.8s ease-in-out infinite 5.6s"></circle>
     </svg>
   </div>
-  <div class="cs-const cs-const-ladle" style="position: fixed; top: 40vh; right: 6vw; z-index: 0; width: min(300px, 36vw); pointer-events: none; opacity: .42;">
-    <svg viewBox="0 0 142 88" style="width: 100%; height: auto; display: block; overflow: visible;">
-      <polyline points="8,20 34,32 58,48 78,64 100,76 126,66 132,42 110,32 78,64" fill="none" stroke="#cfd6f5" stroke-width="0.7" stroke-opacity=".32" stroke-linejoin="round"></polyline>
-      <circle cx="8" cy="20" r="2" fill="#eef1ff" style="animation: csTwinkle 4.0s ease-in-out infinite 0.0s"></circle>
-      <circle cx="34" cy="32" r="2.4" fill="#eef1ff" style="animation: csTwinkle 4.9s ease-in-out infinite 0.9s"></circle>
-      <circle cx="58" cy="48" r="2.1" fill="#eef1ff" style="animation: csTwinkle 5.8s ease-in-out infinite 1.8s"></circle>
-      <circle cx="78" cy="64" r="2.6" fill="#eef1ff" style="animation: csTwinkle 4.3s ease-in-out infinite 2.7s"></circle>
-      <circle cx="100" cy="76" r="2.2" fill="#eef1ff" style="animation: csTwinkle 5.2s ease-in-out infinite 3.6s"></circle>
-      <circle cx="126" cy="66" r="2.5" fill="#eef1ff" style="animation: csTwinkle 6.1s ease-in-out infinite 4.5s"></circle>
-      <circle cx="132" cy="42" r="2" fill="#eef1ff" style="animation: csTwinkle 4.6s ease-in-out infinite 5.4s"></circle>
-      <circle cx="110" cy="32" r="2.3" fill="#eef1ff" style="animation: csTwinkle 5.5s ease-in-out infinite 6.3s"></circle>
+  <div class="cs-const cs-const-horse" style="position: fixed; top: 40vh; right: 6vw; z-index: 0; width: min(450px, 54vw); pointer-events: none; opacity: .42;">
+    <svg viewBox="0 0 150 108" style="width: 100%; height: auto; display: block; overflow: visible;">
+      <polyline points="10,36 28,28 38,42 58,50 92,46 116,58 138,46 128,66 110,68 99,96 88,94 94,68 58,70 50,98 39,98 44,68 28,58 10,36" fill="none" stroke="#cfd6f5" stroke-width="0.7" stroke-opacity=".32" stroke-linejoin="round"></polyline>
+      <polyline points="28,28 26,14 38,30" fill="none" stroke="#cfd6f5" stroke-width="0.7" stroke-opacity=".32" stroke-linejoin="round"></polyline>
+      <circle cx="10" cy="36" r="2.2" fill="#eef1ff" style="animation: csTwinkle 4.0s ease-in-out infinite 0.0s"></circle>
+      <circle cx="28" cy="28" r="2.6" fill="#eef1ff" style="animation: csTwinkle 4.7s ease-in-out infinite 0.7s"></circle>
+      <circle cx="26" cy="14" r="2" fill="#eef1ff" style="animation: csTwinkle 5.4s ease-in-out infinite 1.4s"></circle>
+      <circle cx="38" cy="42" r="2.3" fill="#eef1ff" style="animation: csTwinkle 6.1s ease-in-out infinite 2.1s"></circle>
+      <circle cx="58" cy="50" r="2.5" fill="#eef1ff" style="animation: csTwinkle 4.4s ease-in-out infinite 2.8s"></circle>
+      <circle cx="92" cy="46" r="2.2" fill="#eef1ff" style="animation: csTwinkle 5.1s ease-in-out infinite 3.5s"></circle>
+      <circle cx="116" cy="58" r="2.6" fill="#eef1ff" style="animation: csTwinkle 5.8s ease-in-out infinite 4.2s"></circle>
+      <circle cx="138" cy="46" r="2.1" fill="#eef1ff" style="animation: csTwinkle 4.1s ease-in-out infinite 4.9s"></circle>
+      <circle cx="110" cy="68" r="2.3" fill="#eef1ff" style="animation: csTwinkle 4.8s ease-in-out infinite 5.6s"></circle>
+      <circle cx="99" cy="96" r="2.1" fill="#eef1ff" style="animation: csTwinkle 5.5s ease-in-out infinite 6.3s"></circle>
+      <circle cx="58" cy="70" r="2.4" fill="#eef1ff" style="animation: csTwinkle 4.6s ease-in-out infinite 7.0s"></circle>
+      <circle cx="50" cy="98" r="2.1" fill="#eef1ff" style="animation: csTwinkle 5.2s ease-in-out infinite 7.7s"></circle>
     </svg>
   </div>
   <div class="cs-const cs-const-fish" style="position: fixed; top: 76vh; right: 20vw; z-index: 0; width: min(260px, 32vw); pointer-events: none; opacity: .42;">
@@ -627,7 +611,7 @@
 
 
   <!-- top bar -->
-  <div class="cs-topbar" ref="{{ topbarRef }}" style="position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 20px 36px; visibility: {{ mainUiVisibility }};">
+  <div class="cs-topbar" ref="{{ topbarRef }}" style="position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 20px 36px; ">
     <div class="cs-topbar-left" style="display: flex; align-items: center; gap: 12px;">
       <button type="button" class="cs-sound" ref="{{ soundBtnRef }}" title="{{ soundLabel }}" aria-label="{{ soundLabel }}">
         <img class="cs-sound-icon cs-sound-icon-on" src="assets/icon_sound_on.webp" alt="" width="78" height="78">
@@ -639,9 +623,22 @@
         </sc-for>
       </div>
     </div>
-    <button class="cs-topbar-center cs-lang-icon-btn" onClick="{{ reopenLangGate }}" style="display: flex; align-items: center; justify-content: center; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit;" title="{{ t.pickLanguage }}" aria-label="{{ t.pickLanguage }}">
+    <button class="cs-topbar-center cs-lang-icon-btn" ref="{{ languageButtonRef }}" onClick="{{ toggleLanguage }}" aria-expanded="{{ languageOpen }}" aria-controls="cs-language-panel" style="display: flex; align-items: center; justify-content: center; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit;" title="{{ t.pickLanguage }}" aria-label="{{ t.pickLanguage }}">
       <img ref="{{ logoTopRef }}" class="cs-logo-top" src="assets/cat_face_star.webp" alt="Cats &amp; Soup" width="50" height="50" style="width: 50px; height: 50px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));">
     </button>
+    <sc-if value="{{ languageOpen }}" hint-placeholder-val="{{ false }}">
+      <div id="cs-language-panel" class="cs-language-panel" role="dialog" aria-labelledby="cs-language-title">
+        <div class="cs-language-heading">
+          <p id="cs-language-title">{{ t.pickLanguage }}</p>
+          <button type="button" class="cs-language-close" onClick="{{ closeLanguage }}" aria-label="{{ t.navClose }}">×</button>
+        </div>
+        <div class="cs-language-options">
+          <sc-for list="{{ pickerLangs }}" as="l" hint-placeholder-count="9">
+            <button type="button" onClick="{{ l.pick }}" aria-pressed="{{ l.selected }}" style="background: {{ l.bg }}; color: {{ l.fg }};">{{ l.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
     <div class="cs-menu-scrim" ref="{{ menuScrimRef }}" aria-hidden="true"></div>
     <div class="cs-nav" id="cs-nav" ref="{{ navRef }}" style="display: flex; align-items: center; gap: var(--cs-nav-gap, 18px); font-size: var(--cs-nav-size, 20px); font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: var(--cs-weight, 700); white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; flex-wrap: wrap; justify-content: flex-end;">
       <a href="#story" ref="{{ storyNavRef }}" onClick="{{ goStory }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navStory }}</a>
@@ -665,7 +662,7 @@
   </div>
 
   <!-- SCENE 1 : night sky hero -->
-  <div ref="{{ mainContentRef }}" style="visibility: {{ mainUiVisibility }};">
+  <div ref="{{ mainContentRef }}" style="">
   <section data-screen-label="1 밤하늘" class="cs-hero" onClick="{{ skyClick }}" style="position: relative; z-index: 3; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 96px 24px 36px; cursor: pointer;">
     <!-- the cat star -->
     <div class="cs-catstar cs-meowcat" style="position: absolute; top: 15vh; right: 15vw; z-index: 1; pointer-events: auto">
@@ -687,10 +684,10 @@
 
       <!-- beat visuals -->
       
-      <div ref="{{ cloudsRef }}" style="position: absolute; bottom: 0; left: 0; right: 0; height: 335px; opacity: 0; pointer-events: none; will-change: opacity, transform; background: url('assets/forrest_pattern_s.webp') repeat-x center bottom / auto 335px;"></div>
+      <div class="cs-story-clouds" ref="{{ cloudsRef }}" style="position: absolute; bottom: 0; left: 0; right: 0; height: 335px; opacity: 0; pointer-events: none; will-change: opacity, transform; background: url('assets/forrest_pattern_s.webp') repeat-x center bottom / auto 335px;"></div>
 
       <!-- falling cat -->
-      <div ref="{{ catFallRef }}" style="position: absolute; left: 50%; top: 0; will-change: transform; z-index: 6;">
+      <div class="cs-falling-cat" ref="{{ catFallRef }}" style="position: absolute; left: 50%; top: 0; will-change: transform; z-index: 6;">
         <div style="position: relative; width: 114px; margin-left: -57px;">
           <img src="assets/balloon.webp" alt="" style="position: absolute; left: 50%; bottom: 45%; width: 163px; margin-left: -96px; display: block; z-index: -1; filter: drop-shadow(0 4px 16px rgba(0,0,0,.28)); animation: csBob 4.2s ease-in-out infinite;">
           <img class="cs-meowcat" src="assets/kiki.webp" alt="별고양이 키키" style="width: 114px; display: block;">
@@ -723,6 +720,10 @@
       <div ref="{{ beat3Ref }}" class="cs-story-beat" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 24px; opacity: 0; will-change: opacity, transform;">
         <div style="max-width: 720px; text-align: center;">
           <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.beat3 }}</p>
+          <div class="cs-mobile-arrival">
+            <img class="cs-arrival-balloon" src="assets/balloon.webp" alt="">
+            <img class="cs-meowcat" src="assets/kiki.webp" alt="키키">
+          </div>
           <div class="cs-morestar" aria-hidden="true"></div>
         </div>
       </div>
@@ -766,8 +767,8 @@
       <div class="cs-story-eyebrow" style="font-size: 18px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.s4Eyebrow }}</div>
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s4Main }}</p>
     </div>
-    <img ref="{{ catOtherRef }}" class="cs-meowcat" src="assets/cat_other.webp" alt="별고양이들" style="width: min(200px, 45vw); display: block; margin: 28px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(46vw, -38vh) rotate(14deg); transition: opacity 2.4s ease, transform 4.2s cubic-bezier(.42,0,.72,1);">
-    <img ref="{{ catsSurroundRef }}" class="cs-audience cs-meowcat" src="assets/cats_surround.webp" alt="구경하는 고양이들" style="width: min(620px, 88vw); display: block; margin: -10px auto 0; opacity: 0; transform: translateY(24px); transition: opacity 2.2s ease, transform 2.2s ease;">
+    <img ref="{{ catOtherRef }}" class="cs-visiting-cats cs-meowcat" src="assets/cat_other.webp" alt="별고양이들" style="width: min(200px, 45vw); display: block; margin: 28px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(0, 18px); transition: opacity .8s ease, transform 1.2s ease;">
+    <img ref="{{ catsSurroundRef }}" class="cs-audience cs-meowcat" src="assets/cats_surround.webp" alt="구경하는 고양이들" style="width: min(620px, 88vw); display: block; margin: -10px auto 0; opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform 1.2s ease;">
     <div class="cs-reveal"><div class="cs-morestar" aria-hidden="true"></div></div>
   </section>
 
@@ -828,14 +829,14 @@
     <div class="cs-reveal" ref="{{ trailerBoxRef }}" onClick="{{ trailerPlay }}" style="position: relative; width: min(960px, 92vw); aspect-ratio: 16/9; border-radius: 20px; overflow: hidden; border: 1px solid rgba(154,163,209,.35); background: #0b0f22; box-shadow: 0 24px 60px rgba(0,0,0,.4); cursor: pointer; will-change: opacity, transform;">
       <!-- facade poster (YouTube thumbnail) -->
       <div ref="{{ trailerPosterRef }}" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
-        <img src="https://img.youtube.com/vi/u2pUaW_JTMI/maxresdefault.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+        <img src="https://img.youtube.com/vi/Y7GAFRahuNc/maxresdefault.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
         <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,15,34,.15), rgba(11,15,34,.45));"></div>
         <div style="position: relative; width: 84px; height: 84px; border-radius: 50%; background: rgba(240,185,92,.95); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(240,185,92,.4);">
           <div style="width: 0; height: 0; border-left: 26px solid #1b1409; border-top: 16px solid transparent; border-bottom: 16px solid transparent; margin-left: 6px;"></div>
         </div>
       </div>
     </div>
-    <a class="cs-ytlink" href="https://www.youtube.com/watch?v=u2pUaW_JTMI&amp;t=2s" target="_blank" rel="noopener" style="margin-top: 10px; color: #9aa3d1;">▶ {{ t.trailerYoutube }}</a>
+    <a class="cs-ytlink" href="https://www.youtube.com/watch?v=Y7GAFRahuNc" target="_blank" rel="noopener" style="margin-top: 10px; color: #9aa3d1;">▶ {{ t.trailerYoutube }}</a>
   </section>
 
   <section id="download" class="cs-download" data-screen-label="5 아침과 다운로드" ref="{{ scene5Ref }}" style="position: relative; z-index: 3; min-height: 150vh; padding: 34vh 24px 0; display: flex; flex-direction: column; align-items: center; color: #3a2f22;">
@@ -877,13 +878,13 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved.</div>
+    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.52</small></div>
   </footer>
 </div>
 </div></x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;particleDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;분위기&quot;},&quot;fontKr&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Gowun Batang&quot;,&quot;options&quot;:[&quot;Gowun Batang&quot;,&quot;Gowun Dodum&quot;,&quot;Nanum Myeongjo&quot;,&quot;Hi Melody&quot;,&quot;Poor Story&quot;,&quot;Gaegu&quot;,&quot;Dongle&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontEn&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontJp&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Zen Maru Gothic&quot;,&quot;options&quot;:[&quot;Zen Maru Gothic&quot;,&quot;Kosugi Maru&quot;,&quot;M PLUS Rounded 1c&quot;,&quot;Yusei Magic&quot;,&quot;Zen Kurenaido&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontCn&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;ZCOOL XiaoWei&quot;,&quot;options&quot;:[&quot;ZCOOL XiaoWei&quot;,&quot;LXGW WenKai TC&quot;,&quot;Noto Sans SC&quot;,&quot;ZCOOL QingKe HuangYou&quot;,&quot;ZCOOL KuaiLe&quot;,&quot;Noto Sans TC&quot;,&quot;Noto Serif SC&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontEs&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontFr&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontId&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackKr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:-1,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackEn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.5,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackJp&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-2,&quot;max&quot;:3,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackCn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-1,&quot;max&quot;:1,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackEs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-0.5,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackFr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-1,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackId&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingKr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingEn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingJp&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.45,&quot;min&quot;:1.3,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingCn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.7,&quot;min&quot;:1.6,&quot;max&quot;:1.8,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingEs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingFr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingId&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;fontPt&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackPt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingPt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;fontTh&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Mali&quot;,&quot;options&quot;:[&quot;Mali&quot;,&quot;Itim&quot;,&quot;Sriracha&quot;,&quot;Charm&quot;,&quot;Chakra Petch&quot;,&quot;Bai Jamjuree&quot;,&quot;Noto Serif Thai&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackTh&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-2,&quot;max&quot;:4,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingTh&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.8,&quot;min&quot;:1.6,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;}}">
 class Component extends DCLogic {
-  state = { sound: true, flipped: {}, lang: 'kr', langConfirmed: false };
+  state = { sound: false, flipped: {}, lang: 'kr', languageOpen: false };
 
   constructor(props) {
     super(props);
@@ -912,7 +913,7 @@ class Component extends DCLogic {
       a.src = 'assets/bgm.mp3';
       a.id = 'cs-bgm';
       a.loop = true;
-      a.preload = 'auto';
+      a.preload = 'none';
       a.volume = 0;
       a.playsInline = true;
       a.setAttribute('playsinline', '');
@@ -936,7 +937,7 @@ class Component extends DCLogic {
       a.src = 'assets/guitar.mp3';
       a.id = 'cs-guitar';
       a.loop = true;
-      a.preload = 'auto';
+      a.preload = 'none';
       a.volume = 0;
       a.playsInline = true;
       a.setAttribute('playsinline', '');
@@ -1099,12 +1100,12 @@ class Component extends DCLogic {
     clearInterval(this._fade);
     clearInterval(this._bRamp); this._bRamp = null; this._t_bRamp = undefined;
     clearInterval(this._gRamp); this._gRamp = null; this._t_gRamp = undefined;
-    if (!this._loaderGone) {
-      this.silenceAll();
-      this.setState({ sound: on });
-      return;
+    if (on) {
+      this._yielded = false;
+      window.__csChan?.postMessage({ id: window.__csId, claim: true });
+      this.unlockAudio();
+      this.updateAudioZones(window.innerHeight);
     }
-    if (on) this.updateAudioZones(window.innerHeight);
     else this.silenceAll();
     this.setState({ sound: on });
   }
@@ -1203,12 +1204,17 @@ class Component extends DCLogic {
     const travel = Math.max(1, s2.offsetHeight - h);
     // beat1 is still fading in at the section top (p=0 ≈ 10% opacity).
     // land past the fade so the first night is fully visible and lifted.
-    const y = window.scrollY + s2.getBoundingClientRect().top + 0.15 * travel;
+    const readingFlow = this.compactUi() || this._motionQuery?.matches;
+    const y = window.scrollY + s2.getBoundingClientRect().top + (readingFlow ? 0 : 0.10 * travel);
     window.scrollTo(0, y);
     this.updateScroll();
   }
 
-  componentDidUpdate() { this.applyCjkFont(); }
+  componentDidUpdate() {
+    this.applyCjkFont();
+    this.scheduleNavMode();
+    requestAnimationFrame(() => this.updateScroll());
+  }
 
   // fade the BGM out as the trailer section comes into view, back in when leaving
   watchTrailerFade(el) {
@@ -1241,10 +1247,6 @@ class Component extends DCLogic {
 
   // rect-driven audio zoning (IntersectionObserver never fires in this host)
   updateAudioZones(h) {
-    if (!this._loaderGone) {
-      this.silenceAll();
-      return;
-    }
     this._zonesLive = true;
     if (!this.soundEnabled() || this._yielded) {
       this.silenceAll();
@@ -1518,110 +1520,46 @@ class Component extends DCLogic {
   ref2(name) { return (el) => { this.refs2[name] = el; }; }
 
   // own star field for the loader/language gate so it is fully opaque
-  startLoaderStars(cv) {
-    if (!cv || this._loaderStars) return;
-    const ctx = cv.getContext('2d');
-    const dpr = Math.min(1.5, window.devicePixelRatio || 1);
-    const size = () => { cv.width = cv.clientWidth * dpr; cv.height = cv.clientHeight * dpr; };
-    size();
-    const mobile = this.compactUi();
-    const stars = Array.from({ length: mobile ? 28 : 70 }, () => ({
-      x: Math.random(), y: Math.random(),
-      r: (Math.random() * (mobile ? 1.0 : 1.3) + 0.35) * dpr,
-      ph: Math.random() * Math.PI * 2,
-      sp: 0.6 + Math.random() * 1.4
-    }));
-    const draw = (t) => {
-      if (this._loaderGone && this._loaderStarsStop) return;
-      if (document.hidden) {
-        this._loaderStars = requestAnimationFrame(draw);
-        return;
-      }
-      ctx.clearRect(0, 0, cv.width, cv.height);
-      ctx.fillStyle = '#e9edff';
-      for (const s of stars) {
-        const a = (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t / 1000 * s.sp + s.ph))) * (mobile ? 0.45 : 1);
-        ctx.globalAlpha = a;
-        const rr = s.r;
-        ctx.fillRect(s.x * cv.width - rr, s.y * cv.height - rr, rr * 2, rr * 2);
-      }
-      this._loaderStars = requestAnimationFrame(draw);
-    };
-    this._loaderStars = requestAnimationFrame(draw);
-    this._loaderResize = () => size();
-    window.addEventListener('resize', this._loaderResize);
-  }
-
   ref(name) {
     if (!this._refFns) this._refFns = {};
     if (!this._refFns[name]) this._refFns[name] = (el) => { this.refs2[name] = el; };
     return this._refFns[name];
   }
 
-  loadAssets() {
-    this._loadStart = Date.now();
-    const lang = this.state.lang;
-    const urls = [
-      'assets/cat_face_star.png', 'assets/cat_star.png', 'assets/kiki.png',
-      'assets/balloon.png', 'assets/cat_cook_01.png', 'assets/cat_cook_02.png',
-      'assets/light_02.png', 'assets/room.png', 'assets/kiki_star.png',
-      'assets/soup_pot.png', 'assets/cat_back.png', 'assets/forrest_pattern_s.png',
-      'assets/cat_other.png', 'assets/cats_surround.png', 'assets/guitar_show.png',
-      'assets/camping_cat.png', 'assets/cat_rest.png', 'assets/shop_open.png',
-      'assets/googleplay.png', 'assets/appstore.png', 'assets/cat_paw.png',
-      'assets/logo_' + (['kr', 'en', 'jp', 'cn'].includes(lang) ? lang : 'en') + '_trim.png',
-      'assets/meadow.png', 'assets/bgm.mp3', 'assets/guitar.mp3'
-    ];
-    const pngs = urls.map(u => /\.png$/.test(u) ? this.webp(u) : u);
-    urls.length = 0; urls.push(...pngs);
-    let loaded = 0;
-    const bump = () => {
-      loaded++;
-      const bar = this.refs2.loaderBar;
-      if (bar) bar.style.width = Math.round((loaded / urls.length) * 100) + '%';
-      if (loaded >= urls.length) this.hideLoader();
-    };
-    urls.forEach((u) => {
-      if (u.endsWith('.mp3')) {
-        // fetch the whole file — canplaythrough can fire on a partial buffer
-        fetch(u).then((r) => r.blob()).then(bump).catch(bump);
-      } else {
-        const img = new Image();
-        img.onload = bump; img.onerror = bump;
-        img.src = u;
-      }
+  closeLanguage(restoreFocus = true) {
+    if (!this.state.languageOpen) return;
+    this.setState({ languageOpen: false }, () => {
+      if (restoreFocus && this.refs2.languageButton) this.refs2.languageButton.focus({ preventScroll: true });
     });
-    // safety timeout so a slow/blocked asset never traps the user on the loader
-    setTimeout(() => this.hideLoader(), 20000);
   }
 
-  hideLoader() {
-    if (this._hideQueued) return;
-    this._hideQueued = true;
-    const elapsed = Date.now() - (this._loadStart || 0);
-    const wait = Math.max(0, 4000 - elapsed);
-    setTimeout(() => {
-      const el = this.refs2.loader;
-      if (!el) return;
-      this._loaderStarsStop = true;
-      cancelAnimationFrame(this._loaderStars);
-      const loaderStar = el.querySelector('.cs-loader-star');
-      if (loaderStar) loaderStar.style.animation = 'none';
-      el.style.opacity = '0';
-      setTimeout(() => {
-        el.style.display = 'none';
-        this._loaderGone = true;
-        if (this._loaderResize) window.removeEventListener('resize', this._loaderResize);
-        if (this.soundEnabled()) {
-          this._pendingBgm = false;
-          this._t_bRamp = undefined;
-          this._t_gRamp = undefined;
-          this.updateAudioZones(window.innerHeight);
-        } else {
-          this.silenceAll();
-        }
-      }, 850);
-    }, wait);
+  selectLanguage(lang) {
+    this.setState({ lang, languageOpen: false }, () => {
+      this.applyCjkFont();
+      this.scheduleNavMode();
+      this.updateScroll();
+      this.refs2.languageButton?.focus({ preventScroll: true });
+    });
+  }
+
+  updateCharacterMotion() {
+    for (const el of this._characters || []) {
+      const r = el.getBoundingClientRect();
+      const beat = el.closest('.cs-story-beat');
+      const visible = !document.hidden && r.bottom > 0 && r.top < window.innerHeight &&
+        r.width > 0 && (!beat || Number(getComputedStyle(beat).opacity) > 0.1);
+      el.classList.toggle('cs-character-resting', !visible || this._motionQuery.matches);
+    }
+  }
+
+  reactCat(host) {
+    if (this._motionQuery.matches || !host.animate) return;
+    host._csReaction?.cancel();
+    host._csReaction = host.animate([
+      { translate: '0 0', scale: '1' },
+      { translate: '0 -7px', scale: '1.035', offset: 0.35 },
+      { translate: '0 0', scale: '1' }
+    ], { duration: 480, easing: 'ease-out' });
   }
 
   // a remount must silence whatever the previous instance left running
@@ -1680,6 +1618,34 @@ class Component extends DCLogic {
     requestAnimationFrame(toTop);
     setTimeout(toTop, 120);
     window.addEventListener('beforeunload', toTop);
+    this._motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMotionChange = () => {
+      this.updateScroll();
+      if (this._motionQuery.matches) this.draw(0);
+      this._onVis?.();
+    };
+    this._motionQuery.addEventListener('change', this._onMotionChange);
+    this._characters = Array.from(document.querySelectorAll('.cs-meowcat, .cs-mobile-arrival'));
+    for (const el of this._characters) {
+      if (!el.classList.contains('cs-meowcat')) continue;
+      el.setAttribute('role', 'button');
+      el.tabIndex = 0;
+      el.setAttribute('aria-label', el.getAttribute('alt') || el.querySelector('img[alt]')?.alt || this._meowText || '키키');
+    }
+    this._onLanguageOutside = (e) => {
+      if (!e.target.closest('.cs-language-panel, .cs-lang-icon-btn')) this.closeLanguage(false);
+    };
+    this._onExperienceKey = (e) => {
+      if (e.key === 'Escape') this.closeLanguage();
+      const cat = e.target.closest?.('.cs-meowcat');
+      if (cat && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        this.playMeow(cat);
+      }
+    };
+    document.addEventListener('pointerdown', this._onLanguageOutside);
+    document.addEventListener('focusin', this._onLanguageOutside);
+    document.addEventListener('keydown', this._onExperienceKey);
     this.killStrayAudio();
     this.applyCjkFont();
     this.updateNavMode();
@@ -1700,29 +1666,39 @@ class Component extends DCLogic {
       });
     };
     this.onMove = (e) => { this.mx = e.clientX; this.my = e.clientY; };
-    this.onResize = () => { this._balloonEl = null; this.sizeCanvas(); this.updateScroll(); this.scheduleNavMode(); };
+    this.onResize = () => {
+      const wasReadingFlow = this._readingFlow;
+      const storyWasActive = this._storyActive;
+      const storyStage = this._storyStage ?? 0;
+      this._balloonEl = null;
+      this.sizeCanvas();
+      this.scheduleNavMode();
+      requestAnimationFrame(() => {
+        const readingFlowNow = this.compactUi() || this._motionQuery.matches;
+        if (storyWasActive && wasReadingFlow !== readingFlowNow) {
+          const beats = [this.refs2.beat1, this.refs2.beat2, this.refs2.beat3];
+          if (readingFlowNow) {
+            const index = storyStage < 0.30 ? 0 : storyStage < 0.63 ? 1 : 2;
+            beats[index]?.scrollIntoView({ block: 'center' });
+          } else if (this.refs2.scene2) {
+            const index = Math.max(0, beats.indexOf(this._mobileStoryBeat));
+            const progress = [0.14, 0.48, 0.80][index];
+            const sectionTop = window.scrollY + this.refs2.scene2.getBoundingClientRect().top;
+            window.scrollTo(0, sectionTop + progress * Math.max(1, this.refs2.scene2.offsetHeight - window.innerHeight));
+          }
+        }
+        this._readingFlow = readingFlowNow;
+        this.updateScroll();
+      });
+    };
     window.addEventListener('scroll', this.onScroll, { passive: true, capture: true });
     window.addEventListener('mousemove', this.onMove, { passive: true });
     window.addEventListener('resize', this.onResize);
     this.sizeCanvas();
     this.updateScroll();
-    // BGM starts on; browsers block autoplay, so retry on first interaction
-    const startBgm = () => {
-      // stay silent until the loader has finished and the hero is showing
-      if (!this._loaderGone || this._pendingBgm) return;
-      if (!this.state.sound) return;
-      this.updateAudioZones(window.innerHeight);
-      window.removeEventListener('pointerdown', startBgm);
-      window.removeEventListener('keydown', startBgm);
-      window.removeEventListener('scroll', startBgm, { capture: true });
-    };
-    this._startBgm = startBgm;
-    startBgm();
-    window.addEventListener('pointerdown', startBgm);
-    window.addEventListener('keydown', startBgm);
     let last = 0;
     const loop = (t) => {
-      if (document.hidden) { this.rafId = 0; return; }
+      if (document.hidden || this._motionQuery.matches) { this.rafId = 0; return; }
       this.rafId = requestAnimationFrame(loop);
       const idle = this.dayAlpha > 0.92 && !this.magicShots.length && !this.shooters.length;
       if (t - last < (idle ? 80 : 33)) return;
@@ -1730,12 +1706,14 @@ class Component extends DCLogic {
       this.draw(t / 1000);
     };
     this._onVis = () => {
+      document.documentElement.classList.toggle('cs-page-hidden', document.hidden);
+      this.updateCharacterMotion();
       if (!document.hidden && !this.rafId) this.rafId = requestAnimationFrame(loop);
     };
     document.addEventListener('visibilitychange', this._onVis);
     this.rafId = requestAnimationFrame(loop);
     this.steamTimer = setInterval(() => {
-      if (document.hidden) return;
+      if (document.hidden || this._motionQuery.matches) return;
       this.spawnSteam(false);
       this.spawnSteam(false, 2);
     }, 900);
@@ -1756,10 +1734,11 @@ class Component extends DCLogic {
 
 
     this.shootTimer = setInterval(() => {
+      if (document.hidden || this._motionQuery.matches) return;
       if (this.dayAlpha < 0.6 && Math.random() < 0.6) {
         this.shooters.push({ x: Math.random() * 0.8 + 0.1, y: Math.random() * 0.35, life: 0, dx: 0.28 + Math.random() * 0.15, dy: 0.12 + Math.random() * 0.08 });
       }
-    }, 3800);
+    }, 1900);
     this._onMeowClick = (e) => {
       const el = e.target && e.target.closest && e.target.closest('.cs-meowcat');
       if (!el) return;
@@ -1774,6 +1753,11 @@ class Component extends DCLogic {
       if (a) { a.pause(); a.volume = 0; }
     }
     clearInterval(this._bRamp); clearInterval(this._gRamp);
+    this._motionQuery?.removeEventListener('change', this._onMotionChange);
+    document.removeEventListener('pointerdown', this._onLanguageOutside);
+    document.removeEventListener('focusin', this._onLanguageOutside);
+    document.removeEventListener('keydown', this._onExperienceKey);
+    for (const el of this._characters || []) el._csReaction?.cancel();
     cancelAnimationFrame(this.rafId);
     if (this._scrollRaf) cancelAnimationFrame(this._scrollRaf);
     if (this._onVis) document.removeEventListener('visibilitychange', this._onVis);
@@ -1781,11 +1765,6 @@ class Component extends DCLogic {
     clearInterval(this.steamTimer);
     clearInterval(this.shootTimer);
     window.removeEventListener('scroll', this.onScroll, { capture: true });
-    if (this._startBgm) {
-      window.removeEventListener('pointerdown', this._startBgm);
-      window.removeEventListener('keydown', this._startBgm);
-      window.removeEventListener('scroll', this._startBgm, { capture: true });
-    }
     window.removeEventListener('mousemove', this.onMove);
     window.removeEventListener('resize', this.onResize);
     if (this._onMeowClick) document.removeEventListener('click', this._onMeowClick, true);
@@ -1813,9 +1792,33 @@ class Component extends DCLogic {
     const h = window.innerHeight;
     // scene 2: cat falls through sticky viewport
     const s2 = this.refs2.scene2;
-    if (s2 && this.refs2.catFall) {
+    const readingFlow = this.compactUi() || this._motionQuery?.matches;
+    this._readingFlow = readingFlow;
+    if (s2) {
+      const storyRect = s2.getBoundingClientRect();
+      this._storyActive = storyRect.bottom > 0 && storyRect.top < h;
+      if (readingFlow && this._storyActive) {
+        const center = h / 2;
+        const beats = [this.refs2.beat1, this.refs2.beat2, this.refs2.beat3].filter(Boolean);
+        this._mobileStoryBeat = beats.reduce((best, el) => {
+          const rect = el.getBoundingClientRect();
+          const distance = Math.abs(rect.top + rect.height / 2 - center);
+          return !best || distance < best.distance ? { el, distance } : best;
+        }, null)?.el;
+        const index = Math.max(0, beats.indexOf(this._mobileStoryBeat));
+        this._storyStage = [0.14, 0.48, 0.80][index];
+      }
+    }
+    if (readingFlow) {
+      for (const el of [this.refs2.beat1, this.refs2.beat2, this.refs2.beat3, this.refs2.kikiStar]) {
+        if (!el) continue;
+        el.style.opacity = '1'; el.style.transform = 'none'; el.style.pointerEvents = 'auto'; el.inert = false;
+      }
+    }
+    if (!readingFlow && s2 && this.refs2.catFall) {
       const r = s2.getBoundingClientRect();
-      const p = Math.max(0, Math.min(1, -r.top / (r.height - h)));
+      const p = Math.max(0, Math.min(1, -r.top / Math.max(1, r.height - h)));
+      this._storyStage = p;
       const cf = this.refs2.catFall;
       const cw = cf.offsetWidth || 190, ch = cf.offsetHeight || 250;
       const pad = this.compactUi() ? 14 : 24;
@@ -1864,23 +1867,21 @@ class Component extends DCLogic {
         }
         el.style.opacity = String(o);
         el.style.pointerEvents = o > 0.08 ? 'auto' : 'none';
+        el.inert = o <= 0.08;
         const span = Math.max(0.001, b - a);
         const t = Math.max(0, Math.min(1, (p - a) / span));
-        const travel = h * 0.58;
+        const travel = h * 0.12;
         el.style.transform = 'translateY(' + ((0.5 - t) * travel) + 'px)';
       };
-      win(this.refs2.beat1, -0.02, 0.22);
-      win(this.refs2.beat2, 0.30, 0.54);
-      win(this.refs2.beat3, 0.66, 0.92);
-      // kiki plays her own timed entrance once beat2 comes into view
-      if (this.refs2.kikiStar && !this._kikiFlew && p > 0.36) {
-        this._kikiFlew = true;
-        const el = this.refs2.kikiStar;
-        el.style.transition = 'opacity 2.6s ease, transform 3.4s cubic-bezier(.34,0,.5,1)';
-        requestAnimationFrame(() => {
-          el.style.opacity = '1';
-          el.style.transform = 'translateX(0) rotate(0deg)';
-        });
+      win(this.refs2.beat1, -0.08, 0.36);
+      win(this.refs2.beat2, 0.30, 0.69);
+      win(this.refs2.beat3, 0.63, 1.08);
+      // Follow the shorter chapter pace rather than waiting for a long timer.
+      if (this.refs2.kikiStar) {
+        const arrival = Math.max(0, Math.min(1, (p - 0.30) / 0.10));
+        this.refs2.kikiStar.style.transition = 'none';
+        this.refs2.kikiStar.style.opacity = String(arrival);
+        this.refs2.kikiStar.style.transform = 'translateX(' + ((1 - arrival) * 60) + 'px)';
       }
       // beat visuals
       if (this.refs2.moon) {
@@ -1892,7 +1893,10 @@ class Component extends DCLogic {
       if (this.refs2.clouds) {
         const raw = Math.max(0, Math.min(1, (p - 0.66) / 0.24));
         const o = raw * raw * (3 - 2 * raw);
-        this.refs2.clouds.style.opacity = String(o * 0.95);
+        // Once the pinned scene releases, fade the forest as it scrolls upward.
+        const exit = Math.max(0, Math.min(1, (h - r.bottom) / (h * 0.55)));
+        const remaining = 1 - exit * exit * (3 - 2 * exit);
+        this.refs2.clouds.style.opacity = String(o * remaining * 0.95);
         this.refs2.clouds.style.transform = 'translateY(' + ((1 - o) * 10) + 'vh)';
       }
     }
@@ -1904,27 +1908,27 @@ class Component extends DCLogic {
       const r = el.getBoundingClientRect();
       const inn = Math.max(0, Math.min(1, (h * 0.86 - r.top) / (h * 0.26)));
       const out = Math.max(0, Math.min(1, (r.bottom - h * 0.14) / (h * 0.26)));
-      const t = Math.min(inn, out);
+      const t = readingFlow ? 1 : Math.min(inn, out);
       const o = t * t * (3 - 2 * t);
       const op = Math.round(o * 100) / 100;
       const ty = ((1 - o) * 16) | 0;
       if (el._csO !== op) { el._csO = op; el.style.opacity = String(op); }
       if (el._csY !== ty) { el._csY = ty; el.style.transform = 'translateY(' + ty + 'px)'; }
     }
-    // cloud cat + audience cats (rect-driven; IO does not fire in this host)
+    // Both visitors appear together while their chapter is being read.
     const co = this.refs2.catOther;
-    if (co && !this._coFlew) {
-      const r = co.getBoundingClientRect();
-      if (r.top < h * 0.82 && r.bottom > 0) {
-        this._coFlew = true;
-        co.style.opacity = '1';
-        co.style.transform = 'translate(0, 0) rotate(0deg)';
-        setTimeout(() => {
-          const c = this.refs2.catsSurround;
-          if (c) { c.style.opacity = '.9'; c.style.transform = 'translateY(0)'; }
-        }, 4200);
+    if (co) {
+      const section = co.closest('section');
+      const r = section.getBoundingClientRect();
+      if (readingFlow || r.top < h * 0.72) this._coFlew = true;
+      const shown = !!this._coFlew;
+      for (const el of [co, this.refs2.catsSurround]) {
+        if (!el) continue;
+        el.style.opacity = shown ? '1' : '0';
+        el.style.transform = shown ? 'none' : 'translateY(18px)';
       }
     }
+    this.updateCharacterMotion();
     this.updateAudioZones(h);
     const s3 = this.refs2.scene3;
     if (s3) {
@@ -2035,18 +2039,45 @@ class Component extends DCLogic {
           this.glowT = 0;
         }
       }
-      ctx.strokeStyle = 'rgba(255,224,150,0.9)';
       for (let i = this.shooters.length - 1; i >= 0; i--) {
         const sh = this.shooters[i];
         sh.life += 0.02;
         if (sh.life > 1) { this.shooters.splice(i, 1); continue; }
         const x = (sh.x + sh.dx * sh.life) * w, y = (sh.y + sh.dy * sh.life) * h;
+        // A tapered white trail follows the flight direction at every aspect ratio.
+        const vx = sh.dx * w, vy = sh.dy * h;
+        const speed = Math.max(1, Math.hypot(vx, vy));
+        const ux = vx / speed, uy = vy / speed;
+        const tail = (this.compactUi() ? 72 : 110) * dpr;
+        const tx = x - ux * tail, ty = y - uy * tail;
+        const halfWidth = 2.2 * dpr;
+        ctx.save();
         ctx.globalAlpha = night * Math.sin(sh.life * Math.PI);
-        ctx.lineWidth = 2 * dpr;
+        const trail = ctx.createLinearGradient(tx, ty, x, y);
+        trail.addColorStop(0, 'rgba(255,255,255,0)');
+        trail.addColorStop(0.35, 'rgba(255,255,255,0.08)');
+        trail.addColorStop(0.8, 'rgba(255,255,255,0.5)');
+        trail.addColorStop(1, 'rgba(255,255,255,0.95)');
+        ctx.fillStyle = trail;
         ctx.beginPath();
-        ctx.moveTo(x - 90 * dpr, y - 40 * dpr);
-        ctx.lineTo(x, y);
-        ctx.stroke();
+        ctx.moveTo(tx, ty);
+        ctx.lineTo(x - uy * halfWidth, y + ux * halfWidth);
+        ctx.lineTo(x + uy * halfWidth, y - ux * halfWidth);
+        ctx.closePath();
+        ctx.fill();
+        const glow = ctx.createRadialGradient(x, y, 0, x, y, 12 * dpr);
+        glow.addColorStop(0, 'rgba(255,255,255,0.95)');
+        glow.addColorStop(0.22, 'rgba(255,255,255,0.5)');
+        glow.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(x, y, 12 * dpr, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(x, y, 2.4 * dpr, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
       }
       const vis = this._s3Vis || 0;
       if (vis > 0.05) {
@@ -2076,8 +2107,8 @@ class Component extends DCLogic {
     const build = () => {
       if (!window.YT || !window.YT.Player) return false;
       this.ytPlayer = new window.YT.Player(holder, {
-        videoId: 'u2pUaW_JTMI',
-        playerVars: { autoplay: 1, mute: 1, controls: 0, loop: 1, playlist: 'u2pUaW_JTMI', start: 2, modestbranding: 1, playsinline: 1, rel: 0, disablekb: 1, fs: 0 },
+        videoId: 'Y7GAFRahuNc',
+        playerVars: { autoplay: 1, mute: 1, controls: 0, loop: 1, playlist: 'Y7GAFRahuNc', start: 0, modestbranding: 1, playsinline: 1, rel: 0, disablekb: 1, fs: 0 },
         events: {
           onReady: (e) => {
             e.target.mute();
@@ -2114,6 +2145,7 @@ class Component extends DCLogic {
       'font-family:var(--cs-cjk, "Gowun Batang"), "Gowun Batang", serif;font-weight:700;font-size:15px;' +
       'border-radius:14px 14px 14px 3px;box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none;z-index:60;' +
       'opacity:0;animation:csMeowPop 1.5s ease-out forwards;';
+    if (this._motionQuery.matches) b.style.opacity = '1';
     document.body.appendChild(b);
     setTimeout(() => b.remove(), 1600);
   }
@@ -2122,6 +2154,7 @@ class Component extends DCLogic {
     const now = performance.now();
     if (this._meowAt && now - this._meowAt < 220) return;
     this._meowAt = now;
+    this.reactCat(host);
     this.popMeow({ currentTarget: host });
     if (!this.soundEnabled() || this._yielded) return;
     try {
@@ -2645,7 +2678,8 @@ class Component extends DCLogic {
       label: l.label,
       bg: l.id === lang ? '#f0b95c' : 'transparent',
       fg: l.id === lang ? '#1a1330' : '#f3efe2',
-      pick: () => this.setState({ lang: l.id }, () => this.applyCjkFont())
+      selected: l.id === lang,
+      pick: () => this.selectLanguage(l.id)
     }));
     const langDefs = [
       { id: 'kr', label: '한' },
@@ -2669,30 +2703,16 @@ class Component extends DCLogic {
         this.refs2.logoHero = el;
         if (el) el.src = this.webp('assets/logo_' + (['kr','en','jp','cn'].includes(lang) ? lang : 'en') + '_trim.png');
       },
-      reopenLangGate: () => {
-        this._loaderGone = false;
-        this._hideQueued = false;
-        this._loaderStarsStop = false;
-        const el = this.refs2.loader;
-        if (el) { el.style.display = 'flex'; el.style.opacity = '1'; }
-        // kill every in-flight ramp first — otherwise its next tick calls play() again
-        clearInterval(this._fadeIn);
-        clearInterval(this._bRamp); this._bRamp = null; this._t_bRamp = undefined;
-        clearInterval(this._gRamp); this._gRamp = null; this._t_gRamp = undefined;
-        this._zonesLive = false;
-        this._pendingBgm = false;
-        this._guitarPlayed = false;
-        this._guitarDone = false;
-        this._guitarReached = false;
-        this._guitarPageY = undefined;
-        this._videoMute = false;
-        for (const a of [window.__csBgm, window.__csGuitar]) {
-          if (a) { a.pause(); a.volume = 0; a.currentTime = 0; }
-        }
-        this._loaderStars = null;
-        if (this.refs2.loaderStars) this.startLoaderStars(this.refs2.loaderStars);
+      languageButtonRef: this.ref('languageButton'),
+      languageOpen: this.state.languageOpen,
+      closeLanguage: () => this.closeLanguage(),
+      toggleLanguage: () => {
+        if (this.state.languageOpen) { this.closeLanguage(); return; }
         this.closeMenu();
-        this.setState({ langConfirmed: false });
+        this.closeSocial();
+        this.setState({ languageOpen: true }, () => {
+          document.querySelector('#cs-language-panel button[aria-pressed="true"]')?.focus({ preventScroll: true });
+        });
       },
       langs: langDefs.map(l => ({
         label: l.label,
@@ -2704,19 +2724,7 @@ class Component extends DCLogic {
           this.setState({ lang: l.id }, () => this.applyCjkFont());
         }
       })),
-      loaderRef: this.ref2('loader'),
-      loaderStarsRef: (el) => { this.refs2.loaderStars = el; if (el) requestAnimationFrame(() => this.startLoaderStars(el)); },
-      loaderBarRef: this.ref2('loaderBar'),
-      langConfirmed: this.state.langConfirmed,
-      langNotConfirmed: !this.state.langConfirmed,
-      mainUiVisibility: this.state.langConfirmed ? 'visible' : 'hidden',
       pickerLangs,
-      confirmLoader: () => {
-        // unlock both tracks inside the click gesture — iOS will not start guitar later on scroll
-        this.unlockAudio();
-        this._pendingBgm = true;
-        this.setState({ langConfirmed: true }, () => this.loadAssets());
-      },
       cats,
       soundLabel: '♪ ' + (this.state.sound ? (T[lang] || T.kr).bgmOff : (T[lang] || T.kr).bgmOn),
       menuLabel: this._menuOpen ? (T[lang] || T.kr).navClose : (T[lang] || T.kr).navMenu,
@@ -2728,11 +2736,10 @@ class Component extends DCLogic {
         el.classList.toggle('is-off', !this.soundEnabled());
         if (el._csSoundBound) return;
         el._csSoundBound = true;
-        el.addEventListener('pointerup', (e) => {
-          e.preventDefault();
+        el.addEventListener('click', (e) => {
           e.stopPropagation();
           this.toggleSoundNow();
-        }, { passive: false });
+        });
       },
       menuBtnRef: (el) => {
         this.refs2.menuBtn = el;
@@ -2789,7 +2796,7 @@ class Component extends DCLogic {
         if (!host || host.querySelector('iframe.cs-ytplayer')) return;
         if (p) p.style.display = 'none';
         host.insertAdjacentHTML('beforeend',
-          '<iframe class="cs-ytplayer" src="https://www.youtube.com/embed/u2pUaW_JTMI?autoplay=1&amp;start=2&amp;playsinline=1&amp;rel=0" title="Cats &amp; Soup trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>'
+          '<iframe class="cs-ytplayer" src="https://www.youtube.com/embed/Y7GAFRahuNc?autoplay=1&amp;playsinline=1&amp;rel=0" title="Cats &amp; Soup trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>'
         );
       },
       goStory: (e) => this.jumpToStory(e),
@@ -2895,21 +2902,7 @@ class Component extends DCLogic {
         el.addEventListener('touchend', () => { this.stirring = false; }, { passive: true });
       },
       cookFrame1Ref: this.ref('cookFrame1'),
-      cookFrameRef: (el) => {
-        this.refs2.cookFrame = el;
-        if (!el || this._cookLoop) return;
-        let on = false;
-        const tick = () => {
-          const img = this.refs2.cookFrame;
-          if (!img) return;
-          on = !on;
-          img.style.opacity = on ? '1' : '0';
-          const a = this.refs2.cookFrame1;
-          if (a) a.style.opacity = on ? '0' : '1';
-          this._cookLoop = setTimeout(tick, on ? 800 : 2200);
-        };
-        this._cookLoop = setTimeout(tick, 2200);
-      },
+      cookFrameRef: this.ref('cookFrame'),
       meowBubbleRef: this.ref('meowBubble')
     };
   }
