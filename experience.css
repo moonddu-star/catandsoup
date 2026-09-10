@@ -54,7 +54,8 @@ button:focus-visible, a:focus-visible, .cs-meowcat:focus-visible { outline: 2px 
 @keyframes csPlayGuitar { 0%,100% { rotate: -1deg; } 50% { rotate: 1.2deg; } }
 @keyframes csCookSway { 0%,100% { rotate: -.8deg; } 50% { rotate: 1.2deg; } }
 @keyframes csWelcome { 0%,74%,100% { rotate: 0deg; } 82% { rotate: -4deg; } 91% { rotate: 3deg; } }
-@keyframes csFloatArrival { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+@keyframes csFloatArrival { 0%,100% { translate: 0 -3px; rotate: -1deg; } 50% { translate: 0 10px; rotate: 1.5deg; } }
+@keyframes csKikiMobileHover { 0%,100% { translate: 0 -2px; rotate: -1.5deg; } 50% { translate: 0 8px; rotate: 1.5deg; } }
 .cs-restcat img { animation: csBreathe 4.8s ease-in-out infinite; transform-origin: 50% 80%; }
 .cs-guitarcat { animation: csPlayGuitar 2.8s ease-in-out infinite; transform-origin: 50% 90%; }
 .cs-cook { animation: csCookSway 3.2s ease-in-out infinite; transform-origin: 50% 90%; }
@@ -95,6 +96,8 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-mobile-arrival { display: block; position: relative; width: 170px; height: 230px; margin: 24px auto 0; }
   .cs-mobile-arrival .cs-arrival-balloon { position: absolute; width: 82px; top: 0; left: 28px; }
   .cs-mobile-arrival .cs-meowcat { position: absolute; width: 70px; bottom: 0; left: 78px; }
+  .cs-story-beat .cs-kiki { animation: csKikiMobileHover 3.2s ease-in-out infinite; transform-origin: 50% 80%; }
+  .cs-character-resting, .cs-character-resting * { animation-play-state: running !important; }
   .cs-scene3, .cs-interlude, .cs-cats, .cs-tall {
     min-height: auto !important; padding: 74px 22px 40px !important; gap: 22px !important;
   }
