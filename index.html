@@ -406,7 +406,6 @@
     width: 19px;
     height: 19px;
   }
-  html.cs-hamburger .cs-nav > a:last-of-type { border-bottom: 0; }
   html.cs-hamburger .cs-social-wrap {
     position: static;
     display: flex;
@@ -414,7 +413,7 @@
     align-items: center;
     width: 100%;
   }
-  html.cs-hamburger .cs-nav-social { display: none !important; }
+  html.cs-hamburger .cs-nav .cs-nav-social { display: flex !important; padding-bottom: 8px !important; border-bottom: 0 !important; }
   html.cs-hamburger .cs-social-wrap .cs-socials,
   html.cs-hamburger .cs-social-wrap.is-open .cs-socials {
     display: flex !important;
@@ -424,8 +423,8 @@
     top: auto;
     left: auto;
     gap: 18px;
-    margin-top: 8px;
-    padding: 16px 12px 8px;
+    margin-top: 0;
+    padding: 4px 12px 8px;
     border: 0;
   }
   html.cs-hamburger .cs-nav .cs-social {
@@ -604,10 +603,7 @@
       <circle cx="104" cy="60" r="1.9" fill="#eef1ff" style="animation: csTwinkle 4.8s ease-in-out infinite 5.6s"></circle>
     </svg>
   </div>
-  <div ref="{{ dayBgRef }}" style="position: fixed; inset: 0; z-index: 1; opacity: 0; background: linear-gradient(180deg, #bfdde8 0%, #e8ecd9 45%, #f6ead6 100%); transition: opacity 0.2s linear;"></div>
   <canvas ref="{{ canvasRef }}" style="position: fixed; inset: 0; z-index: 2; width: 100%; height: 100%; pointer-events: none; contain: strict;"></canvas>
-  <!-- the fire the story keeps feeding: one warmth that grows from the soup pot to the morning -->
-  <div ref="{{ warmthRef }}" style="position: fixed; inset: 0; z-index: 2; opacity: 0; pointer-events: none; background: radial-gradient(120% 62% at 50% 108%, rgba(255,186,92,.42) 0%, rgba(255,150,70,.20) 34%, rgba(255,140,60,0) 70%);"></div>
 
 
   <!-- top bar -->
@@ -651,7 +647,7 @@
           <a class="cs-social" href="https://www.instagram.com/catsnsoup.official/" target="_blank" rel="noopener" onClick="{{ closeMenu }}" title="Instagram" aria-label="Instagram"><span class="cs-social-icon is-ig" aria-hidden="true"></span></a>
           <a class="cs-social" href="https://www.youtube.com/c/kittypawpaw" target="_blank" rel="noopener" onClick="{{ closeMenu }}" title="YouTube" aria-label="YouTube"><span class="cs-social-icon is-yt" aria-hidden="true"></span></a>
           <a class="cs-social" href="https://www.tiktok.com/@catsnsoup.official" target="_blank" rel="noopener" onClick="{{ closeMenu }}" title="TikTok" aria-label="TikTok"><span class="cs-social-icon is-tt" aria-hidden="true"></span></a>
-          <a class="cs-social" href="https://www.pinterest.com/catsnsoup.official/" target="_blank" rel="noopener" onClick="{{ closeMenu }}" title="Pinterest" aria-label="Pinterest"><span class="cs-social-icon is-pin" aria-hidden="true"></span></a>
+          <a class="cs-social" href="https://kr.pinterest.com/catsnsoup_official/" target="_blank" rel="noopener" onClick="{{ closeMenu }}" title="Pinterest" aria-label="Pinterest"><span class="cs-social-icon is-pin" aria-hidden="true"></span></a>
         </div>
       </div>
     </div>
@@ -678,8 +674,19 @@
     </div>
   </section>
 
+  <!-- ORIGIN : where the story began -->
+  <section id="story" class="cs-tall cs-origin" data-screen-label="1.5 이야기의 시작" style="position: relative; z-index: 3; min-height: 110vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px;">
+    <div class="cs-reveal" style="max-width: 660px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
+      <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; font-size: 16px; color: #9aa3d1; margin-bottom: 26px;">{{ t.originEyebrow }}</div>
+      <p class="cs-origin-quote" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 46px; line-height: var(--cs-lead, 1.85); color: #f3efe2; margin: 0 0 26px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originQuote }}</p>
+      <p class="cs-origin-note" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-size: 21px; line-height: var(--cs-lead, 1.9); color: #9aa3d1; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originNote }}</p>
+      <img class="cs-meowcat" src="assets/origin_cat.webp" alt="" style="width: min(140px, 24.6vw); height: auto; display: block; margin: 26px auto 0;">
+      <div class="cs-morestar" aria-hidden="true"></div>
+    </div>
+  </section>
+
   <!-- SCENE 2 : falling star cat -->
-  <section id="story" class="cs-story" data-screen-label="2 별에서 온 고양이" ref="{{ scene2Ref }}" style="position: relative; z-index: 3; height: 930vh; margin-bottom: 0;">
+  <section id="first-night" class="cs-story" data-screen-label="2 별에서 온 고양이" ref="{{ scene2Ref }}" style="position: relative; z-index: 3; height: 930vh; margin-bottom: 0;">
     <div class="cs-story-pin" style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
 
       <!-- beat visuals -->
@@ -808,69 +815,39 @@
     <div class="cs-reveal"><div class="cs-morestar" aria-hidden="true"></div></div>
   </section>
 
-  <!-- SCENE 5 : dawn / download -->
-  <!-- EPILOGUE : where the story came from -->
-  <section class="cs-tall" data-screen-label="4.9 이야기의 시작" style="position: relative; z-index: 3; min-height: 110vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px;">
-    <div class="cs-reveal" style="max-width: 660px; margin: 0 auto; text-align: center; will-change: opacity, transform;">
-      <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 13px; letter-spacing: 5px; font-size: 16px; color: #9aa3d1; margin-bottom: 26px;">{{ t.originEyebrow }}</div>
-      <p class="cs-origin-quote" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 46px; line-height: var(--cs-lead, 1.85); color: #f3efe2; margin: 0 0 26px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originQuote }}</p>
-      <p class="cs-origin-note" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); direction: var(--cs-dir, ltr); font-size: 21px; line-height: var(--cs-lead, 1.9); color: #9aa3d1; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.originNote }}</p>
-      <img class="cs-meowcat" src="assets/origin_cat.webp" alt="" style="width: min(140px, 24.6vw); height: auto; display: block; margin: 26px auto 0;">
-      <div class="cs-morestar" aria-hidden="true"></div>
-    </div>
-  </section>
+  <!-- LOWER STAGE : trailer and download on the forest tree -->
+  <div class="cs-tree-stage">
+    <img class="cs-polo-tree-bg" src="assets/cats_polo_tree.webp" alt="" aria-hidden="true" loading="lazy" width="1382" height="1358">
 
-  <!-- SCENE 4.7 : game trailer -->
-  <section ref="{{ trailerSectionRef }}" class="cs-tall" data-screen-label="4.7 게임 영상" style="position: relative; z-index: 3; min-height: 140vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12vh 24px;">
-    <div class="cs-reveal" style="text-align: center; max-width: 640px; margin-bottom: 44px; will-change: opacity, transform;">
-      <div style="font-size: 13px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.trailerEyebrow }}</div>
-      <p style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: 26px; line-height: 1.7; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.trailerMain }}</p>
-    </div>
-    <div class="cs-reveal" ref="{{ trailerBoxRef }}" onClick="{{ trailerPlay }}" style="position: relative; width: min(960px, 92vw); aspect-ratio: 16/9; border-radius: 20px; overflow: hidden; border: 1px solid rgba(154,163,209,.35); background: #0b0f22; box-shadow: 0 24px 60px rgba(0,0,0,.4); cursor: pointer; will-change: opacity, transform;">
-      <!-- facade poster (YouTube thumbnail) -->
-      <div ref="{{ trailerPosterRef }}" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
-        <img src="https://img.youtube.com/vi/Y7GAFRahuNc/maxresdefault.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,15,34,.15), rgba(11,15,34,.45));"></div>
-        <div style="position: relative; width: 84px; height: 84px; border-radius: 50%; background: rgba(240,185,92,.95); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(240,185,92,.4);">
-          <div style="width: 0; height: 0; border-left: 26px solid #1b1409; border-top: 16px solid transparent; border-bottom: 16px solid transparent; margin-left: 6px;"></div>
+    <section ref="{{ trailerSectionRef }}" class="cs-tall cs-trailer" data-screen-label="4.7 게임 영상" style="position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+      <div class="cs-reveal cs-trailer-copy" style="text-align: center; max-width: 640px; margin-bottom: 44px; will-change: opacity, transform;">
+        <p class="cs-trailer-title" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: 26px; line-height: 1.7; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.trailerMain }}</p>
+      </div>
+      <div class="cs-reveal" ref="{{ trailerBoxRef }}" onClick="{{ trailerPlay }}" style="position: relative; width: min(960px, 92vw); aspect-ratio: 16/9; border-radius: 20px; overflow: hidden; border: 1px solid rgba(154,163,209,.35); background: #0b0f22; box-shadow: 0 24px 60px rgba(0,0,0,.4); cursor: pointer; will-change: opacity, transform;">
+        <div ref="{{ trailerPosterRef }}" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+          <img src="https://i.ytimg.com/vi_webp/Y7GAFRahuNc/maxresdefault.webp" alt="" loading="lazy" decoding="async" fetchpriority="low" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,15,34,.15), rgba(11,15,34,.45));"></div>
+          <div style="position: relative; width: 84px; height: 84px; border-radius: 50%; background: rgba(240,185,92,.95); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(240,185,92,.4);">
+            <div style="width: 0; height: 0; border-left: 26px solid #1b1409; border-top: 16px solid transparent; border-bottom: 16px solid transparent; margin-left: 6px;"></div>
+          </div>
         </div>
       </div>
-    </div>
-    <a class="cs-ytlink" href="https://www.youtube.com/watch?v=Y7GAFRahuNc" target="_blank" rel="noopener" style="margin-top: 10px; color: #9aa3d1;">▶ {{ t.trailerYoutube }}</a>
-  </section>
+    </section>
 
-  <section id="download" class="cs-download" data-screen-label="5 아침과 다운로드" ref="{{ scene5Ref }}" style="position: relative; z-index: 3; min-height: 150vh; padding: 34vh 24px 0; display: flex; flex-direction: column; align-items: center; color: #3a2f22;">
-    <div style="position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; background: linear-gradient(180deg, rgba(243,230,200,0) 0%, rgba(243,230,200,.55) 9%, #f3e6c8 20%, #f7edd6 46%, #f4ead0 100%);">
-      <img src="assets/meadow.webp" alt="" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 34%; object-fit: cover; object-position: center bottom; mask-image: linear-gradient(180deg, transparent 0%, black 22%); -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 22%); opacity: .95;">
-    </div>
-    <div style="position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: center; gap: 6px; margin: 0 auto 26px;">
-      <img class="cs-shop" src="assets/shop_open.webp" alt="문을 연 스프 가게" style="width: min(340px, 68vw); display: block;">
-      <img class="cs-chefcat cs-meowcat" src="assets/chef_cat.webp" alt="요리사 고양이" style="width: min(72px, 14.4vw); display: block; margin-bottom: 4px;">
-    </div>
-    <div class="cs-download-copy" style="position: relative; z-index: 1; text-align: center; width: 100%; max-width: 680px; margin-bottom: 0; min-height: 300px; display: flex; flex-direction: column; justify-content: flex-start;">
-      <div class="cs-s5eyebrow" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 20px; letter-spacing: 3px; color: #a08a5f; margin-bottom: 18px;">{{ t.s5Eyebrow }}</div>
-      <h2 style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: clamp(34px, 4.5vw, 52px); line-height: 1.25; margin: 0 0 20px; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s5Heading }}</h2>
-      <p class="cs-s5main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-size: 24px; line-height: var(--cs-lead, 1.9); color: #6d5c42; margin: 0; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s5Main }}</p>
-    </div>
-    <div class="cs-storebtns" style="position: relative; z-index: 1; margin-top: 40px; padding-bottom: 5vh; display: flex; flex-direction: column; align-items: center; gap: 20px;">
-      <img class="cs-dlnow" src="assets/download.png" alt="Download Now" width="120" height="132" style="width: 120px; height: auto; display: block;">
-      <div class="cs-gatelabel" style="display: flex; align-items: center; gap: 14px; font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 20px; letter-spacing: 3px; color: #a08a5f;">
-        <span style="display: block; width: 30px; height: 1px; background: rgba(160,138,95,.5);"></span>
-        <span>{{ t.gateLabel }}</span>
-        <span style="display: block; width: 30px; height: 1px; background: rgba(160,138,95,.5);"></span>
+    <section id="download" class="cs-bottom-download" data-screen-label="5 다운로드" ref="{{ scene5Ref }}">
+      <div class="cs-bottom-download-actions">
+        <img class="cs-dlnow" src="assets/download.png" alt="Download Now" loading="lazy" width="120" height="132">
+        <div class="cs-bottom-download-badges">
+          <a class="cs-storebadge-link" href="https://play.google.com/store/apps/details?id=com.hidea.cat">
+            <img class="cs-storebadge" src="assets/googleplay.webp" alt="{{ t.btnGoogle }}" width="308" height="102">
+          </a>
+          <a class="cs-storebadge-link" href="https://itunes.apple.com/app/id1581431235">
+            <img class="cs-storebadge" src="assets/appstore.webp" alt="{{ t.btnApple }}" width="308" height="102">
+          </a>
+        </div>
       </div>
-      <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; align-items: center;">
-        <a class="cs-storebadge-link" href="https://play.google.com/store/apps/details?id=com.hidea.cat">
-          <img class="cs-storebadge" src="assets/googleplay.webp" alt="{{ t.btnGoogle }}" width="308" height="102">
-        </a>
-        <a class="cs-storebadge-link" href="https://itunes.apple.com/app/id1581431235">
-          <img class="cs-storebadge" src="assets/appstore.webp" alt="{{ t.btnApple }}" width="308" height="102">
-        </a>
-      </div>
-      <a class="cs-coupon" href="https://redeem.catsnsoup.com/" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; font-size: 20px; color: #6d5c42; border-bottom: 1px solid rgba(109,92,66,.4);" style-hover="color: #3a2f22; border-bottom-color: #3a2f22;">{{ t.btnCoupon }}</a>
-    </div>
-  </section>
-
+    </section>
+  </div>
   <!-- footer -->
   <footer data-screen-label="푸터" class="cs-footer" style="position: relative; z-index: 3; padding: 40px 36px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; color: #93815f; font-size: 13px;">
     <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: 16px; color: #6d5c42;">{{ t.brandName }}</div>
@@ -878,7 +855,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.53</small></div>
+    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.54</small></div>
   </footer>
 </div>
 </div></x-dc>
@@ -894,7 +871,6 @@ class Component extends DCLogic {
     this.shooters = [];
     this.magicShots = [];
     this.glowT = 0;
-    this.dayAlpha = 0;
     this.stirring = false;
     this.lastSteam = 0;
     this.audio = null;
@@ -1198,16 +1174,12 @@ class Component extends DCLogic {
   jumpToStory(e) {
     if (e && e.preventDefault) e.preventDefault();
     this.closeMenu();
-    const s2 = this.refs2.scene2 || document.getElementById('story');
-    if (!s2) return;
-    const h = window.innerHeight;
-    const travel = Math.max(1, s2.offsetHeight - h);
-    // beat1 is still fading in at the section top (p=0 ≈ 10% opacity).
-    // land past the fade so the first night is fully visible and lifted.
-    const readingFlow = this.compactUi() || this._motionQuery?.matches;
-    const y = window.scrollY + s2.getBoundingClientRect().top + (readingFlow ? 0 : 0.10 * travel);
-    window.scrollTo(0, y);
-    this.updateScroll();
+    const origin = document.getElementById('story');
+    if (!origin) return;
+    origin.scrollIntoView({
+      block: 'center',
+      behavior: this._motionQuery?.matches ? 'auto' : 'smooth'
+    });
   }
 
   componentDidUpdate() {
@@ -1700,8 +1672,7 @@ class Component extends DCLogic {
     const loop = (t) => {
       if (document.hidden || this._motionQuery.matches) { this.rafId = 0; return; }
       this.rafId = requestAnimationFrame(loop);
-      const idle = this.dayAlpha > 0.92 && !this.magicShots.length && !this.shooters.length;
-      if (t - last < (idle ? 80 : 33)) return;
+      if (t - last < 33) return;
       last = t;
       this.draw(t / 1000);
     };
@@ -1735,7 +1706,7 @@ class Component extends DCLogic {
 
     this.shootTimer = setInterval(() => {
       if (document.hidden || this._motionQuery.matches) return;
-      if (this.dayAlpha < 0.6 && Math.random() < 0.6) {
+      if (Math.random() < 0.6) {
         this.shooters.push({ x: Math.random() * 0.8 + 0.1, y: Math.random() * 0.35, life: 0, dx: 0.28 + Math.random() * 0.15, dy: 0.12 + Math.random() * 0.08 });
       }
     }, 1900);
@@ -1937,22 +1908,6 @@ class Component extends DCLogic {
     } else {
       this._s3Vis = 0;
     }
-    // scene 5 dawn
-    const s5 = this.refs2.scene5;
-    if (s5) {
-      const r = s5.getBoundingClientRect();
-      const p = Math.max(0, Math.min(1, (h * 0.9 - r.top) / (h * 0.9)));
-      this.dayAlpha = p;
-      if (this.refs2.dayBg) this.refs2.dayBg.style.opacity = String(p);
-    }
-    // one continuous warmth, held back until the trailer, then carried through to the dawn
-    const w = this.refs2.warmth;
-    const ts = this.refs2.trailerSection;
-    if (w && ts) {
-      const h = window.innerHeight;
-      const lit = Math.max(0, Math.min(1, (h * 0.85 - ts.getBoundingClientRect().top) / (h * 0.85)));
-      w.style.opacity = String(lit * (1 - this.dayAlpha * 0.9));
-    }
   }
 
   draw(t) {
@@ -1960,16 +1915,7 @@ class Component extends DCLogic {
     if (!c) return;
     const ctx = this._ctx || c.getContext('2d');
     const w = c.width, h = c.height;
-    const night = 1 - this.dayAlpha;
-    const idleSky = night <= 0.02 && !this.magicShots.length && !this.shooters.length;
-    if (idleSky) {
-      if (!this._canvasCleared) {
-        ctx.clearRect(0, 0, w, h);
-        this._canvasCleared = true;
-      }
-      return;
-    }
-    this._canvasCleared = false;
+    const night = 1;
     ctx.clearRect(0, 0, w, h);
     const dpr = this._dpr || Math.min(1.5, devicePixelRatio || 1);
     const heroVisible = window.scrollY < window.innerHeight * 0.9;
@@ -2041,18 +1987,19 @@ class Component extends DCLogic {
       }
       for (let i = this.shooters.length - 1; i >= 0; i--) {
         const sh = this.shooters[i];
-        sh.life += 0.02;
-        if (sh.life > 1) { this.shooters.splice(i, 1); continue; }
+        const maxLife = 1.25;
+        sh.life += 0.04;
+        if (sh.life > maxLife) { this.shooters.splice(i, 1); continue; }
         const x = (sh.x + sh.dx * sh.life) * w, y = (sh.y + sh.dy * sh.life) * h;
         // A tapered white trail follows the flight direction at every aspect ratio.
         const vx = sh.dx * w, vy = sh.dy * h;
         const speed = Math.max(1, Math.hypot(vx, vy));
         const ux = vx / speed, uy = vy / speed;
-        const tail = (this.compactUi() ? 72 : 110) * dpr;
+        const tail = (this.compactUi() ? 144 : 220) * dpr;
         const tx = x - ux * tail, ty = y - uy * tail;
         const halfWidth = 2.2 * dpr;
         ctx.save();
-        ctx.globalAlpha = night * Math.sin(sh.life * Math.PI);
+        ctx.globalAlpha = night * Math.sin((sh.life / maxLife) * Math.PI);
         const trail = ctx.createLinearGradient(tx, ty, x, y);
         trail.addColorStop(0, 'rgba(255,255,255,0)');
         trail.addColorStop(0.35, 'rgba(255,255,255,0.08)');
@@ -2325,7 +2272,7 @@ class Component extends DCLogic {
         s5Heading: '아침이 밝고,\n작은 스프 가게가 문을 열었어요',
         s5Main: '이제, 이 숲의 집사는 당신이에요.\n고양이들과 함께\n스프를 끓여 보세요.',
         lblBreed: '품종', lblBirthday: '생일', lblFood: '좋아하는 음식',
-        navStory: '이야기', navUpdate: '업데이트', navCoupon: '쿠폰 코드', navRecipe: '마법 레시피', navSocial: '소셜', navCats: '고양이들', navDownload: '다운로드', navMenu: '메뉴', navClose: '닫기',
+        navStory: '이야기', navUpdate: '업데이트', navCoupon: '쿠폰 코드', navRecipe: '마법의 레시피', navSocial: '소셜', navCats: '고양이들', navDownload: '다운로드', navMenu: '메뉴', navClose: '닫기',
         btnGoogle: 'Google Play에서 받기', btnApple: 'App Store에서 받기', btnCoupon: '쿠폰 코드 입력',
         bgmOn: '배경음 켜기', bgmOff: '배경음 끄기',
         ftTerms: '이용약관', ftPrivacy: '개인정보처리방침',
@@ -2849,8 +2796,6 @@ class Component extends DCLogic {
         this.spawnSteam(true);
         this.spawnSteam(true);
       },
-      dayBgRef: this.ref('dayBg'),
-      warmthRef: this.ref('warmth'),
       canvasRef: this.ref('canvas'),
       heroVideoRef: this.ref('heroVideo'),
       kikiVideoRef: this.ref('kikiVideo'),

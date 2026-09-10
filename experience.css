@@ -151,7 +151,7 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-interlude,
   .cs-cats,
   .cs-tall,
-  .cs-download {
+  .cs-bottom-download {
     scroll-snap-align: center;
     scroll-snap-stop: normal;
   }
@@ -159,4 +159,48 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-snap-type: none; }
+}
+
+/* Trailer and store actions share the tree stage, following the Polo ending. */
+.cs-tree-stage {
+  position: relative; z-index: 3; width: 100%;
+  min-height: clamp(740px, 104vw, 1640px);
+  overflow: visible; isolation: isolate;
+}
+.cs-polo-tree-bg {
+  position: absolute; left: 50%; bottom: 0; z-index: 1;
+  width: max(720px, 100vw); max-width: 1600px; height: auto; display: block;
+  transform: translateX(-50%); filter: brightness(.5) saturate(.8); opacity: .78;
+  pointer-events: none;
+}
+.cs-tree-stage > section { position: relative; z-index: 2; }
+.cs-tree-stage > .cs-trailer {
+  min-height: auto !important;
+  padding: calc(12vh + 220px) 24px 16px !important;
+}
+.cs-trailer-copy { margin-bottom: 44px !important; }
+.cs-bottom-download {
+  position: relative; z-index: 3; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  margin-top: 40px; padding: 16px 20px 40px; box-sizing: border-box;
+}
+.cs-bottom-download-actions, .cs-bottom-download-badges {
+  display: flex; align-items: center; justify-content: center;
+}
+.cs-bottom-download-actions { flex-direction: column; gap: 24px; }
+.cs-bottom-download-badges { gap: 12px; flex-wrap: wrap; }
+.cs-bottom-download .cs-dlnow { width: 120px; height: auto; display: block; }
+.cs-footer { background: #131730; color: #d8d4d2 !important; }
+.cs-footer a, .cs-footer div, .cs-footer small { color: #d8d4d2 !important; }
+
+@media (max-width: 720px), (max-height: 540px) and (hover: none) {
+  .cs-polo-tree-bg {
+    width: min(850px, calc(118vw + 283px)); max-width: none;
+    transform: translateX(-50%); transform-origin: center bottom;
+  }
+  .cs-tree-stage > .cs-trailer { padding: 273px 20px 16px !important; }
+  .cs-trailer-copy { margin-bottom: 20px !important; }
+  .cs-trailer-title { font-size: 22px !important; line-height: 1.6 !important; }
+  .cs-bottom-download { margin-top: 0; padding: 12px 20px 36px; }
+  .cs-bottom-download-actions > .cs-dlnow { width: 96px !important; }
 }
