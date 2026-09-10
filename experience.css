@@ -1,3 +1,7 @@
+/* Keep dragging the illustrated page from selecting its text. */
+body { cursor: default; -webkit-user-select: none; user-select: none; }
+input, textarea, [contenteditable="true"] { cursor: text; -webkit-user-select: text; user-select: text; }
+
 /* Reading pace and character motion, shared by all nine languages. */
 :root { --cs-header-space: 118px; }
 html { scroll-padding-top: var(--cs-header-space); }
