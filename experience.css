@@ -54,8 +54,12 @@ button:focus-visible, a:focus-visible, .cs-meowcat:focus-visible { outline: 2px 
 @keyframes csPlayGuitar { 0%,100% { rotate: -1deg; } 50% { rotate: 1.2deg; } }
 @keyframes csCookSway { 0%,100% { rotate: -.8deg; } 50% { rotate: 1.2deg; } }
 @keyframes csWelcome { 0%,74%,100% { rotate: 0deg; } 82% { rotate: -4deg; } 91% { rotate: 3deg; } }
-@keyframes csFloatArrival { 0%,100% { translate: 0 -3px; rotate: -1deg; } 50% { translate: 0 10px; rotate: 1.5deg; } }
-@keyframes csKikiMobileHover { 0%,100% { translate: 0 -2px; rotate: -1.5deg; } 50% { translate: 0 8px; rotate: 1.5deg; } }
+@keyframes csFloatArrival { 0%,100% { transform: translateY(-3px) rotate(-1deg); } 50% { transform: translateY(10px) rotate(1.5deg); } }
+@keyframes csKikiMobileHover { 0%,100% { transform: translateY(-2px) rotate(-1.5deg); } 50% { transform: translateY(8px) rotate(1.5deg); } }
+@keyframes csMobileBreathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.018, 1.035); } }
+@keyframes csMobileGuitar { 0%,100% { transform: rotate(-1deg); } 50% { transform: rotate(1.2deg); } }
+@keyframes csMobileCook { 0%,100% { transform: rotate(-.8deg); } 50% { transform: rotate(1.2deg); } }
+@keyframes csMobileWelcome { 0%,74%,100% { transform: rotate(0); } 82% { transform: rotate(-4deg); } 91% { transform: rotate(3deg); } }
 .cs-restcat img { animation: csBreathe 4.8s ease-in-out infinite; transform-origin: 50% 80%; }
 .cs-guitarcat { animation: csPlayGuitar 2.8s ease-in-out infinite; transform-origin: 50% 90%; }
 .cs-cook { animation: csCookSway 3.2s ease-in-out infinite; transform-origin: 50% 90%; }
@@ -97,11 +101,16 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-mobile-arrival .cs-arrival-balloon { position: absolute; width: 82px; top: 0; left: 28px; }
   .cs-mobile-arrival .cs-meowcat { position: absolute; width: 70px; bottom: 0; left: 78px; }
   .cs-story-beat .cs-kiki { animation: csKikiMobileHover 3.2s ease-in-out infinite; transform-origin: 50% 80%; }
+  .cs-restcat img { animation-name: csMobileBreathe; }
+  .cs-guitarcat { animation-name: csMobileGuitar; }
+  .cs-cook { animation-name: csMobileCook; }
+  .cs-chefcat { animation-name: csMobileWelcome; }
   .cs-character-resting, .cs-character-resting * { animation-play-state: running !important; }
   .cs-scene3, .cs-interlude, .cs-cats, .cs-tall {
     min-height: auto !important; padding: 74px 22px 40px !important; gap: 22px !important;
   }
-  .cs-reveal { opacity: 1 !important; transform: none !important; }
+  .cs-reveal { opacity: 1 !important; }
+  .cs-reveal:not(.cs-cook) { transform: none !important; }
   .cs-cook { width: min(240px, 62vw) !important; height: min(240px, 62vw) !important; }
   .cs-camping { width: min(220px, 56vw) !important; margin-bottom: 0 !important; }
   .cs-restcat { width: min(200px, 52vw) !important; }
@@ -133,7 +142,8 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
     z-index: 0;
   }
   .cs-story-beat { z-index: 1; }
-  .cs-reveal, .cs-kiki, .cs-audience, .cs-visiting-cats { opacity: 1 !important; transform: none !important; }
+  .cs-reveal, .cs-kiki, .cs-audience, .cs-visiting-cats { opacity: 1 !important; }
+  .cs-reveal:not(.cs-cook), .cs-audience, .cs-visiting-cats { transform: none !important; }
   .cs-cook img:first-child { opacity: 1 !important; }
   .cs-cook img:nth-child(2) { opacity: 0 !important; }
   .cs-morestar { opacity: .7; }
@@ -142,6 +152,15 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-mobile-arrival .cs-meowcat { position: absolute; width: 70px; bottom: 0; left: 78px; }
 }
 
+/* Keep the small character loops alive on touch devices, even with Reduce Motion enabled. */
+@media (prefers-reduced-motion: reduce) and (max-width: 720px), (prefers-reduced-motion: reduce) and (max-height: 540px) and (hover: none) {
+  .cs-story-beat .cs-kiki { animation: csKikiMobileHover 5s ease-in-out infinite !important; }
+  .cs-mobile-arrival { animation: csFloatArrival 6s ease-in-out infinite !important; }
+  .cs-restcat img { animation: csMobileBreathe 7s ease-in-out infinite !important; }
+  .cs-guitarcat { animation: csMobileGuitar 6s ease-in-out infinite !important; }
+  .cs-cook { animation: csMobileCook 6s ease-in-out infinite !important; }
+  .cs-chefcat { animation: csMobileWelcome 9s ease-in-out infinite !important; }
+}
 /* Proximity snapping lets a swipe pass chapters freely, settling only nearby. */
 @media (max-width: 720px), (max-height: 540px) and (hover: none) {
   html {
