@@ -144,8 +144,6 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-story-beat { z-index: 1; }
   .cs-reveal, .cs-kiki, .cs-audience, .cs-visiting-cats { opacity: 1 !important; }
   .cs-reveal:not(.cs-cook), .cs-audience, .cs-visiting-cats { transform: none !important; }
-  .cs-cook img:first-child { opacity: 1 !important; }
-  .cs-cook img:nth-child(2) { opacity: 0 !important; }
   .cs-morestar { opacity: .7; }
   .cs-mobile-arrival { display: block; position: relative; width: 170px; height: 230px; margin: 24px auto 0; }
   .cs-mobile-arrival .cs-arrival-balloon { position: absolute; width: 82px; top: 0; left: 28px; }
@@ -160,7 +158,15 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-guitarcat { animation: csMobileGuitar 6s ease-in-out infinite !important; }
   .cs-cook { animation: csMobileCook 6s ease-in-out infinite !important; }
   .cs-chefcat { animation: csMobileWelcome 9s ease-in-out infinite !important; }
+  .cs-cook img:first-child { animation: csCookFrameOne 3.2s ease-in-out infinite !important; }
+  .cs-cook img:nth-child(2) { animation: csCookFrameTwo 3.2s ease-in-out infinite !important; }
+  .cs-meow-bubble { animation: csMeowPop 1.5s ease-out forwards !important; }
 }
+@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
+  .cs-cook img:first-child { opacity: 1 !important; }
+  .cs-cook img:nth-child(2) { opacity: 0 !important; }
+}
+
 /* Proximity snapping lets a swipe pass chapters freely, settling only nearby. */
 @media (max-width: 720px), (max-height: 540px) and (hover: none) {
   html {

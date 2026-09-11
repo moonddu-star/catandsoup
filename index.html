@@ -536,7 +536,7 @@
     .cs-hero { padding-top: 64px !important; }
   }
 </style>
-<link rel="stylesheet" href="./experience.css?v=0.57">
+<link rel="stylesheet" href="./experience.css?v=0.58">
 </helmet>
 
 <div data-screen-label="홈 시안 A" style="position: relative; width: 100%; overflow-x: clip; color: #f3efe2;">
@@ -855,7 +855,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.57</small></div>
+    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.58</small></div>
   </footer>
 </div>
 </div></x-dc>
@@ -964,6 +964,10 @@ class Component extends DCLogic {
 
   compactUi() {
     return window.matchMedia('(max-width: 720px), (max-height: 540px) and (hover: none)').matches;
+  }
+
+  shouldReduceMotion() {
+    return Boolean(this._motionQuery?.matches && !this.compactUi());
   }
 
   hamburgerUi() {
@@ -1176,7 +1180,7 @@ class Component extends DCLogic {
     if (!origin) return;
     origin.scrollIntoView({
       block: 'center',
-      behavior: this._motionQuery?.matches ? 'auto' : 'smooth'
+      behavior: this.shouldReduceMotion() ? 'auto' : 'smooth'
     });
   }
 
@@ -1518,18 +1522,25 @@ class Component extends DCLogic {
       const beat = el.closest('.cs-story-beat');
       const visible = !document.hidden && r.bottom > 0 && r.top < window.innerHeight &&
         r.width > 0 && (!beat || Number(getComputedStyle(beat).opacity) > 0.1);
-      el.classList.toggle('cs-character-resting', !visible || this._motionQuery.matches);
+      el.classList.toggle('cs-character-resting', !visible || this.shouldReduceMotion());
     }
   }
 
   reactCat(host) {
-    if (this._motionQuery.matches || !host.animate) return;
+    if (this.shouldReduceMotion() || !host.animate) return;
     host._csReaction?.cancel();
-    host._csReaction = host.animate([
-      { translate: '0 0', scale: '1' },
-      { translate: '0 -7px', scale: '1.035', offset: 0.35 },
-      { translate: '0 0', scale: '1' }
-    ], { duration: 480, easing: 'ease-out' });
+    const reactionFrames = this.compactUi()
+      ? [
+          { transform: 'translateY(0) scale(1)' },
+          { transform: 'translateY(-7px) scale(1.035)', offset: 0.35 },
+          { transform: 'translateY(0) scale(1)' }
+        ]
+      : [
+          { translate: '0 0', scale: '1' },
+          { translate: '0 -7px', scale: '1.035', offset: 0.35 },
+          { translate: '0 0', scale: '1' }
+        ];
+    host._csReaction = host.animate(reactionFrames, { duration: 480, easing: 'ease-out' });
   }
 
   // a remount must silence whatever the previous instance left running
@@ -1591,7 +1602,7 @@ class Component extends DCLogic {
     this._motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     this._onMotionChange = () => {
       this.updateScroll();
-      if (this._motionQuery.matches) this.draw(0);
+      if (this.shouldReduceMotion()) this.draw(0);
       this._onVis?.();
     };
     this._motionQuery.addEventListener('change', this._onMotionChange);
@@ -1644,7 +1655,7 @@ class Component extends DCLogic {
       this.sizeCanvas();
       this.scheduleNavMode();
       requestAnimationFrame(() => {
-        const readingFlowNow = this.compactUi() || this._motionQuery.matches;
+        const readingFlowNow = this.compactUi() || this.shouldReduceMotion();
         if (storyWasActive && wasReadingFlow !== readingFlowNow) {
           const beats = [this.refs2.beat1, this.refs2.beat2, this.refs2.beat3];
           if (readingFlowNow) {
@@ -1668,7 +1679,7 @@ class Component extends DCLogic {
     this.updateScroll();
     let last = 0;
     const loop = (t) => {
-      if (document.hidden || this._motionQuery.matches) { this.rafId = 0; return; }
+      if (document.hidden || this.shouldReduceMotion()) { this.rafId = 0; return; }
       this.rafId = requestAnimationFrame(loop);
       if (t - last < 33) return;
       last = t;
@@ -1682,7 +1693,7 @@ class Component extends DCLogic {
     document.addEventListener('visibilitychange', this._onVis);
     this.rafId = requestAnimationFrame(loop);
     this.steamTimer = setInterval(() => {
-      if (document.hidden || this._motionQuery.matches) return;
+      if (document.hidden || this.shouldReduceMotion()) return;
       this.spawnSteam(false);
       this.spawnSteam(false, 2);
     }, 900);
@@ -1703,7 +1714,7 @@ class Component extends DCLogic {
 
 
     this.shootTimer = setInterval(() => {
-      if (document.hidden || this._motionQuery.matches) return;
+      if (document.hidden || this.shouldReduceMotion()) return;
       if (Math.random() < 0.6) {
         this.shooters.push({ x: Math.random() * 0.8 + 0.1, y: Math.random() * 0.35, life: 0, dx: 0.28 + Math.random() * 0.15, dy: 0.12 + Math.random() * 0.08 });
       }
@@ -1761,7 +1772,7 @@ class Component extends DCLogic {
     const h = window.innerHeight;
     // scene 2: cat falls through sticky viewport
     const s2 = this.refs2.scene2;
-    const readingFlow = this.compactUi() || this._motionQuery?.matches;
+    const readingFlow = this.compactUi() || this.shouldReduceMotion();
     this._readingFlow = readingFlow;
     if (s2) {
       const storyRect = s2.getBoundingClientRect();
@@ -2040,13 +2051,14 @@ class Component extends DCLogic {
     if (!host) return;
     const r = host.getBoundingClientRect();
     const b = document.createElement('div');
+    b.className = 'cs-meow-bubble';
     b.textContent = this._meowText || '야옹 ~';
     b.style.cssText = 'position:fixed;left:' + (r.left + r.width * 0.62) + 'px;top:' + (r.top + r.height * 0.18) +
       'px;transform:translate(-50%,-50%);padding:7px 14px;background:#f3efe2;color:#2c2418;' +
       'font-family:var(--cs-cjk, "Gowun Batang"), "Gowun Batang", serif;font-weight:700;font-size:15px;' +
       'border-radius:14px 14px 14px 3px;box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none;z-index:60;' +
       'opacity:0;animation:csMeowPop 1.5s ease-out forwards;';
-    if (this._motionQuery.matches) b.style.opacity = '1';
+    if (this.shouldReduceMotion()) b.style.opacity = '1';
     document.body.appendChild(b);
     setTimeout(() => b.remove(), 1600);
   }
