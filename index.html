@@ -536,7 +536,7 @@
     .cs-hero { padding-top: 64px !important; }
   }
 </style>
-<link rel="stylesheet" href="./experience.css?v=0.58">
+<link rel="stylesheet" href="./experience.css?v=0.59">
 </helmet>
 
 <div data-screen-label="홈 시안 A" style="position: relative; width: 100%; overflow-x: clip; color: #f3efe2;">
@@ -855,7 +855,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.58</small></div>
+    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.59</small></div>
   </footer>
 </div>
 </div></x-dc>
@@ -1790,9 +1790,32 @@ class Component extends DCLogic {
       }
     }
     if (readingFlow) {
-      for (const el of [this.refs2.beat1, this.refs2.beat2, this.refs2.beat3, this.refs2.kikiStar]) {
+      for (const el of [this.refs2.beat1, this.refs2.beat2, this.refs2.beat3]) {
         if (!el) continue;
         el.style.opacity = '1'; el.style.transform = 'none'; el.style.pointerEvents = 'auto'; el.inert = false;
+      }
+      if (this.compactUi()) {
+        const enterProgress = (el, start = 0.84, distance = 0.42) => {
+          if (!el) return 0;
+          const top = el.getBoundingClientRect().top;
+          const raw = (h * start - top) / (h * distance);
+          const clamped = Math.max(0, Math.min(1, raw));
+          return clamped * clamped * (3 - 2 * clamped);
+        };
+        if (this.refs2.kikiStar) {
+          const arrival = enterProgress(this.refs2.beat2, 0.84, 0.42);
+          this.refs2.kikiStar.style.opacity = String(arrival);
+          this.refs2.kikiStar.style.transform = 'translateX(' + ((1 - arrival) * Math.min(180, window.innerWidth * 0.48)) + 'px) rotate(' + ((1 - arrival) * 8) + 'deg)';
+        }
+        const mobileArrival = this.refs2.beat3?.querySelector('.cs-mobile-arrival');
+        if (mobileArrival) {
+          const descent = enterProgress(this.refs2.beat3, 0.88, 0.48);
+          mobileArrival.style.opacity = String(descent);
+          mobileArrival.style.transform = 'translateY(' + ((1 - descent) * -150) + 'px) rotate(' + ((1 - descent) * -2) + 'deg)';
+        }
+      } else if (this.refs2.kikiStar) {
+        this.refs2.kikiStar.style.opacity = '1';
+        this.refs2.kikiStar.style.transform = 'none';
       }
     }
     if (!readingFlow && s2 && this.refs2.catFall) {
@@ -1895,17 +1918,31 @@ class Component extends DCLogic {
       if (el._csO !== op) { el._csO = op; el.style.opacity = String(op); }
       if (el._csY !== ty) { el._csY = ty; el.style.transform = 'translateY(' + ty + 'px)'; }
     }
-    // Both visitors appear together while their chapter is being read.
+    // The visiting star-cats descend from the upper right on mobile.
     const co = this.refs2.catOther;
     if (co) {
       const section = co.closest('section');
       const r = section.getBoundingClientRect();
-      if (readingFlow || r.top < h * 0.72) this._coFlew = true;
-      const shown = !!this._coFlew;
-      for (const el of [co, this.refs2.catsSurround]) {
-        if (!el) continue;
-        el.style.opacity = shown ? '1' : '0';
-        el.style.transform = shown ? 'none' : 'translateY(18px)';
+      if (this.compactUi()) {
+        const raw = Math.max(0, Math.min(1, (h * 0.88 - r.top) / (h * 0.42)));
+        const arrival = raw * raw * (3 - 2 * raw);
+        co.style.opacity = String(arrival);
+        co.style.transform = 'translate(' + ((1 - arrival) * Math.min(150, window.innerWidth * 0.4)) + 'px,' + ((1 - arrival) * -130) + 'px) rotate(' + ((1 - arrival) * 7) + 'deg)';
+        const audience = this.refs2.catsSurround;
+        if (audience) {
+          const audienceRaw = Math.max(0, Math.min(1, (raw - 0.38) / 0.42));
+          const audienceIn = audienceRaw * audienceRaw * (3 - 2 * audienceRaw);
+          audience.style.opacity = String(audienceIn);
+          audience.style.transform = 'translateY(' + ((1 - audienceIn) * 24) + 'px)';
+        }
+      } else {
+        if (readingFlow || r.top < h * 0.72) this._coFlew = true;
+        const shown = !!this._coFlew;
+        for (const el of [co, this.refs2.catsSurround]) {
+          if (!el) continue;
+          el.style.opacity = shown ? '1' : '0';
+          el.style.transform = shown ? 'none' : 'translateY(18px)';
+        }
       }
     }
     this.updateCharacterMotion();
