@@ -861,7 +861,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.61</small></div>
+    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.62</small></div>
   </footer>
 </div>
 </div></x-dc>
@@ -1795,7 +1795,7 @@ class Component extends DCLogic {
   scheduleStorySettle() {
     this.cancelStorySettle();
     if (!this.compactUi() || this._storyTouching || this._storySettling) return;
-    this._storySettleTimer = setTimeout(() => this.settleStory(), 170);
+    this._storySettleTimer = setTimeout(() => this.settleStory(), 220);
   }
 
   settleStory() {
@@ -1811,7 +1811,7 @@ class Component extends DCLogic {
     const storyTop = window.scrollY + rect.top;
     const target = storyTop + nearest * travel;
     const distance = Math.abs(target - window.scrollY);
-    if (distance < 8 || distance > h * 0.28) return;
+    if (distance < 8 || distance > h * 0.22) return;
     this._storySettling = true;
     window.scrollTo({ top: target, behavior: 'smooth' });
     clearTimeout(this._storySettleDone);

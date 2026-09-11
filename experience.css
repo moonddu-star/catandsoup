@@ -65,6 +65,24 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
 /* A full readable scene on phones; long translations can expand naturally. */
 @media (max-width: 720px), (max-height: 540px) and (hover: none) {
   :root { --cs-header-space: 96px; }
+  html.cs-hamburger .cs-topbar {
+    padding: 8px 11px !important;
+    padding-top: max(8px, env(safe-area-inset-top)) !important;
+    padding-left: max(11px, env(safe-area-inset-left)) !important;
+    padding-right: max(11px, env(safe-area-inset-right)) !important;
+    gap: 6px !important;
+  }
+  html.cs-hamburger .cs-topbar-left,
+  html.cs-hamburger .cs-lang-icon-btn,
+  html.cs-hamburger .cs-sound,
+  html.cs-hamburger .cs-menubtn { height: 50px; }
+  html.cs-hamburger .cs-logo-top { width: 32px !important; height: 32px !important; }
+  html.cs-hamburger .cs-sound-icon-on { width: 50px !important; height: 50px !important; }
+  html.cs-hamburger .cs-sound-icon-off { width: 49px !important; height: 49px !important; }
+  html.cs-hamburger .cs-menubtn { width: 44px; min-width: 44px; min-height: 44px; }
+  html.cs-hamburger .cs-menu-icon-open { width: 37px; height: 27px; }
+  html.cs-hamburger .cs-menu-icon-close { width: 18px; height: 18px; }
+  html.cs-hamburger .cs-nav { padding-top: calc(70px + env(safe-area-inset-top, 0px)) !important; }
   .cs-hero { padding: var(--cs-header-space) 22px 40px !important; min-height: 100svh !important; }
   .cs-story { height: 320svh !important; }
   .cs-story-pin { position: sticky !important; top: 0 !important; height: 100svh !important; overflow: hidden !important; }
@@ -133,6 +151,14 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
 }
 @media (max-height: 540px) and (hover: none) {
   :root { --cs-header-space: 74px; }
+  html.cs-hamburger .cs-topbar-left,
+  html.cs-hamburger .cs-lang-icon-btn,
+  html.cs-hamburger .cs-sound,
+  html.cs-hamburger .cs-menubtn { height: 44px; }
+  html.cs-hamburger .cs-sound-icon-on { width: 38px !important; height: 38px !important; }
+  html.cs-hamburger .cs-sound-icon-off { width: 38px !important; height: 38px !important; }
+  html.cs-hamburger .cs-logo-top { width: 29px !important; height: 29px !important; }
+  html.cs-hamburger .cs-nav { padding-top: calc(52px + env(safe-area-inset-top, 0px)) !important; }
   .cs-story-beat { min-height: 100svh; }
 }
 @media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
@@ -164,25 +190,9 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-audience, .cs-visiting-cats { opacity: 1 !important; transform: none !important; }
 }
 
-/* Proximity snapping lets a swipe pass chapters freely, settling only nearby. */
+/* Keep touch scrolling continuous; the fixed story applies its own gentle settle. */
 @media (max-width: 720px), (max-height: 540px) and (hover: none) {
-  html {
-    scroll-snap-type: y proximity;
-    scroll-padding-bottom: 24px;
-  }
-  .cs-hero,
-  .cs-scene3,
-  .cs-interlude,
-  .cs-cats,
-  .cs-tall,
-  .cs-bottom-download {
-    scroll-snap-align: center;
-    scroll-snap-stop: normal;
-  }
-  .cs-footer { scroll-snap-align: end; }
-}
-@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
-  html { scroll-snap-type: none; }
+  html { scroll-snap-type: none; scroll-padding-bottom: 0; }
 }
 
 /* Trailer and store actions share the tree stage, following the Polo ending. */
