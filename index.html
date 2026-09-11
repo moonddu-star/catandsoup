@@ -197,6 +197,8 @@
     font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif;
     letter-spacing: var(--cs-track, 0px);
     font-weight: var(--cs-weight, 700);
+    white-space: nowrap;
+    flex-wrap: nowrap !important;
   }
   .cs-nav a {
     display: inline-flex;
@@ -205,6 +207,10 @@
     font-family: inherit;
     letter-spacing: inherit;
     font-weight: inherit;
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    flex-shrink: 0;
   }
   .cs-extlink {
     width: 16px;
@@ -380,7 +386,7 @@
     align-items: stretch !important;
     justify-content: flex-start !important;
     gap: 0 !important;
-    font-size: 28px !important;
+    font-size: clamp(11px, 4.8vmin, 28px) !important;
     font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif !important;
     letter-spacing: var(--cs-track, 0px);
     font-weight: var(--cs-weight, 700) !important;
@@ -394,7 +400,7 @@
     justify-content: center;
     padding: 20px 12px !important;
     text-align: center;
-    font-size: 28px !important;
+    font-size: clamp(11px, 4.8vmin, 28px) !important;
     font-family: inherit;
     font-weight: inherit;
     letter-spacing: inherit;
@@ -522,7 +528,7 @@
     html.cs-hamburger .cs-sound-icon-off { width: 47px !important; height: 47px !important; }
     html.cs-hamburger .cs-logo-top { width: 36px !important; height: 36px !important; }
     html.cs-hamburger .cs-nav { padding-top: calc(64px + env(safe-area-inset-top, 0px)) !important; }
-    html.cs-hamburger .cs-nav a { padding: 14px 12px !important; font-size: 22px !important; }
+    html.cs-hamburger .cs-nav a { padding: 14px 12px !important; font-size: clamp(11px, 4.8vmin, 22px) !important; }
     html.cs-hamburger .cs-extlink { width: 16px; height: 16px; }
     html.cs-hamburger .cs-nav .cs-socials { gap: 14px; padding: 4px 12px max(16px, env(safe-area-inset-bottom)); }
     html.cs-hamburger .cs-nav .cs-social {
@@ -855,7 +861,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.60</small></div>
+    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.61</small></div>
   </footer>
 </div>
 </div></x-dc>
@@ -1392,7 +1398,7 @@ class Component extends DCLogic {
     this.ensureFont(picked);
     document.documentElement.style.setProperty('--cs-cjk', "'" + picked + "'");
     const navMetrics = {
-      kr: [20, 18],
+      kr: [17, 12],
       en: [19, 16],
       jp: [18, 14],
       cn: [20, 18],
@@ -1402,7 +1408,7 @@ class Component extends DCLogic {
       pt: [18, 14],
       id: [19, 15]
     }[L] || [20, 18];
-    document.documentElement.style.setProperty('--cs-nav-size', navMetrics[0] + 'px');
+    document.documentElement.style.setProperty('--cs-nav-size', 'clamp(12px, 1.25vw, ' + navMetrics[0] + 'px)');
     document.documentElement.style.setProperty('--cs-nav-gap', navMetrics[1] + 'px');
     const track = { kr: -1, en: p.trackEn, jp: p.trackJp, cn: p.trackCn, es: p.trackEs, fr: p.trackFr, th: p.trackTh, pt: p.trackPt, id: p.trackId }[L] ?? 0;
     document.documentElement.style.setProperty('--cs-track', (L === 'cn' ? Math.max(-2, Math.min(0.5, track || -1)) : track) + 'px');
@@ -2292,7 +2298,7 @@ class Component extends DCLogic {
         s5Heading: '아침이 밝고,\n작은 스프 가게가 문을 열었어요',
         s5Main: '이제, 이 숲의 집사는 당신이에요.\n고양이들과 함께\n스프를 끓여 보세요.',
         lblBreed: '품종', lblBirthday: '생일', lblFood: '좋아하는 음식',
-        navStory: '이야기', navUpdate: '업데이트', navCoupon: '쿠폰 코드', navRecipe: '마법의 레시피', navSocial: '소셜', navCats: '고양이들', navDownload: '다운로드', navMenu: '메뉴', navClose: '닫기',
+        navStory: '이야기', navUpdate: '업데이트', navCoupon: '쿠폰 코드', navRecipe: '고양이와 스프 : 마법의 레시피', navSocial: '소셜', navCats: '고양이들', navDownload: '다운로드', navMenu: '메뉴', navClose: '닫기',
         btnGoogle: 'Google Play에서 받기', btnApple: 'App Store에서 받기', btnCoupon: '쿠폰 코드 입력',
         bgmOn: '배경음 켜기', bgmOff: '배경음 끄기',
         ftTerms: '이용약관', ftPrivacy: '개인정보처리방침',

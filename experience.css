@@ -117,6 +117,10 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-guitarcat ~ span:nth-of-type(2) { font-size: 26px !important; }
   .cs-guitarcat ~ span:nth-of-type(3) { font-size: 20px !important; }
   .cs-audience { max-height: 24svh; }
+  .cs-cats { padding: 56px 20px 18px !important; gap: 10px !important; }
+  .cs-cats .cs-visiting-cats { margin-top: 14px !important; }
+  .cs-cats .cs-audience { width: min(270px, 67.5vw) !important; max-height: 18svh; margin-top: -7px !important; }
+  .cs-cats > .cs-reveal:last-child .cs-morestar { margin: 4px auto !important; }
   .cs-download { min-height: 100svh !important; padding: var(--cs-header-space) 22px 24px !important; }
   .cs-download h2 { font-size: clamp(28px, 8vw, 36px) !important; line-height: 1.4 !important; }
   .cs-s5main { font-size: 19px !important; }
