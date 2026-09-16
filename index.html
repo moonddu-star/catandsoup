@@ -542,7 +542,7 @@
     .cs-hero { padding-top: 64px !important; }
   }
 </style>
-<link rel="stylesheet" href="./experience.css?v=0.71">
+<link rel="stylesheet" href="./experience.css?v=0.74">
 </helmet>
 
 <div data-screen-label="홈 시안 A" style="position: relative; width: 100%; overflow-x: clip; color: #f3efe2;">
@@ -860,7 +860,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.64</small></div>
+    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.65</small></div>
   </footer>
 </div>
 </div></x-dc>
@@ -1679,12 +1679,30 @@ class Component extends DCLogic {
       });
     };
     this._storyTouching = false;
-    this._onStoryTouchStart = () => { this._storyTouching = true; this._storySettling = false; this.cancelStorySettle(); };
+    this._storyWheeling = false;
+    this._interruptSettle = () => { this._storySettling = false; this._slackParked = false; this.cancelStorySettle(); };
+    this._onStoryTouchStart = () => { this._storyTouching = true; this._interruptSettle(); };
     this._onStoryTouchEnd = () => { this._storyTouching = false; this.scheduleStorySettle(); };
+    this._onStoryPointerDown = () => { this._interruptSettle(); };
+    this._onStoryWheel = () => {
+      this._interruptSettle();
+      this._storyWheeling = true;
+      clearTimeout(this._wheelIdle);
+      this._wheelIdle = setTimeout(() => {
+        this._storyWheeling = false;
+        this.scheduleStorySettle();
+      }, 240);
+    };
+    this._onStoryKeyScroll = (e) => {
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(e.key)) this._interruptSettle();
+    };
     window.addEventListener('scroll', this.onScroll, { passive: true, capture: true });
     window.addEventListener('touchstart', this._onStoryTouchStart, { passive: true });
     window.addEventListener('touchend', this._onStoryTouchEnd, { passive: true });
     window.addEventListener('touchcancel', this._onStoryTouchEnd, { passive: true });
+    window.addEventListener('pointerdown', this._onStoryPointerDown, { passive: true });
+    window.addEventListener('wheel', this._onStoryWheel, { passive: true });
+    window.addEventListener('keydown', this._onStoryKeyScroll);
     window.addEventListener('mousemove', this.onMove, { passive: true });
     window.addEventListener('resize', this.onResize);
     this.sizeCanvas();
@@ -1758,11 +1776,15 @@ class Component extends DCLogic {
     clearInterval(this.shootTimer);
     this.cancelStorySettle();
     clearTimeout(this._storySettleDone);
+    clearTimeout(this._wheelIdle);
     clearTimeout(this._catsArrivalTimer);
     window.removeEventListener('scroll', this.onScroll, { capture: true });
     window.removeEventListener('touchstart', this._onStoryTouchStart);
     window.removeEventListener('touchend', this._onStoryTouchEnd);
     window.removeEventListener('touchcancel', this._onStoryTouchEnd);
+    window.removeEventListener('pointerdown', this._onStoryPointerDown);
+    window.removeEventListener('wheel', this._onStoryWheel);
+    window.removeEventListener('keydown', this._onStoryKeyScroll);
     window.removeEventListener('mousemove', this.onMove);
     window.removeEventListener('resize', this.onResize);
     if (this._onMeowClick) document.removeEventListener('click', this._onMeowClick, true);
@@ -1798,34 +1820,57 @@ class Component extends DCLogic {
 
   scheduleStorySettle() {
     this.cancelStorySettle();
-    if (this._storyTouching || this._storySettling || this.shouldReduceMotion()) return;
+    if (this._storyTouching || this._storyWheeling || this._storySettling || this.shouldReduceMotion()) return;
     this._storySettleY = window.scrollY;
-    this._storySettleTimer = setTimeout(() => this.settleStory(), 380);
+    this._storySettleTimer = setTimeout(() => this.settleStory(), 680);
   }
 
   snapTo(target, maxDist) {
     const dest = Math.max(0, target);
     const start = window.scrollY;
     const distance = dest - start;
-    if (Math.abs(distance) < 8 || Math.abs(distance) > maxDist) return false;
+    if (Math.abs(distance) < 12) {
+      this._slackParked = true;
+      this.updateScroll();
+      return false;
+    }
+    if (Math.abs(distance) > maxDist) return false;
     this._storySettling = true;
+    this._slackParked = false;
     if (document.hidden) {
       window.scrollTo(0, dest);
       this._storySettling = false;
+      this._slackParked = true;
+      this.updateScroll();
       return true;
     }
-    const dur = Math.min(720, 280 + Math.abs(distance) * 0.32);
-    const t0 = performance.now();
+    let y = start;
+    let v = 0;
+    let last = performance.now();
+    const stiffness = 5.2;
+    const damping = 6.4;
     const step = (now) => {
-      if (this._storyTouching || !this._storySettling) {
+      if (this._storyTouching || this._storyWheeling || !this._storySettling) {
         this._storySettling = false;
         return;
       }
-      const t = Math.min(1, (now - t0) / dur);
-      const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      window.scrollTo(0, start + distance * e);
-      if (t < 1) requestAnimationFrame(step);
-      else this._storySettling = false;
+      if (Math.abs(window.scrollY - y) > 8) {
+        this._storySettling = false;
+        return;
+      }
+      const dt = Math.min(0.033, Math.max(0.008, (now - last) / 1000));
+      last = now;
+      v += ((dest - y) * stiffness - v * damping) * dt;
+      y += v * dt;
+      window.scrollTo(0, y);
+      if (Math.abs(dest - y) < 0.8 && Math.abs(v) < 8) {
+        window.scrollTo(0, dest);
+        this._storySettling = false;
+        this._slackParked = true;
+        this.updateScroll();
+        return;
+      }
+      requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
     return true;
@@ -1834,10 +1879,11 @@ class Component extends DCLogic {
   snapStoryBeats(story, rect, h) {
     const travel = Math.max(1, story.offsetHeight - h);
     const progress = Math.max(0, Math.min(1, -rect.top / travel));
-    const stops = [0.12, 0.50, 0.84];
+    if (progress >= 0.64) return false;
+    const stops = [0.12, 0.50];
     const nearest = stops.reduce((best, value) => Math.abs(value - progress) < Math.abs(best - progress) ? value : best, stops[0]);
     const target = window.scrollY + rect.top + nearest * travel;
-    return this.snapTo(target, travel * 0.22);
+    return this.snapTo(target, travel * 0.09);
   }
 
   isPawCue(el) {
@@ -1896,14 +1942,14 @@ class Component extends DCLogic {
       if (!best || dist < best.dist) best = { el, box, dist };
     }
     if (!best) return false;
-    return this.snapTo(this.centerContentDest(best.box, h), h * 0.42);
+    return this.snapTo(this.centerContentDest(best.box, h), h * 0.14);
   }
 
   settleStory() {
-    if (this._storyTouching || this.shouldReduceMotion()) return;
+    if (this._storyTouching || this._storyWheeling || this.shouldReduceMotion()) return;
     if (Math.abs(window.scrollY - (this._storySettleY ?? window.scrollY)) > 3) {
       this._storySettleY = window.scrollY;
-      this._storySettleTimer = setTimeout(() => this.settleStory(), 160);
+      this._storySettleTimer = setTimeout(() => this.settleStory(), 220);
       return;
     }
     const h = window.innerHeight;
@@ -1974,13 +2020,11 @@ class Component extends DCLogic {
       // she only starts her descent after beat2 (room + motorcycle) has left
       const pf = Math.max(0, Math.min(1, (p - 0.68) / 0.24));
       const fall = pf * pf * (3 - 2 * pf);
-      const y = yTop + fall * (yBot - yTop);
+      let y = yTop + fall * (yBot - yTop);
       // fall straight down along the right edge, clear of the centered copy
       const halfW = window.innerWidth / 2;
-      const x = Math.max(0, halfW - cw / 2 - Math.max(pad, window.innerWidth * 0.16));
+      const x = Math.max(0, halfW - cw / 2 - Math.max(pad, window.innerWidth * (this.compactUi() ? 0.10 : 0.14)));
       const rot = Math.sin(fall * Math.PI) * 3.5;
-      cf.style.transform = 'translate(' + x + 'px,' + y + 'px) rotate(' + rot + 'deg) scale(' + rigScale + ')';
-      // fade in on arrival, fade out once she has landed
       const fadeIn = Math.min(1, pf / 0.16);
       const fadeOut = Math.min(1, Math.max(0, (1 - pf) / 0.14));
       cf.style.opacity = String(Math.min(fadeIn, fadeOut));
@@ -2006,6 +2050,24 @@ class Component extends DCLogic {
       win(this.refs2.beat1, -0.08, 0.32);
       win(this.refs2.beat2, 0.36, 0.64);
       win(this.refs2.beat3, 0.68, 1.08);
+      const placeCat = (yy) => {
+        cf.style.transform = 'translate(' + x + 'px,' + yy + 'px) rotate(' + rot + 'deg) scale(' + rigScale + ')';
+      };
+      placeCat(y);
+      const copy = this.refs2.beat3?.querySelector('.cs-story-main');
+      const beatOp = parseFloat(this.refs2.beat3?.style.opacity || '0');
+      if ((this._storySettling || this._slackParked) && copy && balloon && beatOp > 0.15) {
+        const gap = 18;
+        const tr = copy.getBoundingClientRect();
+        const br = balloon.getBoundingClientRect();
+        const kr = cf.querySelector('.cs-meowcat')?.getBoundingClientRect();
+        const bot = Math.max(br.bottom, kr ? kr.bottom : br.bottom);
+        const horiz = br.right > tr.left + 8 && br.left < tr.right - 8;
+        if (horiz && bot > tr.top - gap) {
+          y = Math.max(0, y - (bot - (tr.top - gap)));
+          placeCat(y);
+        }
+      }
       // Follow the shorter chapter pace rather than waiting for a long timer.
       if (this.refs2.kikiStar) {
         const arrival = Math.max(0, Math.min(1, (p - 0.36) / 0.10));
@@ -2130,7 +2192,7 @@ class Component extends DCLogic {
       }
       for (let i = this.shooters.length - 1; i >= 0; i--) {
         const sh = this.shooters[i];
-        const maxLife = 1.25;
+        const maxLife = 1.25 * 1.5;
         sh.life += 0.04;
         if (sh.life > maxLife) { this.shooters.splice(i, 1); continue; }
         const x = (sh.x + sh.dx * sh.life) * w, y = (sh.y + sh.dy * sh.life) * h;
