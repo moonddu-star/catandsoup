@@ -4,7 +4,24 @@ input, textarea, [contenteditable="true"] { cursor: text; -webkit-user-select: t
 
 /* Reading pace and character motion, shared by all nine languages. */
 :root { --cs-header-space: 118px; }
-html { scroll-padding-top: var(--cs-header-space); }
+html {
+  scroll-padding-top: var(--cs-header-space);
+  overflow-x: clip;
+  overscroll-behavior-y: none;
+  -webkit-text-size-adjust: 100%;
+}
+body { overflow-x: clip; }
+html.cs-menu-lock,
+html.cs-menu-lock body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+html.cs-menu-lock body {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
 .cs-hero, .cs-story-beat, .cs-scene3, .cs-interlude, .cs-cats, .cs-tall, .cs-download { box-sizing: border-box; }
 .cs-story { height: 420vh !important; }
 .cs-story-main { font-size: clamp(28px, 3vw, 42px) !important; line-height: var(--cs-lead, 1.65) !important; }
@@ -147,7 +164,12 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-guitarcat ~ span:nth-of-type(3) { font-size: 20px !important; }
   .cs-guitar-scene { padding-bottom: 148px !important; }
   .cs-audience { max-height: none; }
-  .cs-cats { overflow: hidden; min-height: 100svh !important; padding: 88px 20px 72px !important; gap: 22px !important; }
+  .cs-cats { overflow-x: clip; overflow-y: visible; min-height: 100svh !important; padding: 88px 20px 72px !important; gap: 22px !important; }
+  .cs-reveal, .cs-story-beat, .cs-falling-cat, .cs-visiting-cats, .cs-audience { will-change: auto !important; }
+  .cs-footer {
+    flex-direction: column !important; justify-content: center !important;
+    text-align: center; padding: 28px 20px 36px !important; gap: 8px !important;
+  }
   .cs-cats .cs-visiting-cats { margin-top: 16px !important; width: min(105px, 27vw) !important; }
   .cs-cats .cs-audience { width: min(238px, 62vw) !important; max-height: none !important; margin-top: 10px !important; }
   .cs-cats > .cs-reveal:last-child .cs-morestar { margin: 8px auto 0 !important; }
@@ -200,8 +222,9 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-audience, .cs-visiting-cats { opacity: 1 !important; transform: none !important; }
 }
 
-/* Keep touch scrolling continuous; the fixed story applies its own gentle settle. */
+/* Keep touch scrolling continuous; do not snap or re-anchor mid-gesture. */
 @media (max-width: 720px), (max-height: 540px) and (hover: none) {
+  html, body { overflow-anchor: none; }
   html { scroll-snap-type: none; scroll-padding-bottom: 0; }
 }
 
@@ -236,6 +259,15 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
 .cs-bottom-download .cs-dlnow { width: 120px; height: auto; display: block; }
 .cs-footer { background: #131730; color: #d8d4d2 !important; }
 .cs-footer a, .cs-footer div, .cs-footer small { color: #d8d4d2 !important; }
+.cs-build-ver {
+  position: fixed; right: max(16px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom)); z-index: 80;
+  margin: 0; pointer-events: none;
+  color: rgba(243, 239, 226, .58); font-size: 12px; letter-spacing: .08em;
+  opacity: 0; transition: opacity .7s ease;
+}
+.cs-build-ver.is-on { opacity: 1; }
+.cs-build-ver.is-off { opacity: 0; }
 
 @media (max-width: 720px), (max-height: 540px) and (hover: none) {
   .cs-polo-tree-bg {

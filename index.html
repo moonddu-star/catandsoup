@@ -29,7 +29,7 @@
 <body>
 <x-dc>
 <helmet>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&amp;family=Gowun+Dodum&amp;family=ZCOOL+KuaiLe&amp;family=Zen+Maru+Gothic:wght@500;700&amp;family=Baloo+2:wght@500;700&amp;display=swap" rel="stylesheet">
@@ -542,10 +542,10 @@
     .cs-hero { padding-top: 64px !important; }
   }
 </style>
-<link rel="stylesheet" href="./experience.css?v=0.74">
+<link rel="stylesheet" href="./experience.css?v=0.76">
 </helmet>
 
-<div data-screen-label="홈 시안 A" style="position: relative; width: 100%; overflow-x: clip; color: #f3efe2;">
+<div data-screen-label="홈 시안 A" style="position: relative; width: 100%; color: #f3efe2;">
 
   <!-- fixed backgrounds -->
   <div style="position: fixed; inset: 0; z-index: 0; background: linear-gradient(180deg, #0d1026 0%, #171c3d 40%, #232a55 75%, #2e3763 100%);"></div>
@@ -751,7 +751,7 @@
     </div>
 
     <!-- interactive cook -->
-    <div ref="{{ tiltCatRef }}" class="cs-soup cs-meowcat" onTouchStart="{{ stirStart }}" onTouchMove="{{ stirTouch }}" onTouchEnd="{{ stirEnd }}" style="position: relative; width: min(280px, 54.4vw); aspect-ratio: 800 / 727; cursor: pointer; filter: drop-shadow(rgba(0,0,0,.4) 0 6px 14px); touch-action: manipulation;">
+    <div ref="{{ tiltCatRef }}" class="cs-soup cs-meowcat" onTouchStart="{{ stirStart }}" onTouchMove="{{ stirTouch }}" onTouchEnd="{{ stirEnd }}" style="position: relative; width: min(280px, 54.4vw); aspect-ratio: 800 / 727; cursor: pointer; filter: drop-shadow(rgba(0,0,0,.4) 0 6px 14px); touch-action: pan-y;">
       <img src="assets/soup_pot.webp" alt="끓고 있는 스프 한 냄비" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
       <div ref="{{ steamRef }}" style="position: absolute; left: 50%; bottom: 58%; width: 40%; height: 1px; transform: translateX(-50%); pointer-events: none; z-index: 3;"></div>
       <div ref="{{ meowBubbleRef }}" data-cs-meow="1" style="display: none; position: absolute; top: 10px; right: 0; padding: 6px 12px; background: #f3efe2; color: #2c2418; font-size: 13px; border-radius: 12px 12px 12px 2px; opacity: 0; transition: opacity .25s;">야옹 ~</div>
@@ -860,8 +860,9 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.66</small></div>
+    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.67</small></div>
   </footer>
+  <p class="cs-build-ver" aria-hidden="true"></p>
 </div>
 </div></x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;particleDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;분위기&quot;},&quot;fontKr&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Gowun Batang&quot;,&quot;options&quot;:[&quot;Gowun Batang&quot;,&quot;Gowun Dodum&quot;,&quot;Nanum Myeongjo&quot;,&quot;Hi Melody&quot;,&quot;Poor Story&quot;,&quot;Gaegu&quot;,&quot;Dongle&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontEn&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontJp&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Zen Maru Gothic&quot;,&quot;options&quot;:[&quot;Zen Maru Gothic&quot;,&quot;Kosugi Maru&quot;,&quot;M PLUS Rounded 1c&quot;,&quot;Yusei Magic&quot;,&quot;Zen Kurenaido&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontCn&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;ZCOOL XiaoWei&quot;,&quot;options&quot;:[&quot;ZCOOL XiaoWei&quot;,&quot;LXGW WenKai TC&quot;,&quot;Noto Sans SC&quot;,&quot;ZCOOL QingKe HuangYou&quot;,&quot;ZCOOL KuaiLe&quot;,&quot;Noto Sans TC&quot;,&quot;Noto Serif SC&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontEs&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontFr&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;fontId&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackKr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:-1,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackEn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.5,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackJp&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-2,&quot;max&quot;:3,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackCn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-1,&quot;max&quot;:1,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackEs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-0.5,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackFr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-1,&quot;max&quot;:2,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;trackId&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingKr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingEn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingJp&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.45,&quot;min&quot;:1.3,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingCn&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.7,&quot;min&quot;:1.6,&quot;max&quot;:1.8,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingEs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingFr&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;leadingId&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;fontPt&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Marcellus&quot;,&quot;options&quot;:[&quot;Spicy Rice&quot;,&quot;Cormorant Garamond&quot;,&quot;Vollkorn&quot;,&quot;Alegreya&quot;,&quot;Spectral&quot;,&quot;Gelasio&quot;,&quot;Bodoni Moda&quot;,&quot;Playfair Display&quot;,&quot;Marcellus&quot;,&quot;Italiana&quot;,&quot;Amiri&quot;,&quot;Sorts Mill Goudy&quot;,&quot;Rosarivo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackPt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-3,&quot;max&quot;:6,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingPt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:1.2,&quot;max&quot;:2.6,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;},&quot;fontTh&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Mali&quot;,&quot;options&quot;:[&quot;Mali&quot;,&quot;Itim&quot;,&quot;Sriracha&quot;,&quot;Charm&quot;,&quot;Chakra Petch&quot;,&quot;Bai Jamjuree&quot;,&quot;Noto Serif Thai&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;언어별 폰트&quot;},&quot;trackTh&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:-2,&quot;max&quot;:4,&quot;step&quot;:0.25,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 자간&quot;},&quot;leadingTh&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.8,&quot;min&quot;:1.6,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;언어별 행간&quot;}}">
@@ -969,6 +970,15 @@ class Component extends DCLogic {
 
   compactUi() {
     return window.matchMedia('(max-width: 720px), (max-height: 540px) and (hover: none)').matches;
+  }
+
+  viewH() {
+    if (!this.compactUi()) return window.innerHeight;
+    const w = window.innerWidth;
+    if (!this._viewLock || Math.abs(this._viewLock.w - w) > 48) {
+      this._viewLock = { w, h: window.innerHeight };
+    }
+    return this._viewLock.h;
   }
 
   shouldReduceMotion() {
@@ -1138,8 +1148,25 @@ class Component extends DCLogic {
     if (this.refs2.nav) this.refs2.nav.classList.remove('is-open');
     if (this.refs2.menuScrim) this.refs2.menuScrim.classList.remove('is-open');
     if (this.refs2.topbar) this.refs2.topbar.classList.remove('is-menu-open');
+    this.unlockPageScroll();
+  }
+
+  lockPageScroll() {
+    if (this._pageScrollLocked) return;
+    this._pageScrollLocked = true;
+    this._lockY = window.scrollY || window.pageYOffset || 0;
+    document.documentElement.classList.add('cs-menu-lock');
+    document.body.classList.add('cs-menu-lock');
+    document.body.style.top = '-' + this._lockY + 'px';
+  }
+
+  unlockPageScroll() {
     document.documentElement.classList.remove('cs-menu-lock');
     document.body.classList.remove('cs-menu-lock');
+    document.body.style.top = '';
+    if (!this._pageScrollLocked) return;
+    this._pageScrollLocked = false;
+    window.scrollTo(0, this._lockY || 0);
   }
 
   menuCopy() {
@@ -1165,8 +1192,8 @@ class Component extends DCLogic {
     if (this.refs2.nav) this.refs2.nav.classList.toggle('is-open', open);
     if (this.refs2.menuScrim) this.refs2.menuScrim.classList.toggle('is-open', open);
     if (this.refs2.topbar) this.refs2.topbar.classList.toggle('is-menu-open', open);
-    document.documentElement.classList.toggle('cs-menu-lock', open);
-    document.body.classList.toggle('cs-menu-lock', open);
+    if (open) this.lockPageScroll();
+    else this.unlockPageScroll();
     if (!this._menuEscBound) {
       this._menuEscBound = true;
       window.addEventListener('keydown', (e) => {
@@ -1604,6 +1631,7 @@ class Component extends DCLogic {
     requestAnimationFrame(toTop);
     setTimeout(toTop, 120);
     window.addEventListener('beforeunload', toTop);
+    this.showBuildVersion();
     this._motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     this._onMotionChange = () => {
       this.updateScroll();
@@ -1645,7 +1673,7 @@ class Component extends DCLogic {
       this.fireflies.push({ x: Math.random(), y: 0.45 + Math.random() * 0.5, vx: (Math.random() - .5) * .0006, vy: (Math.random() - .5) * .0004, p: Math.random() * Math.PI * 2 });
     }
     this.onScroll = () => {
-      this.scheduleStorySettle();
+      if (!this.compactUi()) this.scheduleStorySettle();
       if (this._scrollRaf) return;
       this._scrollRaf = requestAnimationFrame(() => {
         this._scrollRaf = 0;
@@ -1654,10 +1682,15 @@ class Component extends DCLogic {
     };
     this.onMove = (e) => { this.mx = e.clientX; this.my = e.clientY; };
     this.onResize = () => {
+      const w = window.innerWidth;
+      const widthChanged = this._lastInnerW == null || Math.abs(this._lastInnerW - w) > 48;
+      this._lastInnerW = w;
+      if (this.compactUi() && !widthChanged) return;
       const wasReadingFlow = this._readingFlow;
       const storyWasActive = this._storyActive;
       const storyStage = this._storyStage ?? 0;
       this._balloonEl = null;
+      this._viewLock = null;
       this.sizeCanvas();
       this.scheduleNavMode();
       requestAnimationFrame(() => {
@@ -1775,6 +1808,8 @@ class Component extends DCLogic {
     clearInterval(this.steamTimer);
     clearInterval(this.shootTimer);
     this.cancelStorySettle();
+    clearTimeout(this._buildVerTimer);
+    clearTimeout(this._buildVerGone);
     clearTimeout(this._storySettleDone);
     clearTimeout(this._wheelIdle);
     clearTimeout(this._catsArrivalTimer);
@@ -1804,8 +1839,25 @@ class Component extends DCLogic {
   progressOf(el, span) {
     if (!el) return 0;
     const r = el.getBoundingClientRect();
-    const h = window.innerHeight;
+    const h = this.viewH();
     return Math.max(0, Math.min(1, (h - r.top) / (span || (r.height + h))));
+  }
+
+  showBuildVersion() {
+    const stamp = document.querySelector('.cs-build-ver');
+    const src = document.querySelector('.cs-footer-ver');
+    if (!stamp) return;
+    if (src) stamp.textContent = src.textContent.trim();
+    const reduce = this.shouldReduceMotion();
+    const hold = reduce ? 900 : 1800;
+    const fade = reduce ? 80 : 700;
+    requestAnimationFrame(() => {
+      stamp.classList.add('is-on');
+      this._buildVerTimer = setTimeout(() => {
+        stamp.classList.add('is-off');
+        this._buildVerGone = setTimeout(() => { stamp.hidden = true; }, fade);
+      }, hold);
+    });
   }
 
   headerSpace() {
@@ -1968,7 +2020,7 @@ class Component extends DCLogic {
   }
 
   updateScroll() {
-    const h = window.innerHeight;
+    const h = this.viewH();
     // scene 2: cat falls through sticky viewport
     const s2 = this.refs2.scene2;
     const readingFlow = this.shouldReduceMotion();
@@ -2047,12 +2099,12 @@ class Component extends DCLogic {
         el.inert = o <= 0.08;
         const span = Math.max(0.001, b - a);
         const t = Math.max(0, Math.min(1, (p - a) / span));
-        const travel = h * (this.compactUi() ? 0.42 : 0.12);
+        const travel = h * (this.compactUi() ? 0.16 : 0.12);
         el.style.transform = 'translateY(' + ((0.5 - t) * travel) + 'px)';
       };
-      win(this.refs2.beat1, -0.08, 0.32);
-      win(this.refs2.beat2, 0.36, 0.64);
-      win(this.refs2.beat3, 0.68, 1.08);
+      win(this.refs2.beat1, -0.08, this.compactUi() ? 0.36 : 0.32);
+      win(this.refs2.beat2, this.compactUi() ? 0.32 : 0.36, this.compactUi() ? 0.68 : 0.64);
+      win(this.refs2.beat3, this.compactUi() ? 0.64 : 0.68, 1.08);
       const placeCat = (yy) => {
         cf.style.transform = 'translate(' + x + 'px,' + yy + 'px) rotate(' + rot + 'deg) scale(' + rigScale + ')';
       };
@@ -2108,20 +2160,21 @@ class Component extends DCLogic {
         this.refs2.clouds.style.transform = 'translateY(' + ((1 - o) * 10) + 'vh)';
       }
     }
-    // gentle fade-up reveals, driven from live rects on scroll only
-    // fade in as copy enters, fade out as it leaves so adjacent scenes do not stack
-    const reveals = document.getElementsByClassName('cs-reveal');
-    for (let i = 0; i < reveals.length; i++) {
-      const el = reveals[i];
-      const r = el.getBoundingClientRect();
-      const inn = Math.max(0, Math.min(1, (h * 0.86 - r.top) / (h * 0.26)));
-      const out = Math.max(0, Math.min(1, (r.bottom - h * 0.14) / (h * 0.26)));
-      const t = readingFlow ? 1 : Math.min(inn, out);
-      const o = t * t * (3 - 2 * t);
-      const op = Math.round(o * 100) / 100;
-      const ty = ((1 - o) * 16) | 0;
-      if (el._csO !== op) { el._csO = op; el.style.opacity = String(op); }
-      if (el._csY !== ty) { el._csY = ty; el.style.transform = 'translateY(' + ty + 'px)'; }
+    // phones keep copy visible; desktop fades a beat as it leaves so scenes do not stack
+    if (!this.compactUi()) {
+      const reveals = document.getElementsByClassName('cs-reveal');
+      for (let i = 0; i < reveals.length; i++) {
+        const el = reveals[i];
+        const r = el.getBoundingClientRect();
+        const inn = Math.max(0, Math.min(1, (h * 0.86 - r.top) / (h * 0.26)));
+        const out = Math.max(0, Math.min(1, (r.bottom - h * 0.14) / (h * 0.26)));
+        const t = readingFlow ? 1 : Math.min(inn, out);
+        const o = t * t * (3 - 2 * t);
+        const op = Math.round(o * 100) / 100;
+        const ty = ((1 - o) * 16) | 0;
+        if (el._csO !== op) { el._csO = op; el.style.opacity = String(op); }
+        if (el._csY !== ty) { el._csY = ty; el.style.transform = 'translateY(' + ty + 'px)'; }
+      }
     }
     // The cloud-riding cat descends first; the stationary audience fades in after it lands.
     const co = this.refs2.catOther;
