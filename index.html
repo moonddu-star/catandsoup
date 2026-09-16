@@ -860,7 +860,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.65</small></div>
+    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.66</small></div>
   </footer>
 </div>
 </div></x-dc>
@@ -1820,12 +1820,13 @@ class Component extends DCLogic {
 
   scheduleStorySettle() {
     this.cancelStorySettle();
-    if (this._storyTouching || this._storyWheeling || this._storySettling || this.shouldReduceMotion()) return;
+    if (this.compactUi() || this._storyTouching || this._storyWheeling || this._storySettling || this.shouldReduceMotion()) return;
     this._storySettleY = window.scrollY;
     this._storySettleTimer = setTimeout(() => this.settleStory(), 680);
   }
 
   snapTo(target, maxDist) {
+    if (this.compactUi()) return false;
     const dest = Math.max(0, target);
     const start = window.scrollY;
     const distance = dest - start;
@@ -1877,13 +1878,14 @@ class Component extends DCLogic {
   }
 
   snapStoryBeats(story, rect, h) {
+    if (this.compactUi()) return false;
     const travel = Math.max(1, story.offsetHeight - h);
     const progress = Math.max(0, Math.min(1, -rect.top / travel));
-    if (progress >= 0.64) return false;
+    if (progress >= 0.56) return false;
     const stops = [0.12, 0.50];
     const nearest = stops.reduce((best, value) => Math.abs(value - progress) < Math.abs(best - progress) ? value : best, stops[0]);
     const target = window.scrollY + rect.top + nearest * travel;
-    return this.snapTo(target, travel * 0.09);
+    return this.snapTo(target, Math.min(32, h * 0.04));
   }
 
   isPawCue(el) {
@@ -1923,6 +1925,7 @@ class Component extends DCLogic {
   }
 
   snapNightScenes(h) {
+    if (this.compactUi()) return false;
     const sections = [
       this.refs2.scene3,
       document.querySelector('.cs-interlude'),
@@ -1942,11 +1945,11 @@ class Component extends DCLogic {
       if (!best || dist < best.dist) best = { el, box, dist };
     }
     if (!best) return false;
-    return this.snapTo(this.centerContentDest(best.box, h), h * 0.14);
+    return this.snapTo(this.centerContentDest(best.box, h), Math.min(24, h * 0.03));
   }
 
   settleStory() {
-    if (this._storyTouching || this._storyWheeling || this.shouldReduceMotion()) return;
+    if (this.compactUi() || this._storyTouching || this._storyWheeling || this.shouldReduceMotion()) return;
     if (Math.abs(window.scrollY - (this._storySettleY ?? window.scrollY)) > 3) {
       this._storySettleY = window.scrollY;
       this._storySettleTimer = setTimeout(() => this.settleStory(), 220);
