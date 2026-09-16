@@ -542,7 +542,7 @@
     .cs-hero { padding-top: 64px !important; }
   }
 </style>
-<link rel="stylesheet" href="./experience.css?v=0.59">
+<link rel="stylesheet" href="./experience.css?v=0.69">
 </helmet>
 
 <div data-screen-label="홈 시안 A" style="position: relative; width: 100%; overflow-x: clip; color: #f3efe2;">
@@ -780,8 +780,8 @@
       <div class="cs-story-eyebrow" style="font-size: 18px; letter-spacing: 5px; color: #9aa3d1; margin-bottom: 18px;">{{ t.s4Eyebrow }}</div>
       <p class="cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line;">{{ t.s4Main }}</p>
     </div>
-    <img ref="{{ catOtherRef }}" class="cs-visiting-cats cs-meowcat" src="assets/cat_other.webp" alt="구름을 타고 내려오는 고양이" style="width: min(180px, 40.5vw); display: block; margin: 28px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(46vw, -38vh) rotate(14deg); transition: opacity 2.4s ease, transform 4.2s cubic-bezier(.42,0,.72,1);">
-    <img ref="{{ catsSurroundRef }}" class="cs-audience cs-meowcat" src="assets/cats_surround.webp" alt="구경하는 고양이들" style="width: min(620px, 88vw); display: block; margin: -10px auto 0; opacity: 0; transform: none; transition: opacity 2.2s ease;">
+    <img ref="{{ catOtherRef }}" class="cs-visiting-cats cs-meowcat" src="assets/cat_other.webp" alt="구름을 타고 내려오는 고양이" style="width: min(126px, 28vw); display: block; margin: 14px auto 0; filter: drop-shadow(0 6px 24px rgba(255,220,150,.2)); opacity: 0; transform: translate(34vw, -26vh) rotate(12deg); transition: opacity 2.4s ease, transform 4.2s cubic-bezier(.42,0,.72,1);">
+    <img ref="{{ catsSurroundRef }}" class="cs-audience cs-meowcat" src="assets/cats_surround.webp" alt="구경하는 고양이들" style="width: min(434px, 62vw); display: block; margin: -6px auto 0; opacity: 0; transform: none; transition: opacity 2.2s ease;">
     <div class="cs-reveal"><div class="cs-morestar" aria-hidden="true"></div></div>
   </section>
 
@@ -809,9 +809,8 @@
   </section>
 
   <!-- SCENE 4.3 : the guitar cat -->
-  <section ref="{{ guitarSectionRef }}" class="cs-tall" data-screen-label="4.3 기타 치는 고양이" style="position: relative; z-index: 3; width: 100%; min-height: 160vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 30px; box-sizing: border-box;">
+  <section ref="{{ guitarSectionRef }}" class="cs-tall cs-guitar-scene" data-screen-label="4.3 기타 치는 고양이" style="position: relative; z-index: 3; width: 100%; min-height: 160vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10vh 24px; gap: 30px; box-sizing: border-box;">
     <p class="cs-reveal cs-story-main" style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-feature-settings: var(--cs-jp-palt, normal); font-kerning: var(--cs-jp-kern, auto); direction: var(--cs-dir, ltr); font-weight: var(--cs-weight, 700); font-size: 50px; line-height: var(--cs-lead, 1.85); margin: 0 auto; max-width: 740px; text-align: center; text-wrap: pretty; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; white-space: pre-line; will-change: opacity, transform;">{{ t.guitarMain }}</p>
-    <div class="cs-reveal cs-dawnhint" style="margin-top: 30px; font-size: 24px; letter-spacing: 2px; line-height: 1.7; color: #9aa3d1; will-change: opacity, transform;">{{ t.dawnHint }}</div>
     <div style="position: relative; width: min(504px, 86vw); margin: 0 auto; flex-shrink: 0;">
       <img class="cs-guitarcat cs-meowcat" src="assets/guitar_show.webp" alt="기타 치는 고양이" style="width: 100%; display: block; filter: drop-shadow(0 8px 28px rgba(255,220,150,.22));">
       <span style="position: absolute; left: 30%; top: 22%; font-size: 40px; color: #ffd48a; opacity: 0; animation: csNote 3.6s ease-out infinite;">♪</span>
@@ -861,7 +860,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.62</small></div>
+    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.63</small></div>
   </footer>
 </div>
 </div></x-dc>
@@ -1921,11 +1920,23 @@ class Component extends DCLogic {
         this.refs2.moon.style.transform = 'translateY(' + ((p - 0.22) * -120) + 'px)';
       }
 
-      if (this.refs2.clouds) {
-        const raw = Math.max(0, Math.min(1, (p - 0.66) / 0.24));
+    }
+    if (this.refs2.clouds && s2) {
+      const storyRect = s2.getBoundingClientRect();
+      if (readingFlow) {
+        const beat3 = this.refs2.beat3?.getBoundingClientRect();
+        let o = 0;
+        if (beat3) {
+          const overlap = Math.min(beat3.bottom, h) - Math.max(beat3.top, 0);
+          o = overlap > 0 ? Math.max(0, Math.min(1, overlap / Math.min(h * 0.42, beat3.height || h))) : 0;
+        }
+        this.refs2.clouds.style.opacity = String(o * 0.9);
+        this.refs2.clouds.style.transform = 'none';
+      } else {
+        const p = this._storyStage ?? 0;
+        const raw = Math.max(0, Math.min(1, (p - 0.63) / 0.10));
         const o = raw * raw * (3 - 2 * raw);
-        // Once the pinned scene releases, fade the forest as it scrolls upward.
-        const exit = Math.max(0, Math.min(1, (h - r.bottom) / (h * 0.55)));
+        const exit = Math.max(0, Math.min(1, (h - storyRect.bottom) / (h * 0.40)));
         const remaining = 1 - exit * exit * (3 - 2 * exit);
         this.refs2.clouds.style.opacity = String(o * remaining * 0.95);
         this.refs2.clouds.style.transform = 'translateY(' + ((1 - o) * 10) + 'vh)';
@@ -1955,6 +1966,12 @@ class Component extends DCLogic {
         co.style.transform = 'none';
         if (audience) { audience.style.opacity = '.9'; audience.style.transform = 'none'; }
       } else if (!this._coFlew) {
+        if (!co._csFlightStart) {
+          co._csFlightStart = true;
+          co.style.transform = this.compactUi()
+            ? 'translate(30vw, -22vh) rotate(12deg)'
+            : 'translate(34vw, -26vh) rotate(12deg)';
+        }
         const r = co.getBoundingClientRect();
         if (r.top < h * 0.82 && r.bottom > 0) {
           this._coFlew = true;
@@ -2293,7 +2310,6 @@ class Component extends DCLogic {
         tapHint: '카드를 눌러 고양이를 만나 보세요',
         guitarMain: '어디선가 한 고양이는 기타를 치고\n노래를 부르기 시작해요.\n사랑의 노래를.',
         inter2: '밤이 깊도록 스프는 보글보글 끓고,\n고양이들은 모닥불 곁에서\n그르렁 그르렁...\n숲은 어느새 작은 마을이 되었어요.',
-        dawnHint: '그리고, 동쪽 하늘이\n밝아오기 시작했어요',
         s5Eyebrow: '그리고, 아침',
         s5Heading: '아침이 밝고,\n작은 스프 가게가 문을 열었어요',
         s5Main: '이제, 이 숲의 집사는 당신이에요.\n고양이들과 함께\n스프를 끓여 보세요.',
@@ -2335,7 +2351,6 @@ class Component extends DCLogic {
         tapHint: 'Tap a card to meet a cat',
         guitarMain: 'Somewhere, a cat starts playing guitar\nand begins to sing.\nA love song.',
         inter2: 'The soup bubbled late into the night,\nthe cats by the fire\npurred and purred...\nand the forest became a little village.',
-        dawnHint: 'Then the eastern sky\nbegan to glow',
         s5Eyebrow: 'AND THEN, MORNING',
         s5Heading: 'Morning came,\nand the little soup shop opened its doors',
         s5Main: 'Now the forest is yours to care for.\nCome cook soup\nwith the cats.',
@@ -2377,7 +2392,6 @@ class Component extends DCLogic {
         tapHint: 'カードをタップして猫に会おう',
         guitarMain: 'どこかで一匹の猫がギターを弾き、\n歌をうたいはじめます。\n愛の歌を。',
         inter2: '夜が更けるまでスープはことこと、\n猫たちは焚き火のそばで\nごろごろ……\n森はいつしか小さな村になりました。',
-        dawnHint: 'そして、東の空が\n明るみはじめました',
         s5Eyebrow: 'そして、朝',
         s5Heading: '朝が来て、\nちいさなスープ屋さんが店をひらきました',
         s5Main: 'これからは、あなたがこの森の飼い主。\n猫たちといっしょに\nスープを作りましょう。',
@@ -2419,7 +2433,6 @@ class Component extends DCLogic {
         tapHint: '点击卡片，认识猫咪',
         guitarMain: '不知从哪里，一只猫咪抱起吉他，\n唱起了歌。\n一首爱的歌。',
         inter2: '汤咕嘟咕嘟煮到深夜，\n猫咪们在火边\n打着呼噜。\n不知不觉，森林变成了一座小村庄。',
-        dawnHint: '然后，东方的天空\n开始泛白',
         s5Eyebrow: '然后，天亮了',
         s5Heading: '天亮了，\n小小的汤铺开门了',
         s5Main: '现在，你就是这片森林的管家。\n来和猫咪们一起\n煮汤吧。',
@@ -2461,7 +2474,6 @@ class Component extends DCLogic {
         tapHint: 'Toca una tarjeta para conocer a un gato',
         guitarMain: 'En algún lugar, un gato toma una guitarra\ny empieza a cantar.\nUna canción de amor.',
         inter2: 'La sopa hirvió hasta bien entrada la noche,\nlos gatos junto al fuego\nronroneaban...\ny el bosque se volvió una pequeña aldea.',
-        dawnHint: 'Entonces el cielo del este\nempezó a brillar',
         s5Eyebrow: 'Y ENTONCES, LA MAÑANA',
         s5Heading: 'Llegó la mañana,\ny la pequeña tienda de sopa abrió sus puertas',
         s5Main: 'Ahora el bosque está a tu cuidado.\nVen a cocinar sopa\ncon los gatos.',
@@ -2503,7 +2515,6 @@ class Component extends DCLogic {
         tapHint: 'Touchez une carte pour rencontrer un chat',
         guitarMain: 'Quelque part, un chat prend une guitare\net se met à chanter.\nUne chanson d’amour.',
         inter2: 'La soupe mijota tard dans la nuit,\nles chats près du feu\nronronnaient...\net la forêt devint un petit village.',
-        dawnHint: 'Puis le ciel de l’est\nse mit à briller',
         s5Eyebrow: 'ET PUIS, LE MATIN',
         s5Heading: 'Le matin vint,\net la petite échoppe de soupe ouvrit ses portes',
         s5Main: 'La forêt est désormais à votre charge.\nVenez cuisiner de la soupe\navec les chats.',
@@ -2545,7 +2556,6 @@ class Component extends DCLogic {
         tapHint: 'แตะการ์ดเพื่อทำความรู้จักแมว',
         guitarMain: 'ที่ไหนสักแห่ง แมวตัวหนึ่งหยิบกีตาร์ขึ้นมา\nแล้วเริ่มร้องเพลง\nเพลงรัก',
         inter2: 'ซุปเดือดไปจนดึกดื่น\nแมว ๆ ข้างกองไฟ\nครางเบา ๆ ...\nและป่าก็กลายเป็นหมู่บ้านเล็ก ๆ',
-        dawnHint: 'แล้วขอบฟ้าทางตะวันออก\nก็เริ่มสว่าง',
         s5Eyebrow: 'และแล้ว เช้าก็มาถึง',
         s5Heading: 'เช้ามาเยือน\nและร้านซุปเล็ก ๆ ก็เปิดประตู',
         s5Main: 'ตั้งแต่นี้ไป ป่าแห่งนี้อยู่ในความดูแลของคุณ\nมาทำซุป\nกับเหล่าแมวกันเถอะ',
@@ -2587,7 +2597,6 @@ class Component extends DCLogic {
         tapHint: 'Toque no cartão para conhecer o gato',
         guitarMain: 'Nalgum lugar, um gato pega numa guitarra\ne começa a cantar.\nUma canção de amor.',
         inter2: 'A sopa ferveu noite adentro,\nos gatos junto à fogueira\nronronaram...\ne a floresta virou uma pequena aldeia.',
-        dawnHint: 'E então o céu a leste\ncomeçou a clarear',
         s5Eyebrow: 'E ENTÃO, A MANHÃ',
         s5Heading: 'A manhã chegou,\ne a pequena casa de sopas abriu as portas',
         s5Main: 'Agora esta floresta está aos seus cuidados.\nVenha cozinhar sopa\ncom os gatos.',
@@ -2629,7 +2638,6 @@ class Component extends DCLogic {
         tapHint: 'Ketuk kartu untuk berkenalan dengan kucing',
         guitarMain: 'Di suatu tempat, seekor kucing memetik gitar\ndan mulai bernyanyi.\nSebuah lagu cinta.',
         inter2: 'Sup mendidih hingga larut malam,\npara kucing di dekat api unggun\nmendengkur...\ndan hutan menjadi sebuah desa kecil.',
-        dawnHint: 'Lalu langit timur\nmulai terang',
         s5Eyebrow: 'DAN KEMUDIAN, PAGI',
         s5Heading: 'Pagi tiba,\ndan kedai sup mungil itu membuka pintunya',
         s5Main: 'Kini hutan ini ada dalam asuhanmu.\nMasaklah sup\nbersama para kucing.',

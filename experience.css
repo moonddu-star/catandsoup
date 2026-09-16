@@ -8,12 +8,23 @@ html { scroll-padding-top: var(--cs-header-space); }
 .cs-hero, .cs-story-beat, .cs-scene3, .cs-interlude, .cs-cats, .cs-tall, .cs-download { box-sizing: border-box; }
 .cs-story { height: 380vh !important; }
 .cs-story-main { font-size: clamp(28px, 3vw, 42px) !important; line-height: var(--cs-lead, 1.65) !important; }
-.cs-scene3, .cs-interlude, .cs-cats, .cs-tall {
+.cs-scene3, .cs-interlude, .cs-tall {
   min-height: 90svh !important;
   padding: var(--cs-header-space) 24px 54px !important;
   gap: 24px !important;
   scroll-margin-top: 0;
 }
+.cs-cats {
+  min-height: auto !important;
+  padding: 48px 24px 28px !important;
+  gap: 12px !important;
+  overflow: hidden;
+  scroll-margin-top: 0;
+}
+.cs-visiting-cats { width: min(126px, 28vw) !important; margin-top: 10px !important; }
+.cs-guitar-scene { padding-bottom: 140px !important; }
+.cs-village .cs-rest-paw-cue { margin-top: -20px; }
+.cs-village .cs-rest-paw-cue .cs-morestar { margin: 2px auto 8px !important; }
 .cs-download { min-height: 100svh !important; padding: var(--cs-header-space) 24px 0 !important; }
 .cs-download-copy { min-height: 0 !important; }
 .cs-download .cs-storebtns { margin-top: 28px !important; }
@@ -27,7 +38,7 @@ html { scroll-padding-top: var(--cs-header-space); }
 .cs-camping { width: 285px !important; }
 .cs-restcat { width: 168px !important; }
 .cs-guitarcat { max-height: 36svh; object-fit: contain; }
-.cs-audience { max-height: 27svh; object-fit: contain; }
+.cs-audience { width: min(434px, 62vw) !important; max-height: 19svh; object-fit: contain; }
 .cs-language-panel {
   position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
   width: min(360px, calc(100vw - 32px)); box-sizing: border-box;
@@ -84,11 +95,11 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   html.cs-hamburger .cs-menu-icon-close { width: 18px; height: 18px; }
   html.cs-hamburger .cs-nav { padding-top: calc(70px + env(safe-area-inset-top, 0px)) !important; }
   .cs-hero { padding: var(--cs-header-space) 22px 40px !important; min-height: 100svh !important; }
-  .cs-story { height: 320svh !important; }
+  .cs-story { height: 360svh !important; }
   .cs-story-pin { position: sticky !important; top: 0 !important; height: 100svh !important; overflow: hidden !important; }
   .cs-story-beat {
     position: absolute !important; inset: 0 !important;
-    min-height: 100svh; padding: 72px 20px 24px !important;
+    min-height: 100svh; padding: 80px 20px 28px !important;
   }
   .cs-story-beat > div { width: 100%; max-width: 560px !important; }
   .cs-story-main { font-size: clamp(20px, 5.5vw, 25px) !important; line-height: 1.65 !important; }
@@ -101,10 +112,8 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-falling-cat { display: block !important; }
   .cs-story-clouds {
     display: block !important;
-    height: min(250px, 32svh) !important;
-    opacity: .9 !important;
-    transform: none !important;
-    background-size: auto min(250px, 32svh) !important;
+    height: min(150px, 18svh) !important;
+    background-size: auto min(150px, 18svh) !important;
     z-index: 0;
   }
   .cs-story-beat { z-index: 1; }
@@ -115,18 +124,20 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-cook { animation-name: csMobileCook; }
   .cs-chefcat { animation-name: csMobileWelcome; }
   .cs-character-resting, .cs-character-resting * { animation-play-state: running !important; }
-  .cs-scene3, .cs-interlude, .cs-cats, .cs-tall {
-    min-height: auto !important; padding: 74px 22px 40px !important; gap: 22px !important;
+  .cs-scene3, .cs-interlude, .cs-tall {
+    min-height: auto !important; padding: 64px 22px 48px !important; gap: 20px !important;
   }
+  .cs-origin { padding: 72px 22px 56px !important; }
   .cs-reveal { opacity: 1 !important; }
   .cs-reveal:not(.cs-cook) { transform: none !important; }
   .cs-cook { width: min(240px, 62vw) !important; height: min(240px, 62vw) !important; }
   .cs-camping { width: min(220px, 56vw) !important; margin-bottom: 0 !important; }
   .cs-restcat { width: min(200px, 52vw) !important; }
-  .cs-village { min-height: 100svh !important; padding: 6vh 20px !important; gap: 24px !important; }
-  .cs-village .cs-camping { width: min(240px, 68vw) !important; max-width: 68vw !important; margin-bottom: 26px !important; }
-  .cs-village .cs-restcat { left: min(80px, 8vw); width: min(90px, 22.4vw) !important; margin: -50px auto 0 !important; }
-  .cs-village .cs-rest-paw-cue { margin-top: -42px; }
+  .cs-village { min-height: auto !important; padding: 64px 20px 48px !important; gap: 20px !important; }
+  .cs-village .cs-camping { width: min(240px, 68vw) !important; max-width: 68vw !important; margin-bottom: 18px !important; }
+  .cs-village .cs-restcat { left: min(80px, 8vw); width: min(90px, 22.4vw) !important; margin: -36px auto 0 !important; }
+  .cs-village .cs-rest-paw-cue { margin-top: -10px; }
+  .cs-village .cs-rest-paw-cue .cs-morestar { margin: 0 auto 4px !important; }
   .cs-village .cs-restcat span:nth-of-type(1) { font-size: 15px !important; }
   .cs-village .cs-restcat span:nth-of-type(2) { font-size: 19px !important; }
   .cs-village .cs-restcat span:nth-of-type(3) { font-size: 22px !important; }
@@ -134,11 +145,12 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-guitarcat ~ span { font-size: 22px !important; }
   .cs-guitarcat ~ span:nth-of-type(2) { font-size: 26px !important; }
   .cs-guitarcat ~ span:nth-of-type(3) { font-size: 20px !important; }
-  .cs-audience { max-height: 24svh; }
-  .cs-cats { padding: 56px 20px 18px !important; gap: 10px !important; }
-  .cs-cats .cs-visiting-cats { margin-top: 14px !important; }
-  .cs-cats .cs-audience { width: min(270px, 67.5vw) !important; max-height: 18svh; margin-top: -7px !important; }
-  .cs-cats > .cs-reveal:last-child .cs-morestar { margin: 4px auto !important; }
+  .cs-guitar-scene { padding-bottom: 108px !important; }
+  .cs-audience { max-height: none; }
+  .cs-cats { overflow: hidden; padding: 36px 20px 24px !important; gap: 10px !important; }
+  .cs-cats .cs-visiting-cats { margin-top: 4px !important; width: min(105px, 27vw) !important; }
+  .cs-cats .cs-audience { width: min(238px, 62vw) !important; max-height: none !important; margin-top: 0 !important; }
+  .cs-cats > .cs-reveal:last-child .cs-morestar { margin: 8px auto 0 !important; }
   .cs-download { min-height: 100svh !important; padding: var(--cs-header-space) 22px 24px !important; }
   .cs-download h2 { font-size: clamp(28px, 8vw, 36px) !important; line-height: 1.4 !important; }
   .cs-s5main { font-size: 19px !important; }
@@ -170,8 +182,6 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-story-clouds {
     display: block !important;
     height: min(250px, 32svh) !important;
-    opacity: .9 !important;
-    transform: none !important;
     background-size: auto min(250px, 32svh) !important;
     z-index: 0;
   }
@@ -232,9 +242,10 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
     width: min(850px, calc(118vw + 283px)); max-width: none;
     transform: translateX(-50%); transform-origin: center bottom;
   }
-  .cs-tree-stage > .cs-trailer { padding: 273px 20px 16px !important; }
-  .cs-trailer-copy { margin-bottom: 20px !important; }
+  .cs-tree-stage { min-height: 0; }
+  .cs-tree-stage > .cs-trailer { padding: 120px 20px 16px !important; }
+  .cs-trailer-copy { margin-bottom: 16px !important; }
   .cs-trailer-title { font-size: 22px !important; line-height: 1.6 !important; }
-  .cs-bottom-download { margin-top: 0; padding: 12px 20px 36px; }
+  .cs-bottom-download { margin-top: 8px; padding: 8px 20px 32px; }
   .cs-bottom-download-actions > .cs-dlnow { width: 96px !important; }
 }
