@@ -542,7 +542,7 @@
     .cs-hero { padding-top: 64px !important; }
   }
 </style>
-<link rel="stylesheet" href="./experience.css?v=0.69">
+<link rel="stylesheet" href="./experience.css?v=0.71">
 </helmet>
 
 <div data-screen-label="홈 시안 A" style="position: relative; width: 100%; overflow-x: clip; color: #f3efe2;">
@@ -860,7 +860,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.63</small></div>
+    <div>© NEOWIZ All rights reserved. <small style="margin-left: 8px; opacity: .7;">ver 0.64</small></div>
   </footer>
 </div>
 </div></x-dc>
@@ -1665,11 +1665,11 @@ class Component extends DCLogic {
         if (storyWasActive && wasReadingFlow !== readingFlowNow) {
           const beats = [this.refs2.beat1, this.refs2.beat2, this.refs2.beat3];
           if (readingFlowNow) {
-            const index = storyStage < 0.30 ? 0 : storyStage < 0.63 ? 1 : 2;
+            const index = storyStage < 0.36 ? 0 : storyStage < 0.68 ? 1 : 2;
             beats[index]?.scrollIntoView({ block: 'center' });
           } else if (this.refs2.scene2) {
             const index = Math.max(0, beats.indexOf(this._mobileStoryBeat));
-            const progress = [0.14, 0.48, 0.80][index];
+            const progress = [0.12, 0.50, 0.84][index];
             const sectionTop = window.scrollY + this.refs2.scene2.getBoundingClientRect().top;
             window.scrollTo(0, sectionTop + progress * Math.max(1, this.refs2.scene2.offsetHeight - window.innerHeight));
           }
@@ -1679,7 +1679,7 @@ class Component extends DCLogic {
       });
     };
     this._storyTouching = false;
-    this._onStoryTouchStart = () => { this._storyTouching = true; this.cancelStorySettle(); };
+    this._onStoryTouchStart = () => { this._storyTouching = true; this._storySettling = false; this.cancelStorySettle(); };
     this._onStoryTouchEnd = () => { this._storyTouching = false; this.scheduleStorySettle(); };
     window.addEventListener('scroll', this.onScroll, { passive: true, capture: true });
     window.addEventListener('touchstart', this._onStoryTouchStart, { passive: true });
@@ -1786,6 +1786,11 @@ class Component extends DCLogic {
     return Math.max(0, Math.min(1, (h - r.top) / (span || (r.height + h))));
   }
 
+  headerSpace() {
+    const n = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--cs-header-space'));
+    return Number.isFinite(n) ? n : 96;
+  }
+
   cancelStorySettle() {
     clearTimeout(this._storySettleTimer);
     this._storySettleTimer = 0;
@@ -1793,28 +1798,124 @@ class Component extends DCLogic {
 
   scheduleStorySettle() {
     this.cancelStorySettle();
-    if (!this.compactUi() || this._storyTouching || this._storySettling) return;
-    this._storySettleTimer = setTimeout(() => this.settleStory(), 220);
+    if (this._storyTouching || this._storySettling || this.shouldReduceMotion()) return;
+    this._storySettleY = window.scrollY;
+    this._storySettleTimer = setTimeout(() => this.settleStory(), 380);
+  }
+
+  snapTo(target, maxDist) {
+    const dest = Math.max(0, target);
+    const start = window.scrollY;
+    const distance = dest - start;
+    if (Math.abs(distance) < 8 || Math.abs(distance) > maxDist) return false;
+    this._storySettling = true;
+    if (document.hidden) {
+      window.scrollTo(0, dest);
+      this._storySettling = false;
+      return true;
+    }
+    const dur = Math.min(720, 280 + Math.abs(distance) * 0.32);
+    const t0 = performance.now();
+    const step = (now) => {
+      if (this._storyTouching || !this._storySettling) {
+        this._storySettling = false;
+        return;
+      }
+      const t = Math.min(1, (now - t0) / dur);
+      const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      window.scrollTo(0, start + distance * e);
+      if (t < 1) requestAnimationFrame(step);
+      else this._storySettling = false;
+    };
+    requestAnimationFrame(step);
+    return true;
+  }
+
+  snapStoryBeats(story, rect, h) {
+    const travel = Math.max(1, story.offsetHeight - h);
+    const progress = Math.max(0, Math.min(1, -rect.top / travel));
+    const stops = [0.12, 0.50, 0.84];
+    const nearest = stops.reduce((best, value) => Math.abs(value - progress) < Math.abs(best - progress) ? value : best, stops[0]);
+    const target = window.scrollY + rect.top + nearest * travel;
+    return this.snapTo(target, travel * 0.22);
+  }
+
+  isPawCue(el) {
+    if (!el) return false;
+    if (el.classList.contains('cs-rest-paw-cue')) return true;
+    return Boolean(el.querySelector(':scope > .cs-morestar')) && !el.querySelector('img, p, .cs-story-main, .cs-story-eyebrow');
+  }
+
+  sceneContentBox(el) {
+    const section = el.getBoundingClientRect();
+    let top = Infinity;
+    let bottom = -Infinity;
+    for (const child of el.children) {
+      if (this.isPawCue(child)) continue;
+      if (child.offsetHeight < 8) continue;
+      top = Math.min(top, child.offsetTop);
+      bottom = Math.max(bottom, child.offsetTop + child.offsetHeight);
+    }
+    if (!Number.isFinite(top)) {
+      return { top: section.top, bottom: section.bottom, height: section.height };
+    }
+    return {
+      top: section.top + top,
+      bottom: section.top + bottom,
+      height: bottom - top,
+    };
+  }
+
+  centerContentDest(box, h) {
+    const header = this.headerSpace();
+    const available = Math.max(1, h - header);
+    const dest = box.height >= available - 8
+      ? window.scrollY + box.top - header
+      : window.scrollY + box.top - header - (available - box.height) / 2;
+    const max = Math.max(0, (document.scrollingElement?.scrollHeight || document.body.scrollHeight) - h);
+    return Math.max(0, Math.min(max, dest));
+  }
+
+  snapNightScenes(h) {
+    const sections = [
+      this.refs2.scene3,
+      document.querySelector('.cs-interlude'),
+      document.querySelector('.cs-cats'),
+      this.refs2.guitarSection2,
+      this.refs2.guitarSection,
+    ].filter(Boolean);
+    if (!sections.length) return false;
+    const header = this.headerSpace();
+    const mid = header + (h - header) * 0.5;
+    let best = null;
+    for (const el of sections) {
+      const box = this.sceneContentBox(el);
+      const overlap = Math.min(box.bottom, h) - Math.max(box.top, header);
+      if (overlap < h * 0.22) continue;
+      const dist = Math.abs(box.top + box.height / 2 - mid);
+      if (!best || dist < best.dist) best = { el, box, dist };
+    }
+    if (!best) return false;
+    return this.snapTo(this.centerContentDest(best.box, h), h * 0.42);
   }
 
   settleStory() {
-    const story = this.refs2.scene2;
-    if (!story || this._storyTouching || this._storySettling) return;
+    if (this._storyTouching || this.shouldReduceMotion()) return;
+    if (Math.abs(window.scrollY - (this._storySettleY ?? window.scrollY)) > 3) {
+      this._storySettleY = window.scrollY;
+      this._storySettleTimer = setTimeout(() => this.settleStory(), 160);
+      return;
+    }
     const h = window.innerHeight;
-    const rect = story.getBoundingClientRect();
-    const travel = Math.max(1, story.offsetHeight - h);
-    const progress = Math.max(0, Math.min(1, -rect.top / travel));
-    if (rect.bottom <= h * 0.55 || rect.top >= h * 0.45) return;
-    const stops = [0.14, 0.495, 0.855];
-    const nearest = stops.reduce((best, value) => Math.abs(value - progress) < Math.abs(best - progress) ? value : best, stops[0]);
-    const storyTop = window.scrollY + rect.top;
-    const target = storyTop + nearest * travel;
-    const distance = Math.abs(target - window.scrollY);
-    if (distance < 8 || distance > h * 0.22) return;
-    this._storySettling = true;
-    window.scrollTo({ top: target, behavior: 'smooth' });
-    clearTimeout(this._storySettleDone);
-    this._storySettleDone = setTimeout(() => { this._storySettling = false; }, 520);
+    const story = this.refs2.scene2;
+    if (story) {
+      const rect = story.getBoundingClientRect();
+      if (rect.top < h * 0.42 && rect.bottom > h * 0.58) {
+        this.snapStoryBeats(story, rect, h);
+        return;
+      }
+    }
+    this.snapNightScenes(h);
   }
 
   updateScroll() {
@@ -1835,7 +1936,7 @@ class Component extends DCLogic {
           return !best || distance < best.distance ? { el, distance } : best;
         }, null)?.el;
         const index = Math.max(0, beats.indexOf(this._mobileStoryBeat));
-        this._storyStage = [0.14, 0.48, 0.80][index];
+        this._storyStage = [0.12, 0.50, 0.84][index];
       }
     }
     if (readingFlow) {
@@ -1871,7 +1972,7 @@ class Component extends DCLogic {
       const yTop = pad + head;
       const yBot = Math.max(yTop + 1, h - ch - pad);
       // she only starts her descent after beat2 (room + motorcycle) has left
-      const pf = Math.max(0, Math.min(1, (p - 0.66) / 0.24));
+      const pf = Math.max(0, Math.min(1, (p - 0.68) / 0.24));
       const fall = pf * pf * (3 - 2 * pf);
       const y = yTop + fall * (yBot - yTop);
       // fall straight down along the right edge, clear of the centered copy
@@ -1902,12 +2003,12 @@ class Component extends DCLogic {
         const travel = h * (this.compactUi() ? 0.42 : 0.12);
         el.style.transform = 'translateY(' + ((0.5 - t) * travel) + 'px)';
       };
-      win(this.refs2.beat1, -0.08, 0.36);
-      win(this.refs2.beat2, 0.30, 0.69);
-      win(this.refs2.beat3, 0.63, 1.08);
+      win(this.refs2.beat1, -0.08, 0.32);
+      win(this.refs2.beat2, 0.36, 0.64);
+      win(this.refs2.beat3, 0.68, 1.08);
       // Follow the shorter chapter pace rather than waiting for a long timer.
       if (this.refs2.kikiStar) {
-        const arrival = Math.max(0, Math.min(1, (p - 0.30) / 0.10));
+        const arrival = Math.max(0, Math.min(1, (p - 0.36) / 0.10));
         this.refs2.kikiStar.style.transition = 'none';
         this.refs2.kikiStar.style.opacity = String(arrival);
         const kikiTravel = this.compactUi() ? Math.min(180, window.innerWidth * 0.46) : 60;
@@ -1934,7 +2035,7 @@ class Component extends DCLogic {
         this.refs2.clouds.style.transform = 'none';
       } else {
         const p = this._storyStage ?? 0;
-        const raw = Math.max(0, Math.min(1, (p - 0.63) / 0.10));
+        const raw = Math.max(0, Math.min(1, (p - 0.68) / 0.10));
         const o = raw * raw * (3 - 2 * raw);
         const exit = Math.max(0, Math.min(1, (h - storyRect.bottom) / (h * 0.40)));
         const remaining = 1 - exit * exit * (3 - 2 * exit);

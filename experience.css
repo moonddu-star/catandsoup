@@ -6,30 +6,30 @@ input, textarea, [contenteditable="true"] { cursor: text; -webkit-user-select: t
 :root { --cs-header-space: 118px; }
 html { scroll-padding-top: var(--cs-header-space); }
 .cs-hero, .cs-story-beat, .cs-scene3, .cs-interlude, .cs-cats, .cs-tall, .cs-download { box-sizing: border-box; }
-.cs-story { height: 380vh !important; }
+.cs-story { height: 420vh !important; }
 .cs-story-main { font-size: clamp(28px, 3vw, 42px) !important; line-height: var(--cs-lead, 1.65) !important; }
 .cs-scene3, .cs-interlude, .cs-tall {
-  min-height: 90svh !important;
-  padding: var(--cs-header-space) 24px 54px !important;
-  gap: 24px !important;
+  min-height: 100svh !important;
+  padding: calc(var(--cs-header-space) + 20px) 24px 88px !important;
+  gap: 40px !important;
   scroll-margin-top: 0;
 }
 .cs-cats {
-  min-height: auto !important;
-  padding: 48px 24px 28px !important;
-  gap: 12px !important;
+  min-height: 100svh !important;
+  padding: 96px 24px 80px !important;
+  gap: 28px !important;
   overflow: hidden;
   scroll-margin-top: 0;
 }
-.cs-visiting-cats { width: min(126px, 28vw) !important; margin-top: 10px !important; }
-.cs-guitar-scene { padding-bottom: 140px !important; }
+.cs-visiting-cats { width: min(126px, 28vw) !important; margin-top: 18px !important; }
+.cs-guitar-scene { padding-bottom: 168px !important; }
 .cs-village .cs-rest-paw-cue { margin-top: -20px; }
 .cs-village .cs-rest-paw-cue .cs-morestar { margin: 2px auto 8px !important; }
 .cs-download { min-height: 100svh !important; padding: var(--cs-header-space) 24px 0 !important; }
 .cs-download-copy { min-height: 0 !important; }
 .cs-download .cs-storebtns { margin-top: 28px !important; }
 .cs-morestar { margin: 16px auto 12px !important; }
-.cs-story-beat { padding: var(--cs-header-space) 24px 42px !important; }
+.cs-story-beat { padding: var(--cs-header-space) 24px 0 !important; }
 .cs-story-beat .cs-spark { width: min(300px, 62vw) !important; }
 .cs-story-beat .cs-room { width: min(260px, 40vw) !important; }
 .cs-story-beat .cs-kiki { width: min(145px, 25vw) !important; }
@@ -95,11 +95,11 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   html.cs-hamburger .cs-menu-icon-close { width: 18px; height: 18px; }
   html.cs-hamburger .cs-nav { padding-top: calc(70px + env(safe-area-inset-top, 0px)) !important; }
   .cs-hero { padding: var(--cs-header-space) 22px 40px !important; min-height: 100svh !important; }
-  .cs-story { height: 360svh !important; }
+  .cs-story { height: 400svh !important; }
   .cs-story-pin { position: sticky !important; top: 0 !important; height: 100svh !important; overflow: hidden !important; }
   .cs-story-beat {
     position: absolute !important; inset: 0 !important;
-    min-height: 100svh; padding: 80px 20px 28px !important;
+    min-height: 100svh; padding: var(--cs-header-space) 20px 0 !important;
   }
   .cs-story-beat > div { width: 100%; max-width: 560px !important; }
   .cs-story-main { font-size: clamp(20px, 5.5vw, 25px) !important; line-height: 1.65 !important; }
@@ -125,7 +125,7 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-chefcat { animation-name: csMobileWelcome; }
   .cs-character-resting, .cs-character-resting * { animation-play-state: running !important; }
   .cs-scene3, .cs-interlude, .cs-tall {
-    min-height: auto !important; padding: 64px 22px 48px !important; gap: 20px !important;
+    min-height: 100svh !important; padding: 104px 22px 88px !important; gap: 36px !important;
   }
   .cs-origin { padding: 72px 22px 56px !important; }
   .cs-reveal { opacity: 1 !important; }
@@ -133,7 +133,7 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-cook { width: min(240px, 62vw) !important; height: min(240px, 62vw) !important; }
   .cs-camping { width: min(220px, 56vw) !important; margin-bottom: 0 !important; }
   .cs-restcat { width: min(200px, 52vw) !important; }
-  .cs-village { min-height: auto !important; padding: 64px 20px 48px !important; gap: 20px !important; }
+  .cs-village { min-height: 100svh !important; padding: 104px 20px 88px !important; gap: 28px !important; }
   .cs-village .cs-camping { width: min(240px, 68vw) !important; max-width: 68vw !important; margin-bottom: 18px !important; }
   .cs-village .cs-restcat { left: min(80px, 8vw); width: min(90px, 22.4vw) !important; margin: -36px auto 0 !important; }
   .cs-village .cs-rest-paw-cue { margin-top: -10px; }
@@ -145,11 +145,11 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-guitarcat ~ span { font-size: 22px !important; }
   .cs-guitarcat ~ span:nth-of-type(2) { font-size: 26px !important; }
   .cs-guitarcat ~ span:nth-of-type(3) { font-size: 20px !important; }
-  .cs-guitar-scene { padding-bottom: 108px !important; }
+  .cs-guitar-scene { padding-bottom: 148px !important; }
   .cs-audience { max-height: none; }
-  .cs-cats { overflow: hidden; padding: 36px 20px 24px !important; gap: 10px !important; }
-  .cs-cats .cs-visiting-cats { margin-top: 4px !important; width: min(105px, 27vw) !important; }
-  .cs-cats .cs-audience { width: min(238px, 62vw) !important; max-height: none !important; margin-top: 0 !important; }
+  .cs-cats { overflow: hidden; min-height: 100svh !important; padding: 88px 20px 72px !important; gap: 22px !important; }
+  .cs-cats .cs-visiting-cats { margin-top: 16px !important; width: min(105px, 27vw) !important; }
+  .cs-cats .cs-audience { width: min(238px, 62vw) !important; max-height: none !important; margin-top: 10px !important; }
   .cs-cats > .cs-reveal:last-child .cs-morestar { margin: 8px auto 0 !important; }
   .cs-download { min-height: 100svh !important; padding: var(--cs-header-space) 22px 24px !important; }
   .cs-download h2 { font-size: clamp(28px, 8vw, 36px) !important; line-height: 1.4 !important; }
