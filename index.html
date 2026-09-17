@@ -860,7 +860,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.68</small></div>
+    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.69</small></div>
   </footer>
   <p class="cs-build-ver" aria-hidden="true"></p>
 </div>
@@ -1860,6 +1860,14 @@ class Component extends DCLogic {
     });
   }
 
+  // phones read the first two beats sooner and hand over at a shared boundary,
+  // so one line is always lit; the descent keeps the longest window
+  storyBeats() {
+    return this.compactUi()
+      ? { b1: [-0.02, 0.30], b2: [0.30, 0.58], b3: [0.58, 1.06], hw: 0.075, fall: 0.40 }
+      : { b1: [-0.08, 0.32], b2: [0.36, 0.64], b3: [0.68, 1.08], fall: 0.24 };
+  }
+
   headerSpace() {
     const n = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--cs-header-space'));
     return Number.isFinite(n) ? n : 96;
@@ -2072,13 +2080,10 @@ class Component extends DCLogic {
       head *= rigScale;
       const yTop = pad + head;
       const yBot = Math.max(yTop + 1, h - ch - pad);
-      // phones finish the first two beats sooner; the descent still needs travel
       const phone = this.compactUi();
-      const b1 = phone ? [-0.06, 0.28] : [-0.08, 0.32];
-      const b2 = phone ? [0.24, 0.52] : [0.36, 0.64];
-      const b3 = phone ? [0.48, 1.08] : [0.68, 1.08];
+      const { b1, b2, b3, hw, fall: fallSpan } = this.storyBeats();
       // she only starts her descent after beat2 (room + motorcycle) has left
-      const pf = Math.max(0, Math.min(1, (p - b3[0]) / (phone ? 0.40 : 0.24)));
+      const pf = Math.max(0, Math.min(1, (p - b3[0]) / fallSpan));
       const fall = pf * pf * (3 - 2 * pf);
       let y = yTop + fall * (yBot - yTop);
       // fall straight down along the right edge, clear of the centered copy
@@ -2089,23 +2094,31 @@ class Component extends DCLogic {
       const fadeOut = Math.min(1, Math.max(0, (1 - pf) / 0.14));
       cf.style.opacity = String(Math.min(fadeIn, fadeOut));
       // each beat rides the scroll: enter from below, leave upward
+      const smooth = (u) => { const v = Math.max(0, Math.min(1, u)); return v * v * (3 - 2 * v); };
       const win = (el, a, b) => {
         if (!el) return;
-        const fade = Math.min(0.06, (b - a) * 0.28);
         let o = 0;
-        if (p > a && p < b) {
-          const inn = Math.min(1, (p - a) / fade);
-          const out = Math.min(1, (b - p) / fade);
-          const t = Math.min(inn, out);
-          o = t * t * (3 - 2 * t);
+        if (phone) {
+          // one beat rises exactly as the other sets, centred on their shared edge
+          const rise = a <= 0 ? 1 : smooth((p - a) / (2 * hw) + 0.5);
+          const set = b >= 1 ? 1 : 1 - smooth((p - b) / (2 * hw) + 0.5);
+          o = rise * set;
+        } else {
+          const fade = Math.min(0.06, (b - a) * 0.28);
+          if (p > a && p < b) {
+            const inn = Math.min(1, (p - a) / fade);
+            const out = Math.min(1, (b - p) / fade);
+            o = smooth(Math.min(inn, out));
+          }
         }
         el.style.opacity = String(o);
         el.style.pointerEvents = o > 0.08 ? 'auto' : 'none';
         el.inert = o <= 0.08;
         const span = Math.max(0.001, b - a);
         const t = Math.max(0, Math.min(1, (p - a) / span));
-        const travel = phone ? 0 : h * 0.12;
-        el.style.transform = travel ? 'translateY(' + ((0.5 - t) * travel) + 'px)' : 'none';
+        // the copy tracks the finger, or a pinned beat reads as a stalled scroll
+        const travel = h * (phone ? 0.23 : 0.12);
+        el.style.transform = 'translateY(' + ((0.5 - t) * travel) + 'px)';
       };
       win(this.refs2.beat1, b1[0], b1[1]);
       win(this.refs2.beat2, b2[0], b2[1]);
@@ -2157,7 +2170,7 @@ class Component extends DCLogic {
         this.refs2.clouds.style.transform = 'none';
       } else {
         const p = this._storyStage ?? 0;
-        const raw = Math.max(0, Math.min(1, (p - (this.compactUi() ? 0.48 : 0.68)) / 0.10));
+        const raw = Math.max(0, Math.min(1, (p - this.storyBeats().b3[0]) / 0.10));
         const o = raw * raw * (3 - 2 * raw);
         const exit = Math.max(0, Math.min(1, (h - storyRect.bottom) / (h * 0.40)));
         const remaining = 1 - exit * exit * (3 - 2 * exit);
