@@ -112,7 +112,7 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   html.cs-hamburger .cs-menu-icon-close { width: 18px; height: 18px; }
   html.cs-hamburger .cs-nav { padding-top: calc(70px + env(safe-area-inset-top, 0px)) !important; }
   .cs-hero { padding: var(--cs-header-space) 22px 40px !important; min-height: 100svh !important; }
-  .cs-story { height: 400svh !important; }
+  .cs-story { height: 280svh !important; }
   .cs-story-pin { position: sticky !important; top: 0 !important; height: 100svh !important; overflow: hidden !important; }
   .cs-story-beat {
     position: absolute !important; inset: 0 !important;

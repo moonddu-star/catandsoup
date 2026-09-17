@@ -450,7 +450,7 @@
   html.cs-hamburger .cs-social-icon { width: 26px; height: 26px; }
   /* phones, plus short landscape (iPhone 14 landscape is 844×390) */
   @media (max-width: 720px), (max-height: 540px) and (hover: none) {
-    .cs-story { height: 480vh !important; }
+    .cs-story { height: 280svh !important; }
     .cs-story-main { font-size: 26px !important; line-height: 1.8 !important; }
     .cs-story-eyebrow { font-size: 13px !important; letter-spacing: 3px !important; }
     .cs-story-sub { font-size: 13px !important; }
@@ -508,7 +508,7 @@
     .cs-picklabel { width: min(320px, 86vw) !important; font-size: 15px !important; letter-spacing: 2px !important; }
   }
   @media (max-width: 480px) {
-    .cs-story { height: 420vh !important; }
+    .cs-story { height: 280svh !important; }
     .cs-story-main { font-size: 22px !important; }
     .cs-origin-quote { font-size: 22px !important; }
     .cs-cook { width: min(228px, 79vw) !important; height: min(228px, 79vw) !important; }
@@ -542,7 +542,7 @@
     .cs-hero { padding-top: 64px !important; }
   }
 </style>
-<link rel="stylesheet" href="./experience.css?v=0.76">
+<link rel="stylesheet" href="./experience.css?v=0.77">
 </helmet>
 
 <div data-screen-label="홈 시안 A" style="position: relative; width: 100%; color: #f3efe2;">
@@ -860,7 +860,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.67</small></div>
+    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.68</small></div>
   </footer>
   <p class="cs-build-ver" aria-hidden="true"></p>
 </div>
@@ -1665,9 +1665,9 @@ class Component extends DCLogic {
     this.updateNavMode();
     const density = Math.min(1, this.props.particleDensity ?? 1);
     const mobileSky = this.compactUi();
-    const skyMul = mobileSky ? 0.28 : 1;
+    const skyMul = mobileSky ? 0.46 : 1;
     for (let i = 0; i < Math.round(90 * density * skyMul); i++) {
-      this.stars.push({ x: Math.random(), y: Math.random() * 0.9, r: Math.random() * (mobileSky ? 1.1 : 1.6) + 0.35, p: Math.random() * Math.PI * 2, s: 0.5 + Math.random() * 1.5 });
+      this.stars.push({ x: Math.random(), y: Math.random() * 0.9, r: Math.random() * (mobileSky ? 1.7 : 1.6) + (mobileSky ? 0.7 : 0.35), p: Math.random() * Math.PI * 2, s: 0.5 + Math.random() * 1.5 });
     }
     for (let i = 0; i < Math.round(14 * density * (mobileSky ? 0.4 : 1)); i++) {
       this.fireflies.push({ x: Math.random(), y: 0.45 + Math.random() * 0.5, vx: (Math.random() - .5) * .0006, vy: (Math.random() - .5) * .0004, p: Math.random() * Math.PI * 2 });
@@ -2072,8 +2072,13 @@ class Component extends DCLogic {
       head *= rigScale;
       const yTop = pad + head;
       const yBot = Math.max(yTop + 1, h - ch - pad);
+      // phones finish the first two beats sooner; the descent still needs travel
+      const phone = this.compactUi();
+      const b1 = phone ? [-0.06, 0.28] : [-0.08, 0.32];
+      const b2 = phone ? [0.24, 0.52] : [0.36, 0.64];
+      const b3 = phone ? [0.48, 1.08] : [0.68, 1.08];
       // she only starts her descent after beat2 (room + motorcycle) has left
-      const pf = Math.max(0, Math.min(1, (p - 0.68) / 0.24));
+      const pf = Math.max(0, Math.min(1, (p - b3[0]) / (phone ? 0.40 : 0.24)));
       const fall = pf * pf * (3 - 2 * pf);
       let y = yTop + fall * (yBot - yTop);
       // fall straight down along the right edge, clear of the centered copy
@@ -2099,12 +2104,12 @@ class Component extends DCLogic {
         el.inert = o <= 0.08;
         const span = Math.max(0.001, b - a);
         const t = Math.max(0, Math.min(1, (p - a) / span));
-        const travel = h * (this.compactUi() ? 0.16 : 0.12);
-        el.style.transform = 'translateY(' + ((0.5 - t) * travel) + 'px)';
+        const travel = phone ? 0 : h * 0.12;
+        el.style.transform = travel ? 'translateY(' + ((0.5 - t) * travel) + 'px)' : 'none';
       };
-      win(this.refs2.beat1, -0.08, this.compactUi() ? 0.36 : 0.32);
-      win(this.refs2.beat2, this.compactUi() ? 0.32 : 0.36, this.compactUi() ? 0.68 : 0.64);
-      win(this.refs2.beat3, this.compactUi() ? 0.64 : 0.68, 1.08);
+      win(this.refs2.beat1, b1[0], b1[1]);
+      win(this.refs2.beat2, b2[0], b2[1]);
+      win(this.refs2.beat3, b3[0], b3[1]);
       const placeCat = (yy) => {
         cf.style.transform = 'translate(' + x + 'px,' + yy + 'px) rotate(' + rot + 'deg) scale(' + rigScale + ')';
       };
@@ -2125,7 +2130,7 @@ class Component extends DCLogic {
       }
       // Follow the shorter chapter pace rather than waiting for a long timer.
       if (this.refs2.kikiStar) {
-        const arrival = Math.max(0, Math.min(1, (p - 0.36) / 0.10));
+        const arrival = Math.max(0, Math.min(1, (p - b2[0]) / 0.10));
         this.refs2.kikiStar.style.transition = 'none';
         this.refs2.kikiStar.style.opacity = String(arrival);
         const kikiTravel = this.compactUi() ? Math.min(180, window.innerWidth * 0.46) : 60;
@@ -2152,7 +2157,7 @@ class Component extends DCLogic {
         this.refs2.clouds.style.transform = 'none';
       } else {
         const p = this._storyStage ?? 0;
-        const raw = Math.max(0, Math.min(1, (p - 0.68) / 0.10));
+        const raw = Math.max(0, Math.min(1, (p - (this.compactUi() ? 0.48 : 0.68)) / 0.10));
         const o = raw * raw * (3 - 2 * raw);
         const exit = Math.max(0, Math.min(1, (h - storyRect.bottom) / (h * 0.40)));
         const remaining = 1 - exit * exit * (3 - 2 * exit);
@@ -2227,7 +2232,7 @@ class Component extends DCLogic {
     const mx = (this.mx || -9999) * dpr, my = (this.my || -9999) * dpr;
     const px = heroVisible ? ((this.mx || window.innerWidth / 2) / window.innerWidth - 0.5) : 0;
     const py = heroVisible ? ((this.my || window.innerHeight / 2) / window.innerHeight - 0.5) : 0;
-    const mobileDim = this.compactUi() ? 0.4 : 1;
+    const mobileDim = this.compactUi() ? 0.82 : 1;
     const nearR2 = (170 * dpr) * (170 * dpr);
     if (night > 0.02) {
       ctx.fillStyle = '#e9edff';
