@@ -194,6 +194,13 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   html.cs-hamburger .cs-logo-top { width: 29px !important; height: 29px !important; }
   html.cs-hamburger .cs-nav { padding-top: calc(52px + env(safe-area-inset-top, 0px)) !important; }
   .cs-story-beat { min-height: 100svh; }
+  .cs-story-main { font-size: 19px !important; line-height: 1.6 !important; }
+  .cs-story-eyebrow { font-size: 12px !important; margin-bottom: 6px !important; }
+  .cs-story-beat .cs-spark { width: auto !important; height: 17svh; margin-top: 8px !important; }
+  .cs-story-beat .cs-roomrow { margin-top: 8px !important; }
+  .cs-story-beat .cs-room { width: auto !important; height: 23svh; }
+  .cs-story-beat .cs-kiki { width: auto !important; height: 19svh; }
+  .cs-story-beat .cs-morestar { width: 26px; height: 26px; margin: 8px auto 0 !important; }
 }
 @media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
