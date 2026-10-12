@@ -865,7 +865,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.74</small></div>
+    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.75</small></div>
   </footer>
   <p class="cs-build-ver" aria-hidden="true"></p>
 </div>
@@ -1797,12 +1797,6 @@ class Component extends DCLogic {
     };
 
 
-    this.shootTimer = setInterval(() => {
-      if (document.hidden || this.shouldReduceMotion()) return;
-      if (Math.random() < 0.6) {
-        this.shooters.push({ x: Math.random() * 0.8 + 0.1, y: Math.random() * 0.35, life: 0, dx: 0.28 + Math.random() * 0.15, dy: 0.12 + Math.random() * 0.08 });
-      }
-    }, 1900);
     this._onMeowClick = (e) => {
       const el = e.target && e.target.closest && e.target.closest('.cs-meowcat');
       if (!el) return;
@@ -1827,7 +1821,6 @@ class Component extends DCLogic {
     if (this._onVis) document.removeEventListener('visibilitychange', this._onVis);
     if (this.ytPlayer && this.ytPlayer.destroy) try { this.ytPlayer.destroy(); } catch (e) {}
     clearInterval(this.steamTimer);
-    clearInterval(this.shootTimer);
     this.cancelStorySettle();
     clearTimeout(this._buildVerTimer);
     clearTimeout(this._buildVerGone);
@@ -2286,10 +2279,21 @@ class Component extends DCLogic {
         const rr = s.r * dpr * boost;
         ctx.fillRect(sx - rr, sy - rr, rr * 2, rr * 2);
       }
+      // spawn and age on the frame clock: a stalled or throttled loop must not
+      // come back with a backlog of meteors falling all at once
+      const dt = Math.max(0, Math.min(0.1, t - (this._shootLast ?? t)));
+      this._shootLast = t;
+      this._shootWait = (this._shootWait ?? 0) + dt;
+      if (this._shootWait >= 1.9) {
+        this._shootWait = 0;
+        if (this.shooters.length < 2 && Math.random() < 0.6) {
+          this.shooters.push({ x: Math.random() * 0.8 + 0.1, y: Math.random() * 0.35, life: 0, dx: 0.28 + Math.random() * 0.15, dy: 0.12 + Math.random() * 0.08 });
+        }
+      }
       for (let i = this.shooters.length - 1; i >= 0; i--) {
         const sh = this.shooters[i];
         const maxLife = 1.25 * 1.5;
-        sh.life += 0.04;
+        sh.life += dt * 1.2;
         if (sh.life > maxLife) { this.shooters.splice(i, 1); continue; }
         const x = (sh.x + sh.dx * sh.life) * w, y = (sh.y + sh.dy * sh.life) * h;
         // A tapered white trail follows the flight direction at every aspect ratio.
