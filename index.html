@@ -644,6 +644,7 @@
     <div class="cs-menu-scrim" ref="{{ menuScrimRef }}" aria-hidden="true"></div>
     <div class="cs-nav" id="cs-nav" ref="{{ navRef }}" style="display: flex; align-items: center; gap: var(--cs-nav-gap, 18px); font-size: var(--cs-nav-size, 20px); font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: var(--cs-weight, 700); white-space: nowrap; word-break: var(--cs-wb, keep-all); overflow-wrap: break-word; flex-wrap: wrap; justify-content: flex-end;">
       <a href="#story" ref="{{ storyNavRef }}" onClick="{{ goStory }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navStory }}</a>
+      <a href="https://flux.ai.pmang.cloud/VVkKjxaGZE" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navDiner }}<span class="cs-extlink" aria-hidden="true"></span></a>
       <a href="https://www.youtube.com/c/kittypawpaw" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navUpdate }}<span class="cs-extlink" aria-hidden="true"></span></a>
       <a href="https://redeem.catsnsoup.com/" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navCoupon }}<span class="cs-extlink" aria-hidden="true"></span></a>
       <a href="https://apps.apple.com/us/app/cats-soup-magic-recipe/id6446347021" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="text-shadow: 0 1px 6px rgba(0,0,0,.4); white-space: nowrap;">{{ t.navRecipe }}<span class="cs-extlink" aria-hidden="true"></span></a>
@@ -864,7 +865,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.71</small></div>
+    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.72</small></div>
   </footer>
   <p class="cs-build-ver" aria-hidden="true"></p>
 </div>
@@ -2572,7 +2573,7 @@ class Component extends DCLogic {
         s5Heading: '아침이 밝고,\n작은 스프 가게가 문을 열었어요',
         s5Main: '이제, 이 숲의 집사는 당신이에요.\n고양이들과 함께\n스프를 끓여 보세요.',
         lblBreed: '품종', lblBirthday: '생일', lblFood: '좋아하는 음식',
-        navStory: '이야기', navUpdate: '업데이트', navCoupon: '쿠폰 코드', navRecipe: '고양이와 스프 : 마법의 레시피', navSocial: '소셜', navCats: '고양이들', navDownload: '다운로드', navMenu: '메뉴', navClose: '닫기',
+        navStory: '이야기', navDiner: '별빛 식당', navUpdate: '업데이트', navCoupon: '쿠폰 코드', navRecipe: '고양이와 스프 : 마법의 레시피', navSocial: '소셜', navCats: '고양이들', navDownload: '다운로드', navMenu: '메뉴', navClose: '닫기',
         btnGoogle: 'Google Play에서 받기', btnApple: 'App Store에서 받기', btnCoupon: '쿠폰 코드 입력',
         bgmOn: '배경음 켜기', bgmOff: '배경음 끄기',
         ftTerms: '이용약관', ftPrivacy: '개인정보처리방침',
@@ -2613,7 +2614,7 @@ class Component extends DCLogic {
         s5Heading: 'Morning came,\nand the little soup shop opened its doors',
         s5Main: 'Now the forest is yours to care for.\nCome cook soup\nwith the cats.',
         lblBreed: 'Breed', lblBirthday: 'Birthday', lblFood: 'Favorite Food',
-        navStory: 'Story', navUpdate: 'Update', navCoupon: 'Coupon Code', navRecipe: 'Magic Recipe', navSocial: 'Social', navCats: 'Cats', navDownload: 'Download', navMenu: 'Menu', navClose: 'Close',
+        navStory: 'Story', navDiner: 'Starlight Diner', navUpdate: 'Update', navCoupon: 'Coupon Code', navRecipe: 'Magic Recipe', navSocial: 'Social', navCats: 'Cats', navDownload: 'Download', navMenu: 'Menu', navClose: 'Close',
         btnGoogle: 'Get it on Google Play', btnApple: 'Download on the App Store', btnCoupon: 'Enter Coupon Code',
         bgmOn: 'Music On', bgmOff: 'Music Off',
         ftTerms: 'Terms of Service', ftPrivacy: 'Privacy Policy',
@@ -2654,7 +2655,7 @@ class Component extends DCLogic {
         s5Heading: '朝が来て、\nちいさなスープ屋さんが店をひらきました',
         s5Main: 'これからは、あなたがこの森の飼い主。\n猫たちといっしょに\nスープを作りましょう。',
         lblBreed: '猫種', lblBirthday: '誕生日', lblFood: '好きな食べ物',
-        navStory: '物語', navUpdate: 'アップデート', navCoupon: 'クーポンコード', navRecipe: '魔法のレシピ', navSocial: 'ソーシャル', navCats: '猫たち', navDownload: 'ダウンロード', navMenu: 'メニュー', navClose: '閉じる',
+        navStory: '物語', navDiner: '星あかり食堂', navUpdate: 'アップデート', navCoupon: 'クーポンコード', navRecipe: '魔法のレシピ', navSocial: 'ソーシャル', navCats: '猫たち', navDownload: 'ダウンロード', navMenu: 'メニュー', navClose: '閉じる',
         btnGoogle: 'Google Playで手に入れる', btnApple: 'App Storeでダウンロード', btnCoupon: 'クーポンコード入力',
         bgmOn: '背景音楽 オン', bgmOff: '背景音楽 オフ',
         ftTerms: '利用規約', ftPrivacy: 'プライバシーポリシー',
@@ -2695,7 +2696,7 @@ class Component extends DCLogic {
         s5Heading: '天亮了，\n小小的汤铺开门了',
         s5Main: '现在，你就是这片森林的管家。\n来和猫咪们一起\n煮汤吧。',
         lblBreed: '品种', lblBirthday: '生日', lblFood: '喜欢的食物',
-        navStory: '故事', navUpdate: '更新', navCoupon: '优惠码', navRecipe: '魔法食谱', navSocial: '社交', navCats: '猫咪们', navDownload: '下载', navMenu: '菜单', navClose: '关闭',
+        navStory: '故事', navDiner: '星光食堂', navUpdate: '更新', navCoupon: '优惠码', navRecipe: '魔法食谱', navSocial: '社交', navCats: '猫咪们', navDownload: '下载', navMenu: '菜单', navClose: '关闭',
         btnGoogle: '在 Google Play 下载', btnApple: '在 App Store 下载', btnCoupon: '输入优惠码',
         bgmOn: '开启音乐', bgmOff: '关闭音乐',
         ftTerms: '服务条款', ftPrivacy: '隐私政策',
@@ -2736,7 +2737,7 @@ class Component extends DCLogic {
         s5Heading: 'Llegó la mañana,\ny la pequeña tienda de sopa abrió sus puertas',
         s5Main: 'Ahora el bosque está a tu cuidado.\nVen a cocinar sopa\ncon los gatos.',
         lblBreed: 'Raza', lblBirthday: 'Cumpleaños', lblFood: 'Comida favorita',
-        navStory: 'Historia', navUpdate: 'Novedades', navCoupon: 'Código de cupón', navRecipe: 'Receta mágica', navSocial: 'Social', navCats: 'Gatos', navDownload: 'Descargar', navMenu: 'Menú', navClose: 'Cerrar',
+        navStory: 'Historia', navDiner: 'Comedor Estelar', navUpdate: 'Novedades', navCoupon: 'Código de cupón', navRecipe: 'Receta mágica', navSocial: 'Social', navCats: 'Gatos', navDownload: 'Descargar', navMenu: 'Menú', navClose: 'Cerrar',
         btnGoogle: 'Consíguelo en Google Play', btnApple: 'Descárgalo en el App Store', btnCoupon: 'Introducir código',
         bgmOn: 'Música activada', bgmOff: 'Música desactivada',
         ftTerms: 'Términos del servicio', ftPrivacy: 'Política de privacidad',
@@ -2777,7 +2778,7 @@ class Component extends DCLogic {
         s5Heading: 'Le matin vint,\net la petite échoppe de soupe ouvrit ses portes',
         s5Main: 'La forêt est désormais à votre charge.\nVenez cuisiner de la soupe\navec les chats.',
         lblBreed: 'Race', lblBirthday: 'Anniversaire', lblFood: 'Plat préféré',
-        navStory: 'Histoire', navUpdate: 'Mises à jour', navCoupon: 'Code promo', navRecipe: 'Recette magique', navSocial: 'Social', navCats: 'Chats', navDownload: 'Télécharger', navMenu: 'Menu', navClose: 'Fermer',
+        navStory: 'Histoire', navDiner: 'Resto Étoilé', navUpdate: 'Mises à jour', navCoupon: 'Code promo', navRecipe: 'Recette magique', navSocial: 'Social', navCats: 'Chats', navDownload: 'Télécharger', navMenu: 'Menu', navClose: 'Fermer',
         btnGoogle: 'Disponible sur Google Play', btnApple: 'Télécharger dans l’App Store', btnCoupon: 'Saisir un code',
         bgmOn: 'Musique activée', bgmOff: 'Musique désactivée',
         ftTerms: 'Conditions d’utilisation', ftPrivacy: 'Politique de confidentialité',
@@ -2818,7 +2819,7 @@ class Component extends DCLogic {
         s5Heading: 'เช้ามาเยือน\nและร้านซุปเล็ก ๆ ก็เปิดประตู',
         s5Main: 'ตั้งแต่นี้ไป ป่าแห่งนี้อยู่ในความดูแลของคุณ\nมาทำซุป\nกับเหล่าแมวกันเถอะ',
         lblBreed: 'สายพันธุ์', lblBirthday: 'วันเกิด', lblFood: 'อาหารโปรด',
-        navStory: 'เรื่องเล่า', navUpdate: 'อัปเดต', navCoupon: 'โค้ดคูปอง', navRecipe: 'สูตรเวทมนตร์', navSocial: 'โซเชียล', navCats: 'เหล่าแมว', navDownload: 'ดาวน์โหลด', navMenu: 'เมนู', navClose: 'ปิด',
+        navStory: 'เรื่องเล่า', navDiner: 'ร้านแสงดาว', navUpdate: 'อัปเดต', navCoupon: 'โค้ดคูปอง', navRecipe: 'สูตรเวทมนตร์', navSocial: 'โซเชียล', navCats: 'เหล่าแมว', navDownload: 'ดาวน์โหลด', navMenu: 'เมนู', navClose: 'ปิด',
         btnGoogle: 'ดาวน์โหลดบน Google Play', btnApple: 'ดาวน์โหลดบน App Store', btnCoupon: 'กรอกโค้ด',
         bgmOn: 'เปิดเพลง', bgmOff: 'ปิดเพลง',
         ftTerms: 'ข้อกำหนดการใช้งาน', ftPrivacy: 'นโยบายความเป็นส่วนตัว',
@@ -2859,7 +2860,7 @@ class Component extends DCLogic {
         s5Heading: 'A manhã chegou,\ne a pequena casa de sopas abriu as portas',
         s5Main: 'Agora esta floresta está aos seus cuidados.\nVenha cozinhar sopa\ncom os gatos.',
         lblBreed: 'Raça', lblBirthday: 'Aniversário', lblFood: 'Comida preferida',
-        navStory: 'História', navUpdate: 'Atualizações', navCoupon: 'Código de cupão', navRecipe: 'Receita mágica', navSocial: 'Social', navCats: 'Gatos', navDownload: 'Descarregar', navMenu: 'Menu', navClose: 'Fechar',
+        navStory: 'História', navDiner: 'Restaurante Estrelado', navUpdate: 'Atualizações', navCoupon: 'Código de cupão', navRecipe: 'Receita mágica', navSocial: 'Social', navCats: 'Gatos', navDownload: 'Descarregar', navMenu: 'Menu', navClose: 'Fechar',
         btnGoogle: 'Baixar no Google Play', btnApple: 'Baixar na App Store', btnCoupon: 'Resgatar código',
         bgmOn: 'Música ligada', bgmOff: 'Música desligada',
         ftTerms: 'Termos de utilização', ftPrivacy: 'Política de privacidade',
@@ -2900,7 +2901,7 @@ class Component extends DCLogic {
         s5Heading: 'Pagi tiba,\ndan kedai sup mungil itu membuka pintunya',
         s5Main: 'Kini hutan ini ada dalam asuhanmu.\nMasaklah sup\nbersama para kucing.',
         lblBreed: 'Ras', lblBirthday: 'Ulang tahun', lblFood: 'Makanan favorit',
-        navStory: 'Cerita', navUpdate: 'Pembaruan', navCoupon: 'Kode kupon', navRecipe: 'Resep ajaib', navSocial: 'Sosial', navCats: 'Kucing', navDownload: 'Unduh', navMenu: 'Menu', navClose: 'Tutup',
+        navStory: 'Cerita', navDiner: 'Kedai Bintang', navUpdate: 'Pembaruan', navCoupon: 'Kode kupon', navRecipe: 'Resep ajaib', navSocial: 'Sosial', navCats: 'Kucing', navDownload: 'Unduh', navMenu: 'Menu', navClose: 'Tutup',
         btnGoogle: 'Dapatkan di Google Play', btnApple: 'Unduh di App Store', btnCoupon: 'Masukkan kode',
         bgmOn: 'Musik menyala', bgmOff: 'Musik mati',
         ftTerms: 'Ketentuan Layanan', ftPrivacy: 'Kebijakan Privasi',
