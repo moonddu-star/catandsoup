@@ -542,7 +542,7 @@
     .cs-hero { padding-top: 64px !important; }
   }
 </style>
-<link rel="stylesheet" href="./experience.css?v=0.79">
+<link rel="stylesheet" href="./experience.css?v=0.80">
 </helmet>
 
 <div data-screen-label="홈 시안 A" style="position: relative; width: 100%; color: #f3efe2;">
@@ -853,6 +853,10 @@
       </div>
     </section>
   </div>
+  <button type="button" class="cs-topbtn" ref="{{ topBtnRef }}" onClick="{{ goTop }}" title="TOP" aria-label="TOP">
+    <img src="assets/cat_face_star.webp" alt="" width="34" height="34">
+    <span>TOP</span>
+  </button>
   <!-- footer -->
   <footer data-screen-label="푸터" class="cs-footer" style="position: relative; z-index: 3; padding: 40px 36px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; color: #93815f; font-size: 13px;">
     <div style="font-family: var(--cs-cjk, 'Gowun Batang'), 'Gowun Batang', serif; letter-spacing: var(--cs-track, 0px); font-weight: 700; font-size: 16px; color: #6d5c42;">{{ t.brandName }}</div>
@@ -860,7 +864,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.70</small></div>
+    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.71</small></div>
   </footer>
   <p class="cs-build-ver" aria-hidden="true"></p>
 </div>
@@ -1214,6 +1218,22 @@ class Component extends DCLogic {
       block: 'center',
       behavior: this.shouldReduceMotion() ? 'auto' : 'smooth'
     });
+  }
+
+  goTop(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    this.closeMenu();
+    this._interruptSettle?.();
+    window.scrollTo({ top: 0, behavior: this.shouldReduceMotion() ? 'auto' : 'smooth' });
+  }
+
+  // hidden over the first screen and whenever the footer is in view, so it never covers the footer links
+  updateTopBtn(h) {
+    const btn = this.refs2.topBtn;
+    if (!btn) return;
+    if (!this._footerEl || !this._footerEl.isConnected) this._footerEl = document.querySelector('.cs-footer');
+    const beforeFooter = !this._footerEl || this._footerEl.getBoundingClientRect().top >= h;
+    btn.classList.toggle('is-on', window.scrollY > 360 && beforeFooter);
   }
 
   componentDidUpdate() {
@@ -2029,6 +2049,7 @@ class Component extends DCLogic {
 
   updateScroll() {
     const h = this.viewH();
+    this.updateTopBtn(h);
     // scene 2: cat falls through sticky viewport
     const s2 = this.refs2.scene2;
     const readingFlow = this.shouldReduceMotion();
@@ -2913,6 +2934,8 @@ class Component extends DCLogic {
       t: T[lang] || T.kr,
       isKr: lang === 'kr',
       logoTopRef: this.ref('logoTop'),
+      topBtnRef: this.ref('topBtn'),
+      goTop: (e) => this.goTop(e),
       catOtherRef: (el) => { this.refs2.catOther = el; if (el) requestAnimationFrame(() => this.watchCatOther(el)); },
       catsSurroundRef: this.ref('catsSurround'),
       guitarSection2Ref: (el) => { this.refs2.guitarSection2 = el; },
