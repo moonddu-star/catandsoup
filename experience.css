@@ -202,19 +202,6 @@ html.cs-page-hidden *, html.cs-page-hidden *::before, html.cs-page-hidden *::aft
   .cs-story-beat .cs-kiki { width: auto !important; height: 19svh; }
   .cs-story-beat .cs-morestar { width: 26px; height: 26px; margin: 8px auto 0 !important; }
 }
-/* "Reduce motion" keeps the scroll story; only the endless loops rest. */
-@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
-  [style*="infinite"],
-  .cs-morestar,
-  .cs-cook,
-  .cs-cook img,
-  .cs-restcat img,
-  .cs-chefcat { animation: none !important; }
-  .cs-morestar { opacity: .7; }
-  .cs-cook img:first-child { opacity: 1 !important; }
-  .cs-cook img:nth-child(2) { opacity: 0 !important; }
-}
-
 /* Keep touch scrolling continuous; do not snap or re-anchor mid-gesture. */
 @media (max-width: 720px), (max-height: 540px) and (hover: none) {
   html, body { overflow-anchor: none; }

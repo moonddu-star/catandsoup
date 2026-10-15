@@ -542,7 +542,7 @@
     .cs-hero { padding-top: 64px !important; }
   }
 </style>
-<link rel="stylesheet" href="./experience.css?v=0.81">
+<link rel="stylesheet" href="./experience.css?v=0.82">
 </helmet>
 
 <div data-screen-label="홈 시안 A" style="position: relative; width: 100%; color: #f3efe2;">
@@ -865,7 +865,7 @@
       <a class="cs-footlink" href="https://www.neonapi.com/api/mobile/global/terms?app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftTerms }}</a>
       <a class="cs-footlink" href="https://www.neonapi.com/www/mobile/global/privacy?popup=Y&amp;app_id=5063&amp;nation_cd=US" style="color: #93815f;">{{ t.ftPrivacy }}</a>
     </div>
-    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.76</small></div>
+    <div>© NEOWIZ All rights reserved. <small class="cs-footer-ver" style="margin-left: 8px; opacity: .7;">ver 0.77</small></div>
   </footer>
   <p class="cs-build-ver" aria-hidden="true"></p>
 </div>
@@ -986,14 +986,10 @@ class Component extends DCLogic {
     return this._viewLock.h;
   }
 
-  // The OS "reduce motion" setting must not switch the story to the static
-  // reading flow; it only quiets the endless decorative loops (calmMotion).
+  // The OS "reduce motion" setting is ignored on purpose: everyone gets the
+  // same animated story.
   shouldReduceMotion() {
     return false;
-  }
-
-  calmMotion() {
-    return Boolean(this._motionQuery?.matches && !this.compactUi());
   }
 
   hamburgerUi() {
@@ -2262,8 +2258,7 @@ class Component extends DCLogic {
     const night = 1;
     ctx.clearRect(0, 0, w, h);
     const dpr = this._dpr || Math.min(1.5, devicePixelRatio || 1);
-    const calm = this.calmMotion();
-    const heroVisible = !calm && window.scrollY < window.innerHeight * 0.9;
+    const heroVisible = window.scrollY < window.innerHeight * 0.9;
     const mx = (this.mx || -9999) * dpr, my = (this.my || -9999) * dpr;
     const px = heroVisible ? ((this.mx || window.innerWidth / 2) / window.innerWidth - 0.5) : 0;
     const py = heroVisible ? ((this.my || window.innerHeight / 2) / window.innerHeight - 0.5) : 0;
@@ -2293,7 +2288,7 @@ class Component extends DCLogic {
       this._shootWait = (this._shootWait ?? 0) + dt;
       if (this._shootWait >= 1.9) {
         this._shootWait = 0;
-        if (!calm && this.shooters.length < 2 && Math.random() < 0.6) {
+        if (this.shooters.length < 2 && Math.random() < 0.6) {
           this.shooters.push({ x: Math.random() * 0.8 + 0.1, y: Math.random() * 0.35, life: 0, dx: 0.28 + Math.random() * 0.15, dy: 0.12 + Math.random() * 0.08 });
         }
       }
